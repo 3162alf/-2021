@@ -1,0 +1,124 @@
+～～～～～コーディング規約について～～～～～
+
+◆命名規則
+
+基本的にキャメル記法
+メンバ変数はキャメル＋ハンガリアン記法(Inspector上で分かりやすくする為)
+
+メンバ変数
+    bool        isHoge
+    byte        bHoge
+    sbyte       sbHoge
+    char        cHoge
+    short       sHoge
+    ushort      usHoge
+    int         iHoge
+    uint        uiHoge
+    long        lHoge
+    ulong       ulHoge
+    float       fHoge
+    double      dHoge
+    decimal     deHoge
+    string      stHoge
+    object      oHoge
+
+    vector      vHoge
+    animator    aHoge
+    gameobject  gHoge
+
+    enum        HOGE
+
+スクリプト名    CHogeHoge
+
+マテリアル      MTL_Hoge
+画像            IMG_Hoge
+プレハブ        PFB_Hoge
+3Dモデル        MDL_Hoge
+音              BGM_Hoge,SE_Hoge
+
+
+他のスクリプトから触る可能性のあるpublic関数についてはパスカル記法で。
+また、関数の説明を上部にコメントで書く事。
+private関数の命名は自由で良いです。
+
+例:
+    // 何の為に何をしている関数なのか
+    public float HogeHoge(){
+    }
+
+gettersetterはGet_変数名()で
+例:
+    public bool Get_isHoge(){
+        return isHoge;
+    }
+    public void Set_isHoge(bool isFuga){
+        isHoge = isFuga;
+    }
+
+◆スタイル
+
+public及びprivateの表記は必ずする事。
+
+コメントは//の後に半角スペースを挟む事。
+例:
+    // コメント
+
+メンバ変数の定義の横には何の変数かコメントする事。
+例:
+    private float fHoge = default;      // fugafuga
+
+{}の改行はしない。
+例:
+    if (hoge == fuga) {
+        piyo();
+    }
+
+ソースファイルにはヘッダ署名を書く。
+他人のスクリプトにgettersetter等の関数を追加する場合はコードの下の方に書く。
+更新内容ヘッダのHistoryに記入、関数の上にも日付名前内容をコメントする。
+
+例:
+/*==============================================================================
+    Project_HOGE
+    [CHogeHoge.cs]
+    ◆PiyoPiyo
+--------------------------------------------------------------------------------
+    2021.03.21 @Author Wataru Fukuoka
+================================================================================
+    History
+        210322 Fukuoka
+            更新内容
+            
+        210325 Suzuki
+            加速状態のgetterを追加しました。
+        
+/*============================================================================*/
+using UnityEngine;
+
+    public class CHogeHoge : MonoBehaviour {
+    
+    ～～～～～～～～～～～～～～～～～～～
+    
+    // Small is beautiful. Simple is best.
+    
+    ～～～～～～～～～～～～～～～～～～～
+    
+    // 210325 鈴木 加速状態のgetter
+    public bool GetAccele() { return isAccele; }
+    
+    }
+
+↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓テンプレ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+
+/*==============================================================================
+    PROJECT NAME
+    [FILE NAME]
+    ・WHAT IS THIS
+--------------------------------------------------------------------------------
+    YYYY.MM.DD @Author Name
+================================================================================
+    History
+        YYMMDD NAME
+            UPDATE LOG
+            
+/*============================================================================*/
