@@ -1,0 +1,144 @@
+/*==============================================================================
+    PROJECT
+    [Input Manager 利用方法.txt]
+    ・ゲームパッド入力を設定する際のプログラムの書き方
+--------------------------------------------------------------------------------
+    2021 .03 .25 @Ono Tsubasa
+================================================================================
+    History
+        YYMMDD NAME
+            UPDATE LOG
+            
+/*============================================================================*/
+
+◆Input Managerとは
+　Input Manager は簡単に言えばキー入力やゲームパッドの入力、
+　タッチパネルからの入力などに名前をつける仕組みです。
+　そして、スクリプト側ではその名前を使って入力を取得します。
+
+================================================================================
+　
+◆利用方法
+　まずUnityでコントローラやキーボードなどの操作割り当ては
+　Edit > Project Setting > Input Manager の Size を増やすことで入力欄を追加。
+　開いたインスペクタには初期状態で同名の設定が2つずつあり、
+　それぞれ上がPCキーボード、下がゲームパッド用の設定になっています。
+　同名の設定はどちらの操作が使われた場合も同じ名前で値が取得出来るので、
+　異なった操作機器に対応させる際にはその機器の数だけ同名の設定を作る事になります。
+
+　PS4の右アナログスティックのようにUnityのデフォルト設定にないコントロールを
+　アサインする場合は 既存の類似設定を 右クリック>Duplicate Array Element  で
+　設定を複製した後Nameを変更する事で設定を追加します。
+
+================================================================================
+
+◆Input Managerでの引数設定
+　インスペクタを開き Size 欄の値を増やすと
+　一番下に新たな入力( Cancel )が複製されるので、それを設定します。
+例:
+//〇ボタン
+　Name			Select
+　Positive Button		joystick button 2
+　Alt Positive Button 		e
+　Type			Key or Mouse Button
+これでPS4の〇ボタン（joystic button 2）とEキーに「Select」という名前をつけることができました。
+
+//LStick左右
+　Name			Horizontal
+　Type			Joystick Axis
+　Axis			X Axis
+　Joy Num		Get Motion from all Joysticks
+
+//LStick上下
+　Name			Vertical
+　Type			Joystick Axis
+　Axis			Y Axis
+　Joy Num		Get Motion from all Joysticks
+
+================================================================================
+
+◆ゲームパッド入力の取得コード
+　引数にはコントローラに割り振られたボタン番号を渡します。
+
+例: 上記で作った引数を使います。
+
+// 〇ボタンが押された場合
+void Update () {
+		if(Input.GetButtonDown("Select")){
+			Debug.Log("Select Key Pressed");
+		}
+
+〇ボタンが押されたときとEキーが押されたとき、いずれも「Select Key Pressed」という文字が表示されます。
+
+アナログスティックからの入力はGetAxisメソッドを使って取得できます。
+
+// LStickが倒された場合
+void Update () {
+		float fHorizontal = Input.GetAxis("Horizontal");
+		float fVertivcal    = Input.GetAxis("Vertical");
+		Debug.Log("fHorizontal+","+fVertivcal");
+	}
+
+アナログスティックを左に倒したときはGetAxisメソッドの戻り値は「-1」になり、
+アナログスティックを右に倒したときの戻り値は「1」になります。
+通常の状態では「0」が戻ってきます。
+
+*ともきの作った CLampManager 内のコードは SerializeField を設定したうえでの変数に置き換えられてます。
+
+================================================================================
+
+◆PS4コントローラー接続時のボタン割り当て
+          操作			       指定名	               値
+Lスティック左右		X axis		OFF:0 / 左:-1～右:+1
+Lスティック上下		Y axis		OFF:0 / 上:-1～下:+1
+Lスティック押込み(L3)	joystick button 10	OFF:0 / ON:+1
+Rスティック左右		3rd axis		OFF:0 / 左:-1～右:+1
+Rスティック上下		6th axis		OFF:0 / 左:-1～右:+1
+Rスティック押込み(R3)	joystick button 11	OFF:0 / ON:+1
+十字キー左右		7th axis		OFF:0 / 左:-1 / 右:+1
+十字キー上下		8th axis		OFF:0 / 上:+1 / 下:-1
+□ボタン			joystick button 0	OFF:0 / ON:+1
+×ボタン			joystick button 1	OFF:0 / ON:+1
+〇ボタン			joystick button 2	OFF:0 / ON:+1
+△ボタン			joystick button 3	OFF:0 / ON:+1
+L1ボタン			joystick button 4	OFF:0 / ON:+1
+L2(アナログ)		4th axis		OFF:-1～ON:+1
+L2(デジタル)		joystick button 6	OFF:0 / ON:+1
+R1ボタン			joystick button 5	OFF:0 / ON:+1
+R2(アナログ)		5th axis		OFF:-1～ON:+1
+R2(デジタル)		joystick button 7	OFF:0 / ON:+1
+Shareボタン		joystick button 8	OFF:0 / ON:+1
+Optionボタン		joystick button 9	OFF:0 / ON:+1
+PSボタン			joystick button 12	OFF:0 / ON:+1
+トラックパッド押込み	joystick button 13	OFF:0 / ON:+1
+
+【気をつけるポイント】
+・方向設定はアナログとデジタルで、上下の値が逆になる。
+・L2,R2をアナログボタンとして使う場合、初期値(押していない状態)が-1。
+・RスティックのAxisの順番がややこしい。左右が3thで上下が6th。
+
+================================================================================
+
+◆Xboxコントローラー接続時のボタン割り当て
+          操作			       指定名	               値
+Lスティック左右		X axis		OFF:0 / 左:-1～右:+1
+Lスティック上下		Y axis		OFF:0 / 上:-1～下:+1
+Lスティック押込み		joystick button 8	OFF:0 / ON:+1
+Rスティック左右		4rd axis		OFF:0 / 左:-1～右:+1
+Rスティック上下		5th axis		OFF:0 / 左:-1～右:+1
+Rスティック押込み		joystick button 9	OFF:0 / ON:+1
+十字キー左右		6th axis		OFF:0 / 左:-1 / 右:+1
+十字キー上下		7th axis		OFF:0 / 上:+1 / 下:-1
+Aボタン			joystick button 0	OFF:0 / ON:+1
+Bボタン			joystick button 1	OFF:0 / ON:+1
+Xボタン			joystick button 2	OFF:0 / ON:+1
+Yボタン			joystick button 3	OFF:0 / ON:+1
+Lボタン			joystick button 4	OFF:0 / ON:+1
+Rボタン			joystick button 5	OFF:0 / ON:+1
+LT/RT			3th axis		OFF:-1～ON:+1
+Backボタン		joystick button 6	OFF:0 / ON:+1
+Homeボタン		joystick button 7	OFF:0 / ON:+1
+
+【気をつけるポイント】
+Xbox360コントローラーの場合、指定名が多少違うかもしれない。
+================================================================================
