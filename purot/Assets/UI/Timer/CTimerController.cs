@@ -1,49 +1,53 @@
 /*==============================================================================
     PROJECT ???
     [CTimerController.cs]
-    E‚¨‘è‚ðƒNƒŠƒA‚·‚é‚Ü‚Å‚Ì§ŒÀŽžŠÔ
+    ï¿½Eï¿½ï¿½ï¿½ï¿½ï¿½Nï¿½ï¿½ï¿½Aï¿½ï¿½ï¿½ï¿½Ü‚Å‚Ìï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 --------------------------------------------------------------------------------
     2021.03.25 @Author Kaname Ota
 ================================================================================
     History
-        YYMMDD NAME
-            UPDATE LOG
+        2021.04.10 @Tsubasa Ono
+            åˆ¶é™æ™‚é–“ãŒ0ã«ãªã£ãŸã‚‰ãƒªã‚¶ãƒ«ãƒˆç”»é¢ã«é·ç§»ã™ã‚‹ã‚ˆã†ã«å¤‰æ›´
             
 /*============================================================================*/
 
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
-public class CTimerController : MonoBehaviour{
-    public Text tTimer;          // ƒeƒLƒXƒgƒIƒuƒWƒFƒNƒg(Timer)‚ðŠi”[‚·‚é
+public class CTimerController : MonoBehaviour {
+    public Text tTimer;          // ï¿½eï¿½Lï¿½Xï¿½gï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½g(Timer)ï¿½ï¿½iï¿½[ï¿½ï¿½ï¿½ï¿½
 
     [SerializeField]
-    private float fTotalTime;   // §ŒÀŽžŠÔ
-    private int iSecond = 0;    // ƒeƒLƒXƒg‚É•\Ž¦‚·‚é•b”
+    private float fTotalTime;   // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    private int iSecond = 0;    // ï¿½eï¿½Lï¿½Xï¿½gï¿½É•\ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½bï¿½ï¿½
 
-    void Start(){
-        // §ŒÀŽžŠÔ‚ÌÅ‘å’lB‚Æ‚è‚ ‚¦‚¸“ñŒ…
-        if(fTotalTime > 100.0f){
-            fTotalTime = 99.9f;
+    void Start() {
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô‚ÌÅ‘ï¿½lï¿½Bï¿½Æ‚è‚ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        if (fTotalTime > 30.0f) {
+            fTotalTime = 29.9f;
         }
     }
 
-    void Update(){
-        // ƒtƒŒ[ƒ€‚²‚Æ‚Ì•b”‚ðŒ¸ŽZ 
+    void Update() {
+        // ï¿½tï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½Æ‚Ì•bï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Z 
         fTotalTime -= Time.deltaTime;
 
-        // §ŒÀŽžŠÔ‚ðint‚ÅƒLƒƒƒXƒg‚µ‚Ä•b”‚ðŽZo
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô‚ï¿½intï¿½ÅƒLï¿½ï¿½ï¿½Xï¿½gï¿½ï¿½ï¿½Ä•bï¿½ï¿½ï¿½ï¿½Zï¿½o
         iSecond = (int)fTotalTime;
 
-        // •b”‚ð•¶Žš—ñ‚É‚µ‚Ä•\Ž¦
+        // ï¿½bï¿½ï¿½ï¿½ð•¶Žï¿½ï¿½ï¿½É‚ï¿½ï¿½Ä•\ï¿½ï¿½
         tTimer.text = iSecond.ToString("00");
 
-        // §ŒÀŽžŠÔ‚ª‚È‚­‚È‚Á‚½‚ç•\Ž¦‚Æ§ŒÀŽžŠÔ‚ð0‚ÉŒÅ’è
-        if(iSecond <= 0){
+        /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô‚ï¿½ï¿½È‚ï¿½ï¿½È‚ï¿½ï¿½ï¿½ï¿½ï¿½\ï¿½ï¿½ï¿½Æï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô‚ï¿½0ï¿½ÉŒÅ’ï¿½
+        if (iSecond <= 0) {
             tTimer.text = "00";
             fTotalTime = 0.0f;
+        }*/
+
+        //åˆ¶é™æ™‚é–“ãŒ0ã«ãªã£ãŸã‚‰ãƒªã‚¶ãƒ«ãƒˆç”»é¢ã¸é·ç§»
+        if (iSecond == 0) {
+            SceneManager.LoadScene("Result");
         }
 
     }
