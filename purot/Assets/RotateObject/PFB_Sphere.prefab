@@ -13,10 +13,10 @@ GameObject:
   - component: {fileID: 7407900048820148}
   - component: {fileID: 7407900048820149}
   - component: {fileID: 7407900048820152}
-  - component: {fileID: 3159306722293850765}
-  m_Layer: 0
+  - component: {fileID: -236773660559815680}
+  m_Layer: 3
   m_Name: PFB_Sphere
-  m_TagString: sphere
+  m_TagString: RotateObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -113,7 +113,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &3159306722293850765
+--- !u!114 &-236773660559815680
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -126,6 +126,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fRadius: 9
-  fSpeed: 0.3
-  fStartDegree: 90
-  Shape: 1
+  fSpeed: 0.15
+  fStartDegree: 180
+  Shape: 0
+  State: 0

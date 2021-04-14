@@ -45,5 +45,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stHorStickName: Horizontal
   stVerStickName: Vertical
+  fDeadZone: 0.35
   gLamp: {fileID: 2194172625744507505, guid: caa648148f8ebb3429c1894b03a07ce5, type: 3}
   fCreateRad: 6

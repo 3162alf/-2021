@@ -109,3 +109,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5115916703971f1458b0c90728babbbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  iDistance: 10
+  stTagName: RotateObject
+  lmLayerMask:
+    serializedVersion: 2
+    m_Bits: 8
+  fSphereCastRadius: 1
+  stButton2Name: Fire3
