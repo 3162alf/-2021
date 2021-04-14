@@ -8,8 +8,8 @@
     2021.03.24 @Author Hirano Tomoki
 ================================================================================
     History
-        YYMMDD NAME
-            UPDATE LOG
+        210404 Hirano
+            スティック入力の強さによる検知範囲の調整処理
             
 /*============================================================================*/
 
@@ -27,6 +27,8 @@ public class CLampManager : MonoBehaviour {
     [SerializeField, TooltipAttribute("垂直方向用のスティックの登録名")]
     private string stVerStickName = "Vertical";
 
+    [SerializeField] private float fDeadZone = 0.01f;
+
     private float fHorizontal;                      // 水平方向のスティックの傾き格納変数
     private float fVertivcal;                       // 垂直方向のスティックの傾き格納変数
     private float fRad;                             // スティックの傾きから算出したラジアン角格納用変数
@@ -39,22 +41,22 @@ public class CLampManager : MonoBehaviour {
     [SerializeField] private GameObject gLamp;              // 生成するオブジェクト
     [SerializeField] private float fCreateRad = 5f;         // "Lamp"オブジェクト生成に使用する半径
 
-    private int        iLampNum = 16;   // "Lamp"オブジェクトを生成する個数
-    private float      fRepeat  = 1f;   // "Lamp"オブジェクトを生成する周期
+    private int iLampNum = 16;      // "Lamp"オブジェクトを生成する個数
+    private float fRepeat = 1f;     // "Lamp"オブジェクトを生成する周期
 
-    private float fOneCycle     = 0f;   // 
-    private float fPoint        = 0f;   // 
-    private float fRepeatPoint  = 0f;   // 
-    private float fPosX         = 0f;   // 
-    private float fPosZ         = 0f;   // 
+    private float fOneCycle = 0f;   // 
+    private float fPoint = 0f;      // 
+    private float fRepeatPoint = 0f;// 
+    private float fPosX = 0f;       // 
+    private float fPosZ = 0f;       // 
 
-    private Vector3 vCreatePos;         // 
+    private Vector3 vCreatePos;     // 
 
     //-------------------------------------------------------------------------
 
     void Start() {
         // 初期のラジアン角を90°に設定
-        fRad    = 0;
+        fRad = 0;
         fOldRad = fRad;
 
         // ランプを円状に自動生成
@@ -65,7 +67,16 @@ public class CLampManager : MonoBehaviour {
 
         // 水平方向と垂直方向のスティックの傾きを取得
         fHorizontal = Input.GetAxis(stHorStickName);
-        fVertivcal  = Input.GetAxis(stVerStickName);
+        fVertivcal = Input.GetAxis(stVerStickName);
+
+        // スティックの検知範囲を調整
+        if (fHorizontal <  fDeadZone &&
+            fHorizontal > -fDeadZone &&
+            fVertivcal  <  fDeadZone &&
+            fVertivcal  > -fDeadZone)  {
+            fRad = fOldRad;
+            return;
+        }
 
         // スティックの傾きをラジアン角に変換
         fRad = Mathf.Atan2(fVertivcal, fHorizontal) * Mathf.Rad2Deg - 90;
@@ -75,12 +86,7 @@ public class CLampManager : MonoBehaviour {
             fRad += 360;
         }
 
-        // スティックを操作していないときに最後に傾けていた角度を記憶
-        if ((int)fRad == 270) {
-            fRad = fOldRad;
-        }
         fOldRad = fRad;
-
         //Debug.Log((int)fRad);
     }
 
@@ -93,7 +99,7 @@ public class CLampManager : MonoBehaviour {
         for (var i = 0; i < iLampNum; ++i) {
 
             fPoint = ((float)i / iLampNum) * fOneCycle;
-            fRepeatPoint = fPoint * fRepeat; 
+            fRepeatPoint = fPoint * fRepeat;
 
             // オブジェクトを生成する位置を計算する
             fPosX = Mathf.Cos(fRepeatPoint) * fCreateRad;
