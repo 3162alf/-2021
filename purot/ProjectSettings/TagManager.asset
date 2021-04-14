@@ -10,11 +10,12 @@ TagManager:
   - sphere
   - switch1
   - switch2
+  - RotateObject
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - RotateObject
   - Water
   - UI
   - 
