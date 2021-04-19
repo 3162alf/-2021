@@ -123,11 +123,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 5670225888970919545}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4d55ba5d4140904481474cf269770e7, type: 3}
+  m_Script: {fileID: 11500000, guid: f06f240b41983e743a254da0da82da4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   fRadius: 9
   fSpeed: 0.15
-  fStartDegree: 90
+  fStartDegree: 0
   Shape: 0
   State: 0
