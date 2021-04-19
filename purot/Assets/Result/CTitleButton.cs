@@ -14,6 +14,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+//リザルト画面からタイトル画面に遷移
 public class CTitleButton : MonoBehaviour {
     public void OnTitle() {
         SceneManager.LoadScene("TitleScene");
