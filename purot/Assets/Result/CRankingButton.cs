@@ -14,7 +14,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-// リザルト画面からランキング画面に遷移
+//リザルト画面からランキング画面に遷移
 public class CRankingButton : MonoBehaviour {
     public void OnRanking() {
         SceneManager.LoadScene("RankingScene");

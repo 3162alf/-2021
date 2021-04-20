@@ -45,7 +45,7 @@ public class CTimerController : MonoBehaviour {
             fTotalTime = 0.0f;
         }*/
 
-        // 制限時間が0になったらリザルト画面へ遷移
+        //制限時間が0になったらリザルト画面へ遷移
         if (iSecond == 0) {
             SceneManager.LoadScene("Result");
         }
