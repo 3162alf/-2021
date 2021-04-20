@@ -14,7 +14,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-//リザルト画面からゲーム画面に遷移
+// リザルト画面からゲーム画面に遷移
 public class CRetlyButton : MonoBehaviour {
     public void OnRetry() {
         SceneManager.LoadScene("SampleScene");
