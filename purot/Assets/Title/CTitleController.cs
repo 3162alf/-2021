@@ -8,6 +8,9 @@
     History
         YYMMDD NAME
             UPDATE LOG
+
+        210421 Kaname Ota
+            ランキング画面への遷移処理追加
             
 /*============================================================================*/
 
@@ -29,5 +32,10 @@ public class CTitleController : MonoBehaviour{
     // ゲーム画面に遷移
     public void OnClickStartButtun(){
         SceneManager.LoadScene("SampleScene");
+    }
+
+    // ランキング画面に遷移
+    public void OnClickRankingButtun(){
+        SceneManager.LoadScene("RankingScene");
     }
 }
