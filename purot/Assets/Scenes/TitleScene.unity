@@ -208,8 +208,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 173248632}
-        m_TargetAssemblyTypeName: CTitleController, Assembly-CSharp
-        m_MethodName: OnClickRankingButtun
+        m_TargetAssemblyTypeName: CSceneManager, Assembly-CSharp
+        m_MethodName: OnTitletoRanking
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -266,7 +266,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 173248627}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bad4df388049e6b4ba452536c20e117a, type: 3}
+  m_Script: {fileID: 11500000, guid: ff5feabaa5b272948811f1bb70effc69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &543204222
@@ -556,7 +556,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1253054936}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bad4df388049e6b4ba452536c20e117a, type: 3}
+  m_Script: {fileID: 11500000, guid: ff5feabaa5b272948811f1bb70effc69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1253054939
@@ -604,8 +604,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1253054938}
-        m_TargetAssemblyTypeName: CTitleController, Assembly-CSharp
-        m_MethodName: OnClickStartButtun
+        m_TargetAssemblyTypeName: CSceneManager, Assembly-CSharp
+        m_MethodName: OnTitletoGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
