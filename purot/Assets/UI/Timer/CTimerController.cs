@@ -1,7 +1,7 @@
 /*==============================================================================
     PROJECT ???
     [CTimerController.cs]
-    �E�����N���A����܂ł̐�������
+    制限時間の制御をする処理
 --------------------------------------------------------------------------------
     2021.03.25 @Author Kaname Ota
 ================================================================================
@@ -16,30 +16,30 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class CTimerController : MonoBehaviour {
-    public Text tTimer;          // �e�L�X�g�I�u�W�F�N�g(Timer)��i�[����
+    public Text tTimer;          // テキストを入れる箱
 
     [SerializeField]
-    private float fTotalTime;   // ��������
-    private int iSecond = 0;    // �e�L�X�g�ɕ\������b��
+    private float fTotalTime;   // 制限時間の総合時間
+    private int iSecond = 0;    // 秒数
 
     void Start() {
-        // �������Ԃ̍ő�l�B�Ƃ肠������
-        if (fTotalTime > 30.0f) {
-            fTotalTime = 29.9f;
+        // 制限時間の上限値設定
+        if (fTotalTime >120.0f) {
+            fTotalTime = 119.9f;
         }
     }
 
     void Update() {
-        // �t���[�����Ƃ̕b������Z 
+        // フレームごとに総合時間から減算
         fTotalTime -= Time.deltaTime;
 
-        // �������Ԃ�int�ŃL���X�g���ĕb����Z�o
+        // キャストした総合時間を秒数に代入
         iSecond = (int)fTotalTime;
 
-        // �b���𕶎���ɂ��ĕ\��
+        // テキストに秒数を表示
         tTimer.text = iSecond.ToString("00");
 
-        /* �������Ԃ��Ȃ��Ȃ�����\���Ɛ������Ԃ�0�ɌŒ�
+        /* 下限値の設定
         if (iSecond <= 0) {
             tTimer.text = "00";
             fTotalTime = 0.0f;
