@@ -16,7 +16,7 @@ using UnityEngine.SceneManagement;
 public class CSceneManager : MonoBehaviour{
     //タイトル画面からゲーム画面に遷移
     public void OnTitletoGame() {
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("GameScene");
     }
 
     // タイトル画面からランキング画面に遷移
@@ -31,7 +31,7 @@ public class CSceneManager : MonoBehaviour{
 
     // リザルト画面からゲーム画面に遷移
     public void OnResulttoRetly() {
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("GameScene");
     }
 
     // リザルト画面からランキング画面に遷移
