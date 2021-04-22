@@ -594,8 +594,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 885809271}
-        m_TargetAssemblyTypeName: CTitleButton, Assembly-CSharp
-        m_MethodName: OnTitle
+        m_TargetAssemblyTypeName: CSceneManager, Assembly-CSharp
+        m_MethodName: OnResulttoTitle
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -652,7 +652,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 885809266}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 512be62fec306df49ac6cac5d2710347, type: 3}
+  m_Script: {fileID: 11500000, guid: ff5feabaa5b272948811f1bb70effc69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1019716829
@@ -704,7 +704,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1019716829}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 801f624b97ce7cb4295740c605c49c8d, type: 3}
+  m_Script: {fileID: 11500000, guid: ff5feabaa5b272948811f1bb70effc69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1019716832
@@ -752,8 +752,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1019716831}
-        m_TargetAssemblyTypeName: CRetlyButton, Assembly-CSharp
-        m_MethodName: OnRetry
+        m_TargetAssemblyTypeName: CSceneManager, Assembly-CSharp
+        m_MethodName: OnResulttoRetly
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1084,8 +1084,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1907793868}
-        m_TargetAssemblyTypeName: CRankingButton, Assembly-CSharp
-        m_MethodName: OnRanking
+        m_TargetAssemblyTypeName: CSceneManager, Assembly-CSharp
+        m_MethodName: OnResulttoRanking
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1142,7 +1142,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1907793863}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f651584f8d498443a5e2e7998f2ba81, type: 3}
+  m_Script: {fileID: 11500000, guid: ff5feabaa5b272948811f1bb70effc69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1908636269
