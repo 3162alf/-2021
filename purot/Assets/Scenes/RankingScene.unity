@@ -316,8 +316,8 @@ GameObject:
   - component: {fileID: 583230671}
   - component: {fileID: 583230673}
   - component: {fileID: 583230672}
-  - component: {fileID: 583230674}
   - component: {fileID: 583230675}
+  - component: {fileID: 583230674}
   m_Layer: 5
   m_Name: Result
   m_TagString: Untagged
@@ -392,7 +392,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 583230670}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25df251b838280345a0be1aec433945d, type: 3}
+  m_Script: {fileID: 11500000, guid: ff5feabaa5b272948811f1bb70effc69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &583230675
@@ -440,8 +440,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 583230674}
-        m_TargetAssemblyTypeName: CResultButton, Assembly-CSharp
-        m_MethodName: OnRanking
+        m_TargetAssemblyTypeName: CSceneManager, Assembly-CSharp
+        m_MethodName: OnRankingtoResult
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

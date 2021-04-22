@@ -1031,8 +1031,18 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8146928691879178253, guid: be90b340debb4a24da9f494285c0e89f,
         type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -500
+      objectReference: {fileID: 0}
+    - target: {fileID: 8146928691879178253, guid: be90b340debb4a24da9f494285c0e89f,
+        type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: -100
+      objectReference: {fileID: 0}
+    - target: {fileID: 8146928691879178253, guid: be90b340debb4a24da9f494285c0e89f,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 8146928691967587343, guid: be90b340debb4a24da9f494285c0e89f,
         type: 3}
@@ -1043,6 +1053,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_RenderMode
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8146928691967587343, guid: be90b340debb4a24da9f494285c0e89f,
+        type: 3}
+      propertyPath: m_PlaneDistance
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 8146928691967587378, guid: be90b340debb4a24da9f494285c0e89f,
         type: 3}
