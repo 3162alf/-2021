@@ -115,4 +115,4 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   fSphereCastRadius: 1
-  stButton2Name: Fire3
+  stButton2Name: "X\u3092B\u306B\u3057\u305F\u3044"
