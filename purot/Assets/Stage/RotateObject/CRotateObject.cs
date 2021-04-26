@@ -6,29 +6,19 @@
     2021.03.24 @Author Suzuki Hayase
 ================================================================================
     History
-        210328 Suzuki Hayase
+        210328 Suzuki
             リファクタリング
         210404 Hirano
             回転処理書き換え
+        210422 Suzuki
+            セッター追加
             
 /*============================================================================*/
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// 回転状態の列挙型
-public enum RotateState {
-    INSIDE,
-    OUTSIDE
-}
-
 public class CRotateObject : MonoBehaviour {
-    public enum OBJECT_SHAPE {                     // オブジェクトの形状
-        CUBE = 0,                                  // キューブ
-        SPHERE = 1,                                // 球
-        CYLINDER = 2                               // 円柱
-    }
-
     [SerializeField] private float fRadius = 9f;        // 回転半径
     [SerializeField] private float fSpeed = 0.15f;      // 回転速度
     [SerializeField] private float fStartDegree = 0f;   // 初期角度
@@ -37,7 +27,6 @@ public class CRotateObject : MonoBehaviour {
     [SerializeField] private RotateState State;    // オブジェクトの回転状態
 
     private Vector3 vPos;
-
 
     private float fDegree;                         // 角度
 
@@ -89,13 +78,33 @@ public class CRotateObject : MonoBehaviour {
         }
     }
 
+    // 角度getter
+    public float Get_fDegree() {
+        return fDegree;
+    }
+
     // 回転ステートgetter
     public RotateState Get_RotateState() {
         return State;
     }
 
     // オブジェクトの形状getter
-    public int Get_Shape() {
-        return (int)Shape;
+    public OBJECT_SHAPE Get_Shape() {
+        return Shape;
+    }
+
+    // スピードsetter
+    public void Set_fSpeed(float s) {
+        fSpeed = s;
+    } 
+
+    // 初期位置setter
+    public void Set_fStartDegree(float d) {
+        fStartDegree = d;
+    }
+
+    // 形状setter
+    public void Set_Shape(OBJECT_SHAPE s) {
+        Shape = s;
     }
 }

@@ -3,7 +3,7 @@
     [COrderManager.cs]
     ・指令制御
 --------------------------------------------------------------------------------
-    2021.04.19 @Author Suzuki Hayase
+    2021.04.25 @Author Suzuki Hayase
 ================================================================================
     History
 
@@ -13,7 +13,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class COrderManager : MonoBehaviour {
+public class COrderManager1 : MonoBehaviour {
     [SerializeField] private GameObject[] gOrderSource;              // 指令オブジェクト配列
     [SerializeField] private GameObject gClearLamp;
 
@@ -56,8 +56,17 @@ public class COrderManager : MonoBehaviour {
         gClearLampList.Clear();
         OrderList.Clear();
 
+        List<int> nums = new List<int>();
+
+        for(int i = 0; i < kind; i++) {
+            nums.Add(i);
+        }
+
         for (int i = 0; i < n; i++) {
-            OrderList.Add((OBJECT_SHAPE)Random.Range(0, kind));
+            int rand = Random.Range(0, nums.Count);
+
+            OrderList.Add((OBJECT_SHAPE)nums[rand]);
+            nums.RemoveAt(rand);
 
             gOrderList.Add(Instantiate(gOrderSource[(int)OrderList[i]],
                 new Vector3(-18, 0, 5 - i * 5), Quaternion.Euler(0, 180, 0)));
