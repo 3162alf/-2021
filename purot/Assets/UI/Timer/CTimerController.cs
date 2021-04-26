@@ -8,6 +8,9 @@
     History
         2021.04.10 @Tsubasa Ono
             制限時間が0になったらリザルト画面に遷移するように変更
+
+        2021.04.26 @Kaname Ota
+            制限時間を2:00表記にした。
             
 /*============================================================================*/
 
@@ -19,36 +22,50 @@ public class CTimerController : MonoBehaviour {
     public Text tTimer;          // テキストを入れる箱
 
     [SerializeField]
-    private float fTotalTime;   // 制限時間の総合時間
-    private int iSecond = 0;    // 秒数
+    private float fMinute;      // 分数用変数
+
+    [SerializeField]
+    private float fSeconds;      // 秒数用変数
+    private float fOldSeconds;   // 一個前の分数
+    private float fTotalTime;   // 総合時間
+
+
 
     void Start() {
-        // 制限時間の上限値設定
-        if (fTotalTime >120.0f) {
-            fTotalTime = 119.9f;
-        }
+        // 総合時間の算出と初期化
+        fTotalTime = fMinute * 60 + fSeconds;
+        fOldSeconds = 0.0f;      
     }
 
     void Update() {
-        // フレームごとに総合時間から減算
-        fTotalTime -= Time.deltaTime;
-
-        // キャストした総合時間を秒数に代入
-        iSecond = (int)fTotalTime;
-
-        // テキストに秒数を表示
-        tTimer.text = iSecond.ToString("00");
-
-        /* 下限値の設定
-        if (iSecond <= 0) {
-            tTimer.text = "00";
-            fTotalTime = 0.0f;
-        }*/
-
-        // 制限時間が0になったらリザルト画面へ遷移
-        if (iSecond == 0) {
-            SceneManager.LoadScene("ResultScene");
+        // 総合時間がなくなったら処理を飛ばす
+        if(fTotalTime <= 0.0f){
+            return;
         }
 
+        // 総合時間の更新
+        fTotalTime = fMinute * 60 + fSeconds;
+
+        // 総合時間の減算
+        fTotalTime -= Time.deltaTime;
+
+        // 分数の算出
+        fMinute = (int)fTotalTime / 60;
+
+        // 秒数の算出
+        fSeconds = fTotalTime - fMinute * 60;
+
+        // UIテキストに時間を表示
+        if((int)fSeconds != (int)fOldSeconds){
+            tTimer.text = fMinute.ToString("00") + ":" + ((int)fSeconds).ToString("00");
+        }
+
+        // 一個前の秒数に現在の時間を代入
+        fOldSeconds = fSeconds;
+
+        // 総合時間がなくなったらリザルト画面に遷移する
+        if(fTotalTime <= 0.0f){
+            SceneManager.LoadScene("ResultScene");
+        }
     }
 }

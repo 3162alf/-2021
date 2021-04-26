@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4183536177019432147}
   - component: {fileID: 4183536177019432146}
   m_Layer: 0
-  m_Name: TimerController
+  m_Name: PFB_TimerController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,4 +44,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tTimer: {fileID: 0}
-  fTotalTime: 105
+  fMinute: 2
+  fSeconds: 0
