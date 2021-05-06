@@ -39,8 +39,8 @@ public class CSceneManager : MonoBehaviour{
         SceneManager.LoadScene("RankingScene");
     }
 
-    //ランキング画面からリザルト画面に遷移
-    public void OnRankingtoResult() {
-        SceneManager.LoadScene("ResultScene");
+    //ランキング画面からタイトル画面に遷移
+    public void OnRankingtoTitle() {
+        SceneManager.LoadScene("TitleScene");
     }
 }
