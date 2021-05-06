@@ -23,11 +23,11 @@ public class CGateTimerController : MonoBehaviour {
 
     [SerializeField] GameObject gGate; // ゲート
     private CObjectManager csObjectManager;
-    private COrderManager1 csOrderManager;
+    private COrderManager csOrderManager;
 
     void Start() {
         csObjectManager = GameObject.Find("PFB_ObjectManager").GetComponent<CObjectManager>();
-        csOrderManager = GameObject.Find("PFB_OrderManager").GetComponent<COrderManager1>();
+        csOrderManager = GameObject.Find("PFB_OrderManager").GetComponent<COrderManager>();
     }
 
     void Update() {
@@ -46,34 +46,40 @@ public class CGateTimerController : MonoBehaviour {
             fTotalTime = 0.0f;
         }*/
 
-        if(iSecond == 0) {
-            List<GameObject> list = csObjectManager.Get_gObjectList();
-            OBJECT_SHAPE order = csOrderManager.Get_Order(0);
+        // 時間が来たらまたはプレイヤーの意思で回収
+        if(iSecond == 0 || Input.GetKeyDown(KeyCode.Return)) {
+            // ゲートが二つ出るのを防ぐ
+            if (GameObject.Find(gGate.name + "(Clone)") == null) {
+                List<GameObject> list = csObjectManager.Get_gObjectList();
+                OBJECT_SHAPE order = csOrderManager.Get_Order(0);
 
-            GameObject first = new GameObject();
-            CRotateObject cro = new CRotateObject();
+                // 指令の最初のオブジェクトの位置にゲートを出す
+                GameObject first = new GameObject();
 
-            for(int i = 0; i < list.Count; i++) {
-                cro = list[i].GetComponent<CRotateObject>();
-                if (cro.Get_Shape() == order) {
-                    first = list[i];
-                    break;
+                int i;
+                for (i = 0; i < list.Count; i++) {
+                    if (list[i].GetComponent<CRotateObject>().Get_Shape() == order) {
+                        first = list[i];
+                        break;
+                    }
                 }
+
+                Vector3 pos = first.transform.position;
+
+                GameObject gate = Instantiate(gGate, pos, Quaternion.Euler(0, 0, 90));
+                CGate cs = gate.GetComponent<CGate>();
+                CRotateObject cro = list[i].GetComponent<CRotateObject>();
+
+                cs.Set_State(cro.Get_RotateState());
+                cs.Set_fDegree(cro.Get_fDegree());
+
+                fTotalTime = -1;
             }
-
-            Vector3 pos = first.transform.position;
-
-            GameObject gate = Instantiate(gGate, pos, Quaternion.Euler(0, 0, 90));
-            CGate1 cs = gate.GetComponent<CGate1>();
-            cs.Set_State(cro.Get_RotateState());
-            cs.Set_fDegree(cro.Get_fDegree());
-
-            fTotalTime = -1;
         }
-
     }
 
+    // タイマーリセット関数
     public void Reset() {
-        fTotalTime = 5;
+        fTotalTime = 30;
     }
 }
