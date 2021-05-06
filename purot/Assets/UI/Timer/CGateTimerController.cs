@@ -51,29 +51,34 @@ public class CGateTimerController : MonoBehaviour {
             // ゲートが二つ出るのを防ぐ
             if (GameObject.Find(gGate.name + "(Clone)") == null) {
                 List<GameObject> list = csObjectManager.Get_gObjectList();
-                OBJECT_SHAPE order = csOrderManager.Get_Order(0);
 
-                // 指令の最初のオブジェクトの位置にゲートを出す
-                GameObject first = new GameObject();
+                if (list.Count > 0) {
+                    OBJECT_SHAPE order = csOrderManager.Get_Order(0);
 
-                int i;
-                for (i = 0; i < list.Count; i++) {
-                    if (list[i].GetComponent<CRotateObject>().Get_Shape() == order) {
-                        first = list[i];
-                        break;
+                    // 指令の最初のオブジェクトの位置にゲートを出す
+                    GameObject first = new GameObject();
+
+                    int i;
+                    for (i = 0; i < list.Count; i++) {
+                        if (list[i].GetComponent<CRotateObject>().Get_Shape() == order) {
+                            first = list[i];
+                            break;
+                        }
+                    }
+
+                    if (i < list.Count) {
+                        Vector3 pos = first.transform.position;
+
+                        GameObject gate = Instantiate(gGate, pos, Quaternion.Euler(0, 0, 90));
+                        CGate cs = gate.GetComponent<CGate>();
+                        CRotateObject cro = list[i].GetComponent<CRotateObject>();
+
+                        cs.Set_State(cro.Get_RotateState());
+                        cs.Set_fDegree(cro.Get_fDegree());
+
+                        fTotalTime = -1;
                     }
                 }
-
-                Vector3 pos = first.transform.position;
-
-                GameObject gate = Instantiate(gGate, pos, Quaternion.Euler(0, 0, 90));
-                CGate cs = gate.GetComponent<CGate>();
-                CRotateObject cro = list[i].GetComponent<CRotateObject>();
-
-                cs.Set_State(cro.Get_RotateState());
-                cs.Set_fDegree(cro.Get_fDegree());
-
-                fTotalTime = -1;
             }
         }
     }
