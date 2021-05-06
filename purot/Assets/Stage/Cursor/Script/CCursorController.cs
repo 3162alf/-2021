@@ -67,7 +67,7 @@ public class CCursorController : MonoBehaviour {
 
         transform.position = new Vector3(vMovePos.x, vMovePos.y, vMovePos.z);
 
-        if (Input.GetButtonDown(stButton2Name) || Input.GetKeyDown(KeyCode.Return)) {
+        if (Input.GetButtonDown(stButton2Name) || Input.GetKeyDown(KeyCode.Space)) {
             CreateSphereCast(gCursorManager.transform.position, this.transform.position);
         }
         // debugóp(âüÇµÇƒÇ¢ÇÈä‘ÅArayÇîÚÇŒÇµë±ÇØÇÈ)
@@ -119,13 +119,18 @@ public class CCursorController : MonoBehaviour {
         foreach (RaycastHit rhHitObject in rhSphereHits) {
             Debug.Log("SphereCastÇ™" + stTagName + "Ç…ìñÇΩÇ¡ÇΩ");
 
-            // Ç–Ç¡Ç≠ÇËï‘Ç∑èàóù
-            if (rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Get_RotateState() == RotateState.OUTSIDE) {
-                rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Set_State(RotateState.INSIDE);
-            }
-            else if (rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Get_RotateState() == RotateState.INSIDE) {
-                rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Set_State(RotateState.OUTSIDE);
+            if (!rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Get_isAccele()) {
+                if (COrderManager.Instance.Get_Order(0) != rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Get_Shape()) {
+                    // Ç–Ç¡Ç≠ÇËï‘Ç∑èàóù
+                    if (rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Get_RotateState() == RotateState.OUTSIDE) {
+                        rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Set_State(RotateState.INSIDE);
+                    }
+                    else if (rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Get_RotateState() == RotateState.INSIDE) {
+                        rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Set_State(RotateState.OUTSIDE);
 
+                    }
+                    CObjectManager.Instance.Accele(rhHitObject.collider.gameObject);
+                }
             }
         }
     }
