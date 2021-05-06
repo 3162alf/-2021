@@ -886,7 +886,7 @@ GameObject:
   - component: {fileID: 583230675}
   - component: {fileID: 583230674}
   m_Layer: 5
-  m_Name: Result
+  m_Name: Title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1008,7 +1008,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 583230674}
         m_TargetAssemblyTypeName: CSceneManager, Assembly-CSharp
-        m_MethodName: OnRankingtoResult
+        m_MethodName: OnRankingtoTitle
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2240,7 +2240,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u30EA\u30B6\u30EB\u30C8"
+  m_Text: "\u30BF\u30A4\u30C8\u30EB"
 --- !u!222 &1947750556
 CanvasRenderer:
   m_ObjectHideFlags: 0
