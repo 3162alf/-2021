@@ -17,15 +17,15 @@ using UnityEngine.SceneManagement;
 
 public class CScore : MonoBehaviour
 {
-    public static int Score;
-    public static GameObject ScoreObj; // TextオブジェクトをあとでFindして入れる、リザルトでだけ使う
+    public static int iScore;
+    public static GameObject gScoreObj; // TextオブジェクトをあとでFindして入れる、リザルトでだけ使う
 
     void Start()
     {
         // 一回だけ実行したいからスタートに書きました。後悔はしています。
         if (SceneManager.GetActiveScene().name == "GameScene")
         {
-            Score = 0;
+            iScore = 0;
         }
         if (SceneManager.GetActiveScene().name == "ResultScene")
         {
@@ -36,25 +36,25 @@ public class CScore : MonoBehaviour
 
     public static void AddScore()
     {
-        Score++;
+        iScore+= 10;
     }
 
     public static int GetScore()
     {
-        return Score;
+        return iScore;
     }
 
     public static void DispScore()
     {
         // オブジェクトからTextコンポーネントを取得
-        ScoreObj = GameObject.Find("Text");
-        Text ScoreText = ScoreObj.GetComponent<Text>();
+        gScoreObj = GameObject.Find("Text");
+        Text ScoreText = gScoreObj.GetComponent<Text>();
 
         // テキストの表示を入れ替える
-        ScoreText.text = Score.ToString();
+        ScoreText.text = iScore.ToString();
     }
     public static void ResetScore()
     {
-        Score = 0;
+        iScore = 0;
     }
 }
