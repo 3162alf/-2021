@@ -19,6 +19,11 @@ public class CSceneManager : MonoBehaviour{
         SceneManager.LoadScene("GameScene");
     }
 
+    // タイトル画面からチュートリアル画面に遷移
+    public void OnTitletoTutorial() {
+        SceneManager.LoadScene("TutorialScene");
+    }
+
     // タイトル画面からランキング画面に遷移
     public void OnTitletoRanking() {
         SceneManager.LoadScene("RankingScene");
