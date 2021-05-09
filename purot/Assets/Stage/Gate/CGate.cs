@@ -1,12 +1,13 @@
 /*==============================================================================
-    Project_
+    Project
     [CGate.cs]
     ・ゲート制御
 --------------------------------------------------------------------------------
     2021.04.25 @Author Suzuki Hayase
 ================================================================================
     History
-        
+        2021.05.09 @Author Sasaki Misaki
+            125~127行目を見てください。そっと、スコアをAddする処理追加してます。
             
 /*============================================================================*/
 using System.Collections;
@@ -34,6 +35,7 @@ public class CGate : MonoBehaviour {
         iClearNum = 0;
         csOrderManager = GameObject.Find("PFB_OrderManager").GetComponent<COrderManager>();
         csGateTimerController = GameObject.Find("PFB_GateTimerController").GetComponent<CGateTimerController>();
+
     }
 
     // Update is called once per frame
@@ -114,10 +116,15 @@ public class CGate : MonoBehaviour {
 
             // 指令数のオブジェクトが通過したらリセット
             if (iPassNum == ordernum) {
-                if (iMatchNum == ordernum) {
+                if (iMatchNum == ordernum)
+                {
                     // クリアスタンプ生成
                     Instantiate(gClear, new Vector3(20, 0, -10 + iClearNum * 5),
                         Quaternion.Euler(0, 180, 0));
+
+                    //========== 2021/5/09
+                    // スコアを記録するのに必要なので足しました　by佐々木
+                    CScore.AddScore();
 
                     // 指令生成
                     csOrderManager.CreateOrder(3);
