@@ -21,10 +21,14 @@ public enum RotateState {
 }
 
 public enum OBJECT_SHAPE {                     // オブジェクトの形状
-    CUBE,                                      // キューブ
-    SPHERE,                                    // 球
-    CYLINDER,                                  // 円柱
-    Capsule,                                   // カプセル
+    CUBE,
+    SPHERE,
+    TORUS,
+    RAMIEL,
+    STELLA,
+    HOURGLASS,                
+    SATURN,
+    ATOM,
     MAX
 }
 
@@ -34,7 +38,6 @@ public class CObjectManager : CSingletonMonoBehaviour<CObjectManager> {
     private List<GameObject> gAcceleList = new List<GameObject>();     // 加速中のオブジェクトリスト
 
     [SerializeField] private GameObject[] gObjectSource;          // オブジェクトソース
-    [SerializeField] private int iObjectNum;                      // オブジェクト数
     [SerializeField] private float fFirstDegree;                  // 先頭の角度
     [SerializeField] private float fInterval;                     // 配置間隔
     [SerializeField] private float fSpeed;                        // 回転スピード
@@ -43,13 +46,10 @@ public class CObjectManager : CSingletonMonoBehaviour<CObjectManager> {
     [SerializeField] private float fOutRadius;                    // 外回り半径
 
     private int iTimer = 0;                                       // 生成間隔タイマー
-    private GameObject gOrderManager;                             // オーダーマネージャー
 
     // Start is called before the first frame update
     void Start() {
-        OBJECT_SHAPE first = COrderManager.Instance.Get_Order(0);
-        CreateList.Add(first);
-        Create(3);
+        
     }
 
     // Update is called once per frame
@@ -119,7 +119,7 @@ public class CObjectManager : CSingletonMonoBehaviour<CObjectManager> {
     public void Create(int n) {
         // オブジェクトをランダムな順序で配置
         List<int> nums = new List<int>();
-        for (int i = 0; i < (int)OBJECT_SHAPE.MAX; i++) {
+        for (int i = 0; i < CLevelManager.Instance.Get_iObjectNum(); i++) {
             nums.Add(i);
         }
 
@@ -162,6 +162,10 @@ public class CObjectManager : CSingletonMonoBehaviour<CObjectManager> {
         for (int i = 0; i < gAcceleList.Count; i++) {
             gAcceleList[i].GetComponent<CRotateObject>().Set_iRanking(gObjectList.Count + i);
         }
+    }
+
+    public void AddCreateList(OBJECT_SHAPE first) {
+        CreateList.Add(first);
     }
 
     // 指定したオブジェクトが先頭に来るように並べ替える

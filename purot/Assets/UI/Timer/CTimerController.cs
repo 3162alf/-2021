@@ -68,4 +68,8 @@ public class CTimerController : MonoBehaviour {
             SceneManager.LoadScene("ResultScene");
         }
     }
+
+    public float Get_fTotalTime() {
+        return fTotalTime;
+    }
 }
