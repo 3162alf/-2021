@@ -49,7 +49,7 @@ public class COrderManager : CSingletonMonoBehaviour<COrderManager> {
     // 指令生成関数(引数:指令数)
     public void CreateOrder(int n) {
         // 指令の種類
-        int kind = gOrderSource.Length;
+        int kind = CLevelManager.Instance.Get_iObjectNum();
 
         // 前回の指令を破棄
         for (int i = 0; i < gOrderList.Count; i++) {
