@@ -34,7 +34,7 @@ public class CScore : MonoBehaviour {
     void Update() {
         if (tScore != null) {
             // テキストにスコア表示
-            tScore.text = iScore.ToString() + "/10";
+            tScore.text = iScore.ToString() + "/100";
         }
     }
 
@@ -48,7 +48,7 @@ public class CScore : MonoBehaviour {
 
     public static void DispScore() {
         // オブジェクトからTextコンポーネントを取得
-        gScoreObj = GameObject.Find("Text");
+        gScoreObj = GameObject.Find("TextScore");
         Text ScoreText = gScoreObj.GetComponent<Text>();
 
         // テキストの表示を入れ替える
