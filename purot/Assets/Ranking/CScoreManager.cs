@@ -1,3 +1,9 @@
+/*============================================================================== 
+    History    
+        2021.05.09 @Author Sasaki Misaki
+            25行目を見てください。そっと、スコアの数値をぶちこむ処理追加してます。
+　============================================================================*/
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,13 +19,14 @@ public class CScoreManager : MonoBehaviour
 
     private List<CPlayerscore> PlayerScore = new List<CPlayerscore>();
     private CPlayerscore OverwriteScore = new CPlayerscore();
-    
+
     private void Start()
     {
-
-        OverwriteScore.score = 10;
+        //========== 2021/5/09
+        // スコアを表示するのに必要なので = の後ろ書き換えました。　by佐々木
+        OverwriteScore.score = CScore.GetScore();
         Load();
-    
+
         OverwriteRecord();
 
         SaveScore();
@@ -27,10 +34,9 @@ public class CScoreManager : MonoBehaviour
     }
 
     public void SaveScore()
-    { 
-    
+    {
         //3
-        for (int i=0; i < PlayerScore.Count; i++)
+        for (int i = 0; i < PlayerScore.Count; i++)
         {
             int saveNum = i + 1;
 
@@ -43,9 +49,9 @@ public class CScoreManager : MonoBehaviour
     void OverwriteRecord()
     {
         int i = 0;
-        for (i=0; i < PlayerScore.Count; i++)
+        for (i = 0; i < PlayerScore.Count; i++)
         {
-            if(PlayerScore[i].score < OverwriteScore.score)
+            if (PlayerScore[i].score < OverwriteScore.score)
             {
                 PlayerScore.Insert(i, OverwriteScore);
                 i = 10;
@@ -53,16 +59,16 @@ public class CScoreManager : MonoBehaviour
             }
 
         }
-        if(i < 10)
+        if (i < 10)
         {
             PlayerScore.Add(OverwriteScore);
         }
-        if(PlayerScore.Count > 10)
+        if (PlayerScore.Count > 10)
         {
             PlayerScore.RemoveAt(PlayerScore.Count - 1);
         }
 
-        if(PlayerScore.Count == 0)
+        if (PlayerScore.Count == 0)
         {
             PlayerScore.Add(OverwriteScore);
         }
@@ -104,9 +110,9 @@ public class CScoreManager : MonoBehaviour
 
     public void ScoreDisplay()
     {
-        for(int i=0; i< PlayerScore.Count; i++)
+        for (int i = 0; i < PlayerScore.Count; i++)
         {
-            GameObject.Find("score" + (i+1).ToString()).GetComponent<Text>().text = PlayerScore[i].score.ToString();
+            GameObject.Find("score" + (i + 1).ToString()).GetComponent<Text>().text = PlayerScore[i].score.ToString();
         }
     }
 }
