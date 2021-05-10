@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3635406682346761583}
   - component: {fileID: 1555844499011066277}
   - component: {fileID: -6674250534306618025}
+  - component: {fileID: -8951001860074077790}
   m_Layer: 3
   m_Name: PFB_Hourglass
   m_TagString: RotateObject
@@ -97,5 +98,18 @@ MonoBehaviour:
   fRadius: 9
   fSpeed: 0.15
   fAcceleSpeed: 0.5
-  Shape: 0
+  Shape: 5
   State: 0
+--- !u!135 &-8951001860074077790
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1051454328568772720}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.022695316
+  m_Center: {x: -9.313226e-10, y: 0, z: -9.313226e-10}
