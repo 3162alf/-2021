@@ -76,7 +76,7 @@ public class CGateTimerController : MonoBehaviour {
                         cs.Set_State(cro.Get_RotateState());
                         cs.Set_fDegree(cro.Get_fDegree());
 
-                        fTotalTime = -1;
+                        fTotalTime = 0;
                     }
                 }
             }

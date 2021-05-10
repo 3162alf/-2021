@@ -35,7 +35,6 @@ public class CGate : MonoBehaviour {
         iClearNum = 0;
         csOrderManager = GameObject.Find("PFB_OrderManager").GetComponent<COrderManager>();
         csGateTimerController = GameObject.Find("PFB_GateTimerController").GetComponent<CGateTimerController>();
-
     }
 
     // Update is called once per frame
@@ -119,8 +118,8 @@ public class CGate : MonoBehaviour {
                 if (iMatchNum == ordernum)
                 {
                     // クリアスタンプ生成
-                    Instantiate(gClear, new Vector3(20, 0, -10 + iClearNum * 5),
-                        Quaternion.Euler(0, 180, 0));
+                    //Instantiate(gClear, new Vector3(20, 0, -10 + iClearNum * 5),
+                    //    Quaternion.Euler(0, 180, 0));
 
                     //========== 2021/5/09
                     // スコアを記録するのに必要なので足しました　by佐々木

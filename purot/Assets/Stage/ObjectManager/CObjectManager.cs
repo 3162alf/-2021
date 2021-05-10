@@ -57,7 +57,7 @@ public class CObjectManager : CSingletonMonoBehaviour<CObjectManager> {
         // リストにあるオブジェクトを生成
         if (CreateList.Count > 0) {
             // 一定の間隔を開けて生成する
-            if (iTimer >= fInterval / fAcceleSpeed) {
+            if (iTimer >= fInterval / fSpeed + 1) {
                 // 重ならないように生成位置を調整
                 float sd = 180.0f;
                 float rad = 9.0f;
@@ -65,7 +65,7 @@ public class CObjectManager : CSingletonMonoBehaviour<CObjectManager> {
                 if (gObjectList.Count > 0) {
                     float ld = gObjectList[gObjectList.Count - 1].GetComponent<CRotateObject>().Get_fDegree();
 
-                    if (ld >= 360 && ld < 720 + fInterval) {
+                    if (ld >= 180 + fInterval && ld <= 540) {
                         sd = 180;
                         rad = fOutRadius;
                         rs = RotateState.OUTSIDE;
