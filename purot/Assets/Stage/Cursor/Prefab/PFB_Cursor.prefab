@@ -114,4 +114,4 @@ MonoBehaviour:
   lmLayerMask:
     serializedVersion: 2
     m_Bits: 8
-  stButton2Name: Fire2
+  stButton1Name: Xbox_B
