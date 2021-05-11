@@ -6,7 +6,7 @@
     2021.04.25 @Author Suzuki Hayase
 ================================================================================
     History
-        
+        20210511 Hirano XBoxコントローラー入力処理追加
             
 /*============================================================================*/
 using UnityEngine;
@@ -24,6 +24,19 @@ public class CGateTimerController : MonoBehaviour {
     [SerializeField] GameObject gGate; // ゲート
     private CObjectManager csObjectManager;
     private COrderManager csOrderManager;
+
+    // 20210511 追加分---------------------------------
+
+    [SerializeField, TooltipAttribute("Aボタンの登録名")]
+    private string stButton0Name = "joystickbutton0";  // Aボタン
+    //[SerializeField, TooltipAttribute("Bボタンの登録名")]
+    //private string stButton1Name = "joystickbutton1";  // Bボタン
+    //[SerializeField, TooltipAttribute("Xボタンの登録名")]
+    //private string stButton2Name = "joystickbutton2";    // Xボタン
+    //[SerializeField, TooltipAttribute("Yボタンの登録名")]
+    //private string stButton3Name = "joystickbutton3";  // Yボタン
+
+    // ------------------------------------------------
 
     void Start() {
         csObjectManager = GameObject.Find("PFB_ObjectManager").GetComponent<CObjectManager>();
@@ -47,7 +60,7 @@ public class CGateTimerController : MonoBehaviour {
         }*/
 
         // 時間が来たらまたはプレイヤーの意思で回収
-        if(iSecond == 0 || Input.GetKeyDown(KeyCode.Return)) {
+        if(iSecond == 0 || Input.GetKeyDown(KeyCode.Return)|| Input.GetButtonDown(stButton0Name)) {
             // ゲートが二つ出るのを防ぐ
             if (GameObject.Find(gGate.name + "(Clone)") == null) {
                 List<GameObject> list = csObjectManager.Get_gObjectList();

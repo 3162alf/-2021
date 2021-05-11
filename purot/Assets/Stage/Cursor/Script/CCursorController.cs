@@ -39,14 +39,14 @@ public class CCursorController : MonoBehaviour {
     // 現状では、〇ボタン以外の入力処理は必要ないので、コメントアウトしています。
     // 必要になったらその都度外します。
 
-    //[SerializeField, TooltipAttribute("□ボタンの登録名")]
-    //private string stButton0Name = "joystickbutton0";  // □ボタン
-    //[SerializeField, TooltipAttribute("×ボタンの登録名")]
-    //private string stButton1Name = "joystickbutton1";  // ×ボタン
-    [SerializeField, TooltipAttribute("〇ボタンの登録名")]
-    private string stButton2Name = "joystickbutton2";    // 〇ボタン
-    //[SerializeField, TooltipAttribute("△ボタンの登録名")]
-    //private string stButton3Name = "joystickbutton3";  // △ボタン
+    //[SerializeField, TooltipAttribute("Aボタンの登録名")]
+    //private string stButton0Name = "joystickbutton0";  // Aボタン
+    [SerializeField, TooltipAttribute("Bボタンの登録名")]
+    private string stButton1Name = "joystickbutton1";  // Bボタン
+    //[SerializeField, TooltipAttribute("Xボタンの登録名")]
+    //private string stButton2Name = "joystickbutton2";    // Xボタン
+    //[SerializeField, TooltipAttribute("Yボタンの登録名")]
+    //private string stButton3Name = "joystickbutton3";  // Yボタン
 
     //--------------------------------------------------------------------------
 
@@ -67,12 +67,12 @@ public class CCursorController : MonoBehaviour {
 
         transform.position = new Vector3(vMovePos.x, vMovePos.y, vMovePos.z);
 
-        if (Input.GetButtonDown(stButton2Name) || Input.GetKeyDown(KeyCode.Space)) {
+        if (Input.GetButtonDown(stButton1Name) || Input.GetKeyDown(KeyCode.Space)) {
             CreateSphereCast(gCursorManager.transform.position, this.transform.position);
         }
         // debug用(押している間、rayを飛ばし続ける)
         // rayの長さなどを確認したい場合は入力処理をこちらに切り替えてください。
-        //if (Input.GetButton(stButton2Name) || Input.GetKey(KeyCode.Return)) {
+        //if (Input.GetButton(stButton1Name) || Input.GetKey(KeyCode.Return)) {
         //    CreateRay(gCursorManager.transform.position, this.transform.position);
         //}
 

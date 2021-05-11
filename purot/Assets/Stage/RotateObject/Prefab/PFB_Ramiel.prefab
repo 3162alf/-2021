@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6119403460099723733}
   - component: {fileID: 8289027188474946847}
   - component: {fileID: 6430499548397434358}
+  - component: {fileID: -1743113536769411294}
   m_Layer: 3
   m_Name: PFB_Ramiel
   m_TagString: RotateObject
@@ -97,5 +98,18 @@ MonoBehaviour:
   fRadius: 9
   fSpeed: 0.15
   fAcceleSpeed: 0.5
-  Shape: 0
+  Shape: 3
   State: 0
+--- !u!135 &-1743113536769411294
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7496371595803690186}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.021046128
+  m_Center: {x: 0.0005619386, y: 9.313226e-10, z: 0}
