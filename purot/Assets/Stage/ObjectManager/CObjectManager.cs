@@ -110,8 +110,6 @@ public class CObjectManager : CSingletonMonoBehaviour<CObjectManager> {
             Sort(first);
         }
         //}
-
-        Debug.Log(gObjectList.Count);
     }
 
     // オブジェクト生成関数(引数:初期位置、形状、内か外か)

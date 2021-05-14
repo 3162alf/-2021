@@ -75,21 +75,23 @@ public class CRotateObject : MonoBehaviour {
         // 加速中
         if (isAccele) {
             List<GameObject> list = CObjectManager.Instance.Get_gObjectList();
-            GameObject last = list[list.Count - 1];
-            float deg = last.GetComponent<CRotateObject>().Get_fDegree();
+            if (list.Count > 0) {
+                GameObject last = list[list.Count - 1];
+                float deg = last.GetComponent<CRotateObject>().Get_fDegree();
 
-            float diff = deg - fDegree;
-            if (diff < 0) {
-                diff += 720;
-            }
+                float diff = deg - fDegree;
+                if (diff < 0) {
+                    diff += 720;
+                }
 
-            float len = diff / 360 * 2 * Mathf.PI * fRadius;
+                float len = diff / 360 * 2 * Mathf.PI * fRadius;
 
-            if (len < 3.0f) {
-                isAccele = false;
-                fSpeed = CObjectManager.Instance.Get_fSpeed();
-                CObjectManager.Instance.Add(this.gameObject);
-                CObjectManager.Instance.AcceleRemove(this.gameObject);
+                if (len < 3.0f) {
+                    isAccele = false;
+                    fSpeed = CObjectManager.Instance.Get_fSpeed();
+                    CObjectManager.Instance.Add(this.gameObject);
+                    CObjectManager.Instance.AcceleRemove(this.gameObject);
+                }
             }
         }
         else {

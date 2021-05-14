@@ -35,7 +35,7 @@ public class CGate : MonoBehaviour {
         iMatchNum = 0;
         iClearNum = 0;
         gGateTimerController = GameObject.Find("PFB_GateTimerController");
-        csOrderManager = GameObject.Find("PFB_COrderManager").GetComponent<COrderManager>();
+        csOrderManager = GameObject.Find("PFB_OrderManager").GetComponent<COrderManager>();
         csGateTimerController = GameObject.Find("PFB_GateTimerController").GetComponent<CGateTimerController>();
     }
 
@@ -111,6 +111,7 @@ public class CGate : MonoBehaviour {
             CObjectManager.Instance.Remove(col.gameObject);
             CObjectManager.Instance.AcceleRemove(col.gameObject);
             Destroy(col.gameObject);
+            Debug.Log("hit");
 
             iPassNum++;
 
@@ -142,6 +143,7 @@ public class CGate : MonoBehaviour {
                 CObjectManager.Instance.Create(3);
 
                 csGateTimerController.Reset();
+                gGateTimerController.transform.LookAt(new Vector3(0,0,10));
                 Destroy(this.gameObject);
             }
         }
