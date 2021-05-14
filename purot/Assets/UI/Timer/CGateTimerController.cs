@@ -82,7 +82,9 @@ public class CGateTimerController : MonoBehaviour {
                     if (i < list.Count) {
                         Vector3 pos = first.transform.position;
 
-                        GameObject gate = Instantiate(gGate, pos, Quaternion.Euler(0, 0, 90));
+                        GameObject gate = Instantiate(gGate, pos, Quaternion.Euler(115, 90, 0),
+                            transform) as GameObject;
+
                         CGate cs = gate.GetComponent<CGate>();
                         CRotateObject cro = list[i].GetComponent<CRotateObject>();
 

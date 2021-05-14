@@ -55,7 +55,7 @@ public class CCursorController : MonoBehaviour {
         gCursorManager = GameObject.Find("PFB_CursorManager");
         vMovePos.y = 0.0f;
 
-        // 色を灰色に変更する。
+        // 色を赤色に変更する。
         GetComponent<Renderer>().material.color = Color.red;
     }
 
