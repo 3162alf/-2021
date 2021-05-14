@@ -33,7 +33,7 @@ public class CLevelManager : CSingletonMonoBehaviour<CLevelManager> {
     // Update is called once per frame
     void Update() {
         // 1•ª‚²‚Æ‚ÉˆêŒÂ’Ç‰Á
-        if (iObjectNum <= (int)OBJECT_SHAPE.MAX) {
+        if (iObjectNum < (int)OBJECT_SHAPE.MAX) {
             iFrame++;
             if (iFrame > 60 * 60) {
                 iObjectNum++;

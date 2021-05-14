@@ -27,13 +27,15 @@ public class CGate : MonoBehaviour {
     private float fDegree;             // 角度
     private RotateState State;         // オブジェクトの回転状態
 
+    private GameObject gGateTimerController;            // LampManagerのオブジェクトを格納
     private CGateTimerController csGateTimerController; // ゲートタイマースクリプト
 
     // Start is called before the first frame update
     void Start() {
         iMatchNum = 0;
         iClearNum = 0;
-        csOrderManager = GameObject.Find("PFB_OrderManager").GetComponent<COrderManager>();
+        gGateTimerController = GameObject.Find("PFB_GateTimerController");
+        csOrderManager = GameObject.Find("PFB_COrderManager").GetComponent<COrderManager>();
         csGateTimerController = GameObject.Find("PFB_GateTimerController").GetComponent<CGateTimerController>();
     }
 
@@ -59,6 +61,8 @@ public class CGate : MonoBehaviour {
         else if (fDegree <= 360 && State == RotateState.INSIDE) {
             Set_State(RotateState.OUTSIDE);
         }
+
+        gGateTimerController.transform.LookAt(this.transform);
     }
 
     public void Set_fDegree(float d) {
@@ -71,7 +75,7 @@ public class CGate : MonoBehaviour {
         switch (State) {
             case RotateState.INSIDE:
                 //内側回転用の処理
-                fRadius = 3.0f;
+                fRadius = 5.0f;
                 if (fDegree < 360.0f) {
                     fDegree += 360.0f;
                 }
@@ -105,10 +109,9 @@ public class CGate : MonoBehaviour {
 
             // 通過したオブジェクトを削除
             CObjectManager.Instance.Remove(col.gameObject);
+            CObjectManager.Instance.AcceleRemove(col.gameObject);
             Destroy(col.gameObject);
 
-            // 新しいオブジェクト生成
-            CObjectManager.Instance.Create(1);
             iPassNum++;
 
             int ordernum = csOrderManager.Get_iOrderNum();
@@ -135,6 +138,8 @@ public class CGate : MonoBehaviour {
                         l.GetComponent<Renderer>().material.color = Color.white;
                     }
                 }
+                // 新しいオブジェクト生成
+                CObjectManager.Instance.Create(3);
 
                 csGateTimerController.Reset();
                 Destroy(this.gameObject);

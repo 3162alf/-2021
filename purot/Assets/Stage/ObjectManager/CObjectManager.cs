@@ -26,7 +26,7 @@ public enum OBJECT_SHAPE {                     // オブジェクトの形状
     TORUS,
     RAMIEL,
     STELLA,
-    HOURGLASS,                
+    HOURGLASS,
     SATURN,
     ATOM,
     MAX
@@ -34,11 +34,10 @@ public enum OBJECT_SHAPE {                     // オブジェクトの形状
 
 public class CObjectManager : CSingletonMonoBehaviour<CObjectManager> {
     private List<GameObject> gObjectList = new List<GameObject>();     // オブジェクトリスト
+    private List<GameObject> gAcceleList = new List<GameObject>();     // オブジェクトリスト
     private List<OBJECT_SHAPE> CreateList = new List<OBJECT_SHAPE>();  // 生成リスト
-    private List<GameObject> gAcceleList = new List<GameObject>();     // 加速中のオブジェクトリスト
 
     [SerializeField] private GameObject[] gObjectSource;          // オブジェクトソース
-    [SerializeField] private float fFirstDegree;                  // 先頭の角度
     [SerializeField] private float fInterval;                     // 配置間隔
     [SerializeField] private float fSpeed;                        // 回転スピード
     [SerializeField] private float fAcceleSpeed;                  // 加速時回転スピード
@@ -49,7 +48,7 @@ public class CObjectManager : CSingletonMonoBehaviour<CObjectManager> {
 
     // Start is called before the first frame update
     void Start() {
-        
+
     }
 
     // Update is called once per frame
@@ -57,7 +56,8 @@ public class CObjectManager : CSingletonMonoBehaviour<CObjectManager> {
         // リストにあるオブジェクトを生成
         if (CreateList.Count > 0) {
             // 一定の間隔を開けて生成する
-            if (iTimer >= fInterval / fSpeed + 1) {
+            //if (iTimer >= fInterval / fAcceleSpeed + 30) {
+            if (iTimer >= 60) {
                 // 重ならないように生成位置を調整
                 float sd = 180.0f;
                 float rad = 9.0f;
@@ -65,7 +65,7 @@ public class CObjectManager : CSingletonMonoBehaviour<CObjectManager> {
                 if (gObjectList.Count > 0) {
                     float ld = gObjectList[gObjectList.Count - 1].GetComponent<CRotateObject>().Get_fDegree();
 
-                    if (ld >= 180 + fInterval && ld <= 540) {
+                    if (ld >= 180 && ld <= 520) {
                         sd = 180;
                         rad = fOutRadius;
                         rs = RotateState.OUTSIDE;
@@ -86,8 +86,7 @@ public class CObjectManager : CSingletonMonoBehaviour<CObjectManager> {
 
                 // パラメータセット
                 CRotateObject cs = tmp.GetComponent<CRotateObject>();
-                cs.Set_fSpeed(fSpeed);
-                cs.Set_fAcceleSpeed(fAcceleSpeed);
+                cs.Set_fSpeed(fAcceleSpeed);
                 cs.Set_fDegree(sd);
                 cs.Set_Shape(CreateList[0]);
                 cs.Set_State(rs);
@@ -106,13 +105,13 @@ public class CObjectManager : CSingletonMonoBehaviour<CObjectManager> {
 
         // 指令の最初のオブジェクトが先頭になるように
         //if (gAcceleList.Count == 0 && CreateList.Count == 0) {
-        OBJECT_SHAPE first = COrderManager.Instance.Get_Order(0);
-        Sort(first);
+        if (GameObject.Find("PFB_Gate(Clone)") == null) {
+            OBJECT_SHAPE first = COrderManager.Instance.Get_Order(0);
+            Sort(first);
+        }
         //}
 
-        if(gObjectList.Count > 0) {
-            fFirstDegree = gObjectList[0].GetComponent<CRotateObject>().Get_fDegree();
-        }
+        Debug.Log(gObjectList.Count);
     }
 
     // オブジェクト生成関数(引数:初期位置、形状、内か外か)
@@ -148,19 +147,22 @@ public class CObjectManager : CSingletonMonoBehaviour<CObjectManager> {
 
     // オブジェクト追加関数
     public void Add(GameObject g) {
-        gObjectList.Add(g);
-        gAcceleList.Remove(g);
-
-        CDegreeCompare dc = new CDegreeCompare();
-        gObjectList.Sort(dc);
+        if (!gObjectList.Contains(g)) {
+            gObjectList.Add(g);
+        }
     }
 
     // オブジェクト削除関数
     public void Remove(GameObject g) {
-        gObjectList.Remove(g);
-        gAcceleList.Remove(g);
-        for (int i = 0; i < gAcceleList.Count; i++) {
-            gAcceleList[i].GetComponent<CRotateObject>().Set_iRanking(gObjectList.Count + i);
+        if (gObjectList.Contains(g)) {
+            gObjectList.Remove(g);
+        }
+    }
+
+    // オブジェクト削除関数
+    public void AcceleRemove(GameObject g) {
+        if (gAcceleList.Contains(g)) {
+            gAcceleList.Remove(g);
         }
     }
 
@@ -187,22 +189,9 @@ public class CObjectManager : CSingletonMonoBehaviour<CObjectManager> {
         for (int i = 0; i < firstid; i++) {
             GameObject g = gObjectList[0];
             gObjectList.Remove(g);
-            gAcceleList.Add(g);
 
             g.GetComponent<CRotateObject>().Set_isAccele(true);
-        }
-
-        for (int i = 0; i < gAcceleList.Count; i++) {
-            gAcceleList[i].GetComponent<CRotateObject>().Set_iRanking(gObjectList.Count + i);
-        }
-    }
-
-    public void RankSort() {
-        CDegreeCompare dc = new CDegreeCompare();
-        gAcceleList.Sort(dc);
-
-        for (int i = 0; i < gAcceleList.Count; i++) {
-            gAcceleList[i].GetComponent<CRotateObject>().Set_iRanking(gObjectList.Count + i);
+            g.GetComponent<CRotateObject>().Set_fSpeed(fAcceleSpeed);
         }
     }
 
@@ -218,30 +207,19 @@ public class CObjectManager : CSingletonMonoBehaviour<CObjectManager> {
         }
 
         // 加速させる
-        g.GetComponent<CRotateObject>().Set_isAccele(true);
         gAcceleList.Add(g);
+        g.GetComponent<CRotateObject>().Set_isAccele(true);
+        g.GetComponent<CRotateObject>().Set_fSpeed(fAcceleSpeed);
 
         // 後ろのオブジェクトを加速させて詰める
-        for (int j = i; j < gObjectList.Count;) {
-            gObjectList[j].GetComponent<CRotateObject>().Set_isAccele(true);
-            gAcceleList.Add(gObjectList[j]);
-            gObjectList.RemoveAt(j);
+        for (int j = i; j < gObjectList.Count; j++) {
+            gObjectList[j].GetComponent<CRotateObject>().Set_fSpeed(fAcceleSpeed);
         }
-
-        RankSort();
     }
 
     // 間隔getter
     public float Get_fInterval() {
         return fInterval;
-    }
-
-    // 全オブジェクトのスピード変更関数
-    public void Set_fSpeed(float s) {
-        for (int i = 0; i < gObjectList.Count; i++) {
-            CRotateObject cs = gObjectList[i].GetComponent<CRotateObject>();
-            cs.Set_fSpeed(s);
-        }
     }
 
     // オブジェクトリストgetter
@@ -261,20 +239,18 @@ public class CObjectManager : CSingletonMonoBehaviour<CObjectManager> {
 
     // 順番getter
     public int Get_iRanking(GameObject g) {
-        for (int i = 0; i < gObjectList.Count; i++) {
-            if (gObjectList[i] == g) {
-                return i;
-            }
-        }
-        return -1;
-    }
-
-    // 先頭の角度
-    public float Get_fFirstDegree() {
-        return fFirstDegree;
+        return gObjectList.IndexOf(g);
     }
 
     public int Get_iObjectNum() {
         return gObjectList.Count;
+    }
+
+    public float Get_fSpeed() {
+        return fSpeed;
+    }
+
+    public float Get_fAcceleSpeed() {
+        return fAcceleSpeed;
     }
 }
