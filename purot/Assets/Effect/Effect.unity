@@ -6686,12 +6686,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+        m_TargetAssemblyTypeName: CSetting, Assembly-CSharp
+        m_MethodName: OnVolDown
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -6709,6 +6709,7 @@ GameObject:
   - component: {fileID: 1469348278}
   - component: {fileID: 1469348277}
   - component: {fileID: 1469348276}
+  - component: {fileID: 1469348280}
   m_Layer: 5
   m_Name: PFB_SettingButton
   m_TagString: Untagged
@@ -6802,6 +6803,24 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1469348280
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1469348275}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2fce93780450d4458cba5ef61bdbece, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mAudioMixer: {fileID: 24100000, guid: c2a33a57d406f7a40bb1e9add13d4c74, type: 2}
+  gVol_1: {fileID: 1275011709}
+  gVol_2: {fileID: 1026421262}
+  gVol_3: {fileID: 157863399}
+  gVol_4: {fileID: 1784692944}
+  gSettingObj: {fileID: 1469348275}
 --- !u!1 &1549838294
 GameObject:
   m_ObjectHideFlags: 0
@@ -7000,7 +7019,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1591596323}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: CSetting, Assembly-CSharp
+        m_MethodName: OnVolUp
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1593006805
 GameObject:
   m_ObjectHideFlags: 0
