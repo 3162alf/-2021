@@ -19,9 +19,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CRotateObject : MonoBehaviour {
-    [SerializeField] private float fRadius = 9f;        // 回転半径
-    [SerializeField] private float fSpeed = 0.15f;      // 回転速度
-    [SerializeField] private float fAcceleSpeed = 0.5f; // 加速時回転速度
+    [SerializeField] private float fRadius;        // 回転半径
+    [SerializeField] private float fSpeed;         // 回転速度
 
     [SerializeField] private OBJECT_SHAPE Shape;   // オブジェクトの形状
     [SerializeField] private RotateState State;    // オブジェクトの回転状態
@@ -29,7 +28,6 @@ public class CRotateObject : MonoBehaviour {
     private float fDegree;                         // 角度
 
     private bool isAccele = false;                 // 加速フラグ
-    private int iRanking;                          // 順番
 
     // Start is called before the first frame update
     void Start() {
@@ -38,13 +36,10 @@ public class CRotateObject : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+        float s = 180 * fSpeed / Mathf.PI / fRadius;
+
         // 角度加算
-        if (!isAccele) {
-            fDegree += fSpeed;
-        }
-        else {
-            fDegree += fAcceleSpeed;
-        }
+        fDegree += s;
 
         Vector3 pos;
 
@@ -64,28 +59,61 @@ public class CRotateObject : MonoBehaviour {
             Set_State(RotateState.OUTSIDE);
         }
 
+        if (Shape == COrderManager.Instance.Get_Order(0)) {
+            CObjectManager.Instance.Add(this.gameObject);
+            fSpeed = CObjectManager.Instance.Get_fSpeed();
+            isAccele = false;
+        }
+        //if (fSpeed > CObjectManager.Instance.Get_fSpeed()) {
+        //    if (CObjectManager.Instance.Get_iObjectNum() == 0) {
+        //        CObjectManager.Instance.Add(this.gameObject);
+        //        fSpeed = CObjectManager.Instance.Get_fSpeed();
+        //        isAccele = false;
+        //    }
+        //}
+
         // 加速中
         if (isAccele) {
-            if (CObjectManager.Instance.Get_iObjectNum() == 0) {
-                CObjectManager.Instance.Add(this.gameObject);
-                isAccele = false;
-            }
-            else {
-                float deg = CObjectManager.Instance.Get_fFirstDegree();
-                float goal = deg - CObjectManager.Instance.Get_fInterval() * iRanking;
+            List<GameObject> list = CObjectManager.Instance.Get_gObjectList();
+            if (list.Count > 0) {
+                GameObject last = list[list.Count - 1];
+                float deg = last.GetComponent<CRotateObject>().Get_fDegree();
 
-                if (goal < 0) {
-                    goal += 720.0f;
+                float diff = deg - fDegree;
+                if (diff < 0) {
+                    diff += 720;
                 }
 
-                // 定位置まできたら停止
-                if (goal - fDegree >= 0 && goal - fDegree <= fAcceleSpeed) {
-                    fDegree = goal;
+                float len = diff / 360 * 2 * Mathf.PI * fRadius;
+
+                if (len < 3.0f) {
                     isAccele = false;
+                    fSpeed = CObjectManager.Instance.Get_fSpeed();
                     CObjectManager.Instance.Add(this.gameObject);
+                    CObjectManager.Instance.AcceleRemove(this.gameObject);
                 }
             }
         }
+        else {
+            int ranking = CObjectManager.Instance.Get_iRanking(this.gameObject);
+            if (ranking > 0) {
+                GameObject obj = CObjectManager.Instance.Get_gObject(ranking - 1);
+                if (State == obj.GetComponent<CRotateObject>().Get_RotateState()) {
+                    float deg = obj.GetComponent<CRotateObject>().Get_fDegree();
+
+                    float diff = deg - fDegree;
+                    if (diff < 0) {
+                        diff += 720;
+                    }
+
+                    if (diff <= 3.0f * 360 / 2 / Mathf.PI / fRadius)
+                        fSpeed = CObjectManager.Instance.Get_fSpeed();
+
+                    fDegree = deg - 3.0f * 360 / 2 / Mathf.PI / fRadius;
+                }
+            }
+        }
+
     }
 
     // 回転ステート変更関数setter
@@ -94,7 +122,7 @@ public class CRotateObject : MonoBehaviour {
         switch (State) {
             case RotateState.INSIDE:
                 //内側回転用の処理
-                fRadius = 3.0f;
+                fRadius = 5.0f;
                 if (fDegree < 360.0f) {
                     fDegree += 360.0f;
                 }
@@ -134,11 +162,6 @@ public class CRotateObject : MonoBehaviour {
         fSpeed = s;
     }
 
-    // 加速スピードsetter
-    public void Set_fAcceleSpeed(float s) {
-        fAcceleSpeed = s;
-    }
-
     // 初期位置setter
     public void Set_fDegree(float d) {
         fDegree = d;
@@ -152,10 +175,5 @@ public class CRotateObject : MonoBehaviour {
     // 加速フラグsetter
     public void Set_isAccele(bool b) {
         isAccele = b;
-    }
-
-    // 順番setter
-    public void Set_iRanking(int r) {
-        iRanking = r;
     }
 }
