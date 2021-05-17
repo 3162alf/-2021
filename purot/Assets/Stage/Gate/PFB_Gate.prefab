@@ -111,7 +111,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gClear: {fileID: 5437368608403735769, guid: 2783df7318a556c47a4c466f620222da, type: 3}
-  gPanelObject: {fileID: 7688498410026933112, guid: 68e0b5c8f1ee9f14db712113814c3e89,
+  gPanelObjectRed: {fileID: 7688498410026933112, guid: 68e0b5c8f1ee9f14db712113814c3e89,
+    type: 3}
+  gPanelObjectGreen: {fileID: 2097459571336424740, guid: 6df1f7776cbe92440b3d7f5e9ba644f3,
     type: 3}
 --- !u!54 &1902362772890249024
 Rigidbody:
