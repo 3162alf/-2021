@@ -20,7 +20,7 @@ public class CPanel : MonoBehaviour
         if(this.gameObject.activeSelf)
         {
             iPanelDispCnt++;
-            if(iPanelDispCnt >= 15)
+            if(iPanelDispCnt >= 23)
             {
                 Destroy(this.gameObject);
                 Debug.Log("ƒpƒlƒ‹”j‰ó");
