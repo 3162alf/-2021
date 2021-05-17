@@ -4824,7 +4824,7 @@ GameObject:
   - component: {fileID: 9061146223378130583}
   - component: {fileID: 428427125643035326}
   m_Layer: 0
-  m_Name: Particle System Force Field
+  m_Name: PAR_Fire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
