@@ -9,7 +9,8 @@
     History
         20210502 Hirano
             SphereCast追加
-
+        20210515 Misaki Sasaki
+            入れ替え時にエフェクトでるようにしてます。
 /*============================================================================*/
 
 using System.Collections;
@@ -48,6 +49,14 @@ public class CCursorController : MonoBehaviour {
     //[SerializeField, TooltipAttribute("Yボタンの登録名")]
     //private string stButton3Name = "joystickbutton3";  // Yボタン
 
+    // 入れ替え時にワープホールを出すために追加 ---2020/5/15 佐々木
+    [SerializeField] public GameObject PAR;    // パーティクル本体を格納
+    [SerializeField] public GameObject PAR_1;    // パーティクル本体を格納
+    private GameObject pParticleObject = default;
+    private GameObject pParticleObject_1 = default;
+    private ParticleSystem pParticleSystem = default;
+    private ParticleSystem pParticleSystem_1 = default;
+
     //--------------------------------------------------------------------------
 
     void Start() {
@@ -57,6 +66,16 @@ public class CCursorController : MonoBehaviour {
 
         // 色を赤色に変更する。
         GetComponent<Renderer>().material.color = Color.red;
+
+        // パーティクルを生成
+        pParticleObject = (GameObject)Instantiate(PAR);
+        pParticleObject_1 = (GameObject)Instantiate(PAR_1);
+        // パーティクル制御用にコンポーネントを取得
+        pParticleSystem = pParticleObject.GetComponent<ParticleSystem>();
+        pParticleSystem_1 = pParticleObject_1.GetComponent<ParticleSystem>();
+        // 急にパーティクルが再生されることがないように予め停止させる
+        pParticleSystem.Stop();
+        pParticleSystem_1.Stop();
     }
 
     void Update() {
@@ -121,6 +140,13 @@ public class CCursorController : MonoBehaviour {
 
             if (!rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Get_isAccele()) {
                 if (COrderManager.Instance.Get_Order(0) != rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Get_Shape()) {
+
+                    // パーティクル再生
+                    pParticleObject.transform.position = new Vector3(rhHitObject.transform.position.x, rhHitObject.transform.position.y + 1.0f, rhHitObject.transform.position.z);
+                    pParticleObject_1.transform.position = new Vector3(rhHitObject.transform.position.x, rhHitObject.transform.position.y + 1.0f, rhHitObject.transform.position.z);
+                    pParticleSystem.Play();
+                    pParticleSystem_1.Play();
+
                     // ひっくり返す処理
                     if (rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Get_RotateState() == RotateState.OUTSIDE) {
                         rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Set_State(RotateState.INSIDE);

@@ -6,8 +6,10 @@
     2021.04.25 @Author Suzuki Hayase
 ================================================================================
     History
-        2021.05.09 @Author Sasaki Misaki
+        2021.05.09 @Author Misaki Sasaki 
             125~127行目を見てください。そっと、スコアをAddする処理追加してます。
+        2021.5.15 @Author Misaki Sasaki 
+            36~,48~,159~行目。オーダー失敗時に赤いパネルが出るようにしました。
             
 /*============================================================================*/
 using System.Collections;
@@ -30,6 +32,11 @@ public class CGate : MonoBehaviour {
     private GameObject gGateTimerController;            // LampManagerのオブジェクトを格納
     private CGateTimerController csGateTimerController; // ゲートタイマースクリプト
 
+    //-- 2021.5.15追加 sasaki
+    [SerializeField] private GameObject gPanelObject;   // パネルプレハブ
+    private GameObject gPanel;  // パネル自体
+    private GameObject gCanvas; // パネルの親にしたいキャンバス
+
     // Start is called before the first frame update
     void Start() {
         iMatchNum = 0;
@@ -37,10 +44,19 @@ public class CGate : MonoBehaviour {
         gGateTimerController = GameObject.Find("PFB_GateTimerController");
         csOrderManager = GameObject.Find("PFB_OrderManager").GetComponent<COrderManager>();
         csGateTimerController = GameObject.Find("PFB_GateTimerController").GetComponent<CGateTimerController>();
+
+        //-- 2021.5.15追加 sasaki
+        gCanvas = GameObject.Find("PFB_Canvas");
+        Quaternion rot = Quaternion.Euler(45.0f, 0.0f, 0.0f);
+        gPanel = (GameObject)Instantiate(gPanelObject, new Vector3(0.0f, 0.0f, 0.0f), rot);
+        gPanel.GetComponent<RectTransform>().sizeDelta = new Vector2(1920.0f, 1080.0f);
+        gPanel.gameObject.transform.parent = gCanvas.gameObject.transform;
+        gPanel.SetActive(false);
     }
 
     // Update is called once per frame
     void Update() {
+
         // 角度加算
         fDegree -= fSpeed;
 
@@ -118,7 +134,8 @@ public class CGate : MonoBehaviour {
             int ordernum = csOrderManager.Get_iOrderNum();
 
             // 指令数のオブジェクトが通過したらリセット
-            if (iPassNum == ordernum) {
+            if (iPassNum == ordernum)
+            {
                 if (iMatchNum == ordernum)
                 {
                     // クリアスタンプ生成
@@ -138,6 +155,8 @@ public class CGate : MonoBehaviour {
                         GameObject l = csOrderManager.Get_gClearLamp(i);
                         l.GetComponent<Renderer>().material.color = Color.white;
                     }
+                    //-- 2021.5.15追加 sasaki
+                    gPanel.SetActive(true);
                 }
                 // 新しいオブジェクト生成
                 CObjectManager.Instance.Create(3);
