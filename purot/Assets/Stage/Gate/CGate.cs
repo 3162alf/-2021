@@ -49,7 +49,7 @@ public class CGate : MonoBehaviour {
         csGateTimerController = GameObject.Find("PFB_GateTimerController").GetComponent<CGateTimerController>();
 
         //-- 2021.5.15’Ç‰Á sasaki
-        gCanvas = GameObject.Find("PFB_Canvas");
+        gCanvas = GameObject.Find("PanelCanvas");
         Quaternion rot = Quaternion.Euler(45.0f, 0.0f, 0.0f);
         gPanelRed = (GameObject)Instantiate(gPanelObjectRed, new Vector3(0.0f, 0.0f, 0.0f), rot);
         gPanelRed.GetComponent<RectTransform>().sizeDelta = new Vector2(1920.0f, 1080.0f);
