@@ -50,7 +50,7 @@ public class CGate : MonoBehaviour {
 
         //-- 2021.5.15’Ç‰Á sasaki
         gCanvas = GameObject.Find("PanelCanvas");
-        Quaternion rot = Quaternion.Euler(45.0f, 0.0f, 0.0f);
+        Quaternion rot = Quaternion.Euler(90.0f, 0.0f, 0.0f);
         gPanelRed = (GameObject)Instantiate(gPanelObjectRed, new Vector3(0.0f, 0.0f, 0.0f), rot);
         gPanelRed.GetComponent<RectTransform>().sizeDelta = new Vector2(1920.0f, 1080.0f);
         gPanelRed.gameObject.transform.parent = gCanvas.gameObject.transform;
