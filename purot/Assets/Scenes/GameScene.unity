@@ -1307,7 +1307,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b82f589b870439c40a0a986689becd34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iIteration: 5
+  iIteration: 10
   fThreshold: 0.5
   fSoftThreshold: 1
   fIntensity: 1

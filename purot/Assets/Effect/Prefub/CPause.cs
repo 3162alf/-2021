@@ -14,18 +14,18 @@ public class CPause : MonoBehaviour
 
     void Start()
     {
-        gCanvas = GameObject.Find("PanelCanvas");
+        gCanvas = GameObject.Find("PFB_Canvas");
     }
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown(stButtonName) || Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetButtonDown(stButtonName))
         {
             if (gPausePanelInstance == null)
             {
-                Quaternion rot = Quaternion.Euler(90.0f, 0.0f, 0.0f);
-                gPausePanelInstance = (GameObject)Instantiate(gPFB_PausePanel, new Vector3(0.0f, 0.0f, 0.0f), rot);
-                gPausePanelInstance.GetComponent<RectTransform>().sizeDelta = new Vector2(1920.0f, 1080.0f);
+                Quaternion rot = Quaternion.Euler(0.0f, 0.0f, 0.0f);
+                gPausePanelInstance = (GameObject)Instantiate(gPFB_PausePanel, new Vector3(500.0f, 150.0f, 0.0f), rot);
+                gPausePanelInstance.GetComponent<RectTransform>().sizeDelta = new Vector2(3000.0f, 2000.0f);
                 gPausePanelInstance.transform.SetParent(gCanvas.transform);
                 Time.timeScale = 0f;
             }
