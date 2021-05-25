@@ -16,10 +16,11 @@ using UnityEngine.UI;
 
 public class CRankingMove : MonoBehaviour
 {
+    
     private GameObject[] RankObject = new GameObject[10];
     private GameObject[] NameObject = new GameObject[10];
     private GameObject[] ScoreObject = new GameObject[10];
-
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -32,26 +33,46 @@ public class CRankingMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
     }
 
     void SetGameObject()
     {
-        for(int i = 0; i < 10; i++)
+        for (int i = 0; i < 10; i++)
         {
-            RankObject[i] = GameObject.Find("top" + (i + 1));
-            RankObject[i].GetComponent<RectTransform>().localScale = new Vector2(0.2f, 0.2f);
-            ScoreObject[i] = GameObject.Find("score" + (i + 1));
-            ScoreObject[i].GetComponent<RectTransform>().localScale = new Vector2(0.2f, 0.2f);
-            // –¼‘OŒã‚Å’Ç‰Á
+            if (i < 3)
+            {
+                RankObject[i] = GameObject.Find("top" + (i + 1));
+                RankObject[i].GetComponent<RectTransform>().localScale = new Vector2(0.3f, 0.3f);
+                ScoreObject[i] = GameObject.Find("score" + (i + 1));
+                ScoreObject[i].GetComponent<RectTransform>().localScale = new Vector2(0.1f, 0.1f);
+                // –¼‘OŒã‚Å’Ç‰Á
+            }
+            else
+            {
+                RankObject[i] = GameObject.Find("top" + (i + 1));
+                RankObject[i].GetComponent<RectTransform>().localScale = new Vector2(0.225f, 0.225f);
+                ScoreObject[i] = GameObject.Find("score" + (i + 1));
+                ScoreObject[i].GetComponent<RectTransform>().localScale = new Vector2(0.1f, 0.1f);
+                // –¼‘OŒã‚Å’Ç‰Á
+            }
         }
     }
 
     void SetPosition()
     {
-        for(int i = 0; i < 10; i++)
+        for (int i = 0; i < 10; i++)
         {
-            RankObject[i].GetComponent<RectTransform>().position = new Vector3(-65.0f, 42.0f + i * -11.0f, 100.0f);
-            ScoreObject[i].GetComponent<RectTransform>().position = new Vector3(-10.0f, 41.0f + i * -11.0f, 100.0f);
+            if (i < 3)
+            {
+                RankObject[i].GetComponent<RectTransform>().transform.localPosition = new Vector3(-15.5f, 11.6f + i * -7.0f, -2.0f);
+                ScoreObject[i].GetComponent<RectTransform>().transform.localPosition = new Vector3(25.0f, 42.0f + i * -7.0f, -2.0f);
+            }
+            else
+            {
+                RankObject[i].GetComponent<RectTransform>().transform.localPosition = new Vector3(-15.5f, 11.6f + i * -7.0f, -2.0f);
+                ScoreObject[i].GetComponent<RectTransform>().transform.localPosition = new Vector3(25.0f, 42.0f + i * -7.0f, 2.0f);
+            }
         }
     }
 }
