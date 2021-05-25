@@ -8,7 +8,8 @@
     History
         2021.05.13 @Kaname Ota
             
-            
+        210525 Sasaki
+        ポーズ画面の時にオブジェクトが回転しないような処理追加(●~●行目)
 /*============================================================================*/
 
 using System.Collections;
@@ -28,6 +29,11 @@ public class CBackGroundController : MonoBehaviour
     private GameObject gBackGround01;
     private GameObject gBackGround02;
 
+    // 子オブジェクトの箱　色変える用
+    //private GameObject gChild;
+    //private GameObject gChild01;
+    //private GameObject gChild02;
+
     // 表示しているオブジェクトの数
     private int iObjectCount;
 
@@ -42,6 +48,13 @@ public class CBackGroundController : MonoBehaviour
     // 乱数用
     private int iRandomElement;
 
+    // RGBの変数用
+    private byte iColorRed;
+    private byte iColorGreen;
+    private byte iColorBlue;
+
+    private bool bReturnColor;
+
     void Start() {
         // 開始時の背景を生成
         gBackGround01 = Instantiate(gPrefab[0], new Vector3(-350.0f, 150, -100.0f), Quaternion.Euler(90.0f, 0.0f, 0.0f)) as GameObject;
@@ -50,12 +63,62 @@ public class CBackGroundController : MonoBehaviour
         gChild.GetComponent<Renderer>().material = material;
         iObjectCount++;
 
+        iColorRed = 1;
+        iColorGreen = 1;
+        iColorBlue = 255;
+        bReturnColor = false;
     }
 
     void Update() {
+        // 魔法
+        if (Mathf.Approximately(Time.timeScale, 0f)) {
+            return;
+        }
+
+        // 色を変える分岐式
+        if (!bReturnColor) {
+            iColorRed++;
+        }
+        else {
+            iColorRed--;
+        }
+
+        if (iColorRed >= 254) {
+            iColorRed = 254;
+            iColorBlue--;
+
+            if(iColorBlue <= 1) {
+                iColorBlue = 1;
+                iColorGreen++;
+
+                if(iColorGreen >= 254) {
+                    iColorGreen = 254;
+                    bReturnColor = true;
+                }
+            }
+        }
+
+        if(iColorRed <= 1) {
+            iColorRed = 1;
+            iColorBlue++;
+
+            if(iColorBlue >= 254) {
+                iColorBlue = 254;
+                iColorGreen--;
+
+                if(iColorGreen <= 1) {
+                    iColorGreen = 1;
+                    bReturnColor = false;
+                }
+            }
+        }
+
+        // マテリアルの色をセット
+        material.SetColor("_FrontColor", new Color32(iColorRed, iColorGreen, iColorBlue, 255));
+        material.SetColor("_BackColor", new Color32(iColorRed, iColorGreen, iColorBlue, 255));
 
         // 有無の確認
-        if(gBackGround01 != null) {
+        if (gBackGround01 != null) {
             // transformを取得
             tTransform01 = gBackGround01.transform;
 
@@ -86,6 +149,7 @@ public class CBackGroundController : MonoBehaviour
                 Destroy(gBackGround01);
                 iObjectCount--;
             }
+
         }
 
         // 有無の確認
@@ -118,6 +182,7 @@ public class CBackGroundController : MonoBehaviour
                 Destroy(gBackGround02);
                 iObjectCount--;
             }
+
         }
 
     }
