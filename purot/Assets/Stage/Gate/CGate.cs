@@ -1,44 +1,47 @@
 /*==============================================================================
     Project
     [CGate.cs]
-    EƒQ[ƒg§Œä
+    ï¿½Eï¿½Qï¿½[ï¿½gï¿½ï¿½ï¿½ï¿½
 --------------------------------------------------------------------------------
     2021.04.25 @Author Suzuki Hayase
 ================================================================================
     History
         2021.05.09 @Author Misaki Sasaki 
-            125~127s–Ú‚ğŒ©‚Ä‚­‚¾‚³‚¢B‚»‚Á‚ÆAƒXƒRƒA‚ğAdd‚·‚éˆ—’Ç‰Á‚µ‚Ä‚Ü‚·B
+            125~127ï¿½sï¿½Ú‚ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Bï¿½ï¿½ï¿½ï¿½ï¿½ÆAï¿½Xï¿½Rï¿½Aï¿½ï¿½Addï¿½ï¿½ï¿½éˆï¿½ï¿½ï¿½Ç‰ï¿½ï¿½ï¿½ï¿½Ä‚Ü‚ï¿½ï¿½B
         2021.5.15 @Author Misaki Sasaki 
-            36~,52~,156~,169~s–ÚBƒI[ƒ_[¸”s/¬Œ÷‚ÉÔ‚¢/—Îƒpƒlƒ‹‚ªo‚é‚æ‚¤‚É‚µ‚Ü‚µ‚½B
+            36~,52~,156~,169~ï¿½sï¿½ÚBï¿½Iï¿½[ï¿½_ï¿½[ï¿½ï¿½ï¿½s/ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÉÔ‚ï¿½/ï¿½Îƒpï¿½lï¿½ï¿½ï¿½ï¿½ï¿½oï¿½ï¿½æ‚¤ï¿½É‚ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½ï¿½B
             
 /*============================================================================*/
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class CGate : MonoBehaviour {
-    private int iPassNum;                             // ’Ê‰ß”
-    private int iMatchNum;                            // ˆê’v”
-    private int iClearNum;                            // ƒNƒŠƒA”
-    private COrderManager csOrderManager;             // OrderManagerƒXƒNƒŠƒvƒg
+    private int iPassNum;                             // ï¿½Ê‰ßï¿½
+    private int iMatchNum;                            // ï¿½ï¿½vï¿½ï¿½
+    private int iClearNum;                            // ï¿½Nï¿½ï¿½ï¿½Aï¿½ï¿½
+    private COrderManager csOrderManager;             // OrderManagerï¿½Xï¿½Nï¿½ï¿½ï¿½vï¿½g
 
-    [SerializeField] private GameObject gClear;       // ƒNƒŠƒAƒXƒ^ƒ“ƒv
+    [SerializeField] private GameObject gClear;       // ï¿½Nï¿½ï¿½ï¿½Aï¿½Xï¿½^ï¿½ï¿½ï¿½v
 
-    private float fRadius = 9f;        // ‰ñ“]”¼Œa
-    private float fSpeed = 0.5f;       // ‰ñ“]‘¬“x
-    private float fDegree;             // Šp“x
-    private RotateState State;         // ƒIƒuƒWƒFƒNƒg‚Ì‰ñ“]ó‘Ô
+    private float fRadius = 9f;        // ï¿½ï¿½]ï¿½ï¿½ï¿½a
+    private float fSpeed = 0.5f;       // ï¿½ï¿½]ï¿½ï¿½ï¿½x
+    private float fDegree;             // ï¿½pï¿½x
+    private RotateState State;         // ï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½Ì‰ï¿½]ï¿½ï¿½ï¿½
 
-    private GameObject gGateTimerController;            // LampManager‚ÌƒIƒuƒWƒFƒNƒg‚ğŠi”[
-    private CGateTimerController csGateTimerController; // ƒQ[ƒgƒ^ƒCƒ}[ƒXƒNƒŠƒvƒg
+    private bool isDegree;             // è§’åº¦
 
-    //-- 2021.5.15’Ç‰Á sasaki
-    [SerializeField] private GameObject gPanelObjectRed;    // ƒpƒlƒ‹ƒvƒŒƒnƒuiÔj
-    [SerializeField] private GameObject gPanelObjectGreen;  // ƒpƒlƒ‹ƒvƒŒƒnƒui—Îj
-    private GameObject gPanelRed;    // ¶¬‚·‚éƒpƒlƒ‹–{‘ÌiÔj
-    private GameObject gPanelGreen;  // ¶¬‚·‚éƒpƒlƒ‹–{‘Ìi—Îj
+    private GameObject gGateTimerController;            // LampManagerï¿½ÌƒIï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½ï¿½iï¿½[
+    private CGateTimerController csGateTimerController; // ï¿½Qï¿½[ï¿½gï¿½^ï¿½Cï¿½}ï¿½[ï¿½Xï¿½Nï¿½ï¿½ï¿½vï¿½g
 
-    private GameObject gCanvas; // ƒpƒlƒ‹‚Ìe‚É‚µ‚½‚¢ƒLƒƒƒ“ƒoƒX
+    //-- 2021.5.15ï¿½Ç‰ï¿½ sasaki
+    [SerializeField] private GameObject gPanelObjectRed;    // ï¿½pï¿½lï¿½ï¿½ï¿½vï¿½ï¿½ï¿½nï¿½uï¿½iï¿½Ôj
+    [SerializeField] private GameObject gPanelObjectGreen;  // ï¿½pï¿½lï¿½ï¿½ï¿½vï¿½ï¿½ï¿½nï¿½uï¿½iï¿½Îj
+    private GameObject gPanelRed;    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½pï¿½lï¿½ï¿½ï¿½{ï¿½Ìiï¿½Ôj
+    private GameObject gPanelGreen;  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½pï¿½lï¿½ï¿½ï¿½{ï¿½Ìiï¿½Îj
+
+    private GameObject gCanvas; // ï¿½pï¿½lï¿½ï¿½ï¿½Ìeï¿½É‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Lï¿½ï¿½ï¿½ï¿½ï¿½oï¿½X
 
     // Start is called before the first frame update
     void Start() {
@@ -48,7 +51,7 @@ public class CGate : MonoBehaviour {
         csOrderManager = GameObject.Find("PFB_OrderManager").GetComponent<COrderManager>();
         csGateTimerController = GameObject.Find("PFB_GateTimerController").GetComponent<CGateTimerController>();
 
-        //-- 2021.5.15’Ç‰Á sasaki
+        //-- 2021.5.15ï¿½Ç‰ï¿½ sasaki
         gCanvas = GameObject.Find("PanelCanvas");
         Quaternion rot = Quaternion.Euler(90.0f, 0.0f, 0.0f);
         gPanelRed = (GameObject)Instantiate(gPanelObjectRed, new Vector3(0.0f, 0.0f, 0.0f), rot);
@@ -65,25 +68,40 @@ public class CGate : MonoBehaviour {
     // Update is called once per frame
     void Update() {
 
-        // Šp“x‰ÁZ
+        // ï¿½pï¿½xï¿½ï¿½ï¿½Z
         fDegree -= fSpeed;
 
         Vector3 pos;
 
-        // ˆÊ’uXV
-        pos.x = fRadius * Mathf.Sin((fDegree + 180) * Mathf.Deg2Rad);
+        // ï¿½Ê’uï¿½Xï¿½V
+        pos.x = fRadius * Mathf.Sin((fDegree) * Mathf.Deg2Rad);
         pos.y = 0.0f;
-        pos.z = fRadius * Mathf.Cos((fDegree + 180) * Mathf.Deg2Rad);
+        pos.z = fRadius * Mathf.Cos((fDegree) * Mathf.Deg2Rad);
         transform.position = pos;
 
-        // ˆêü‚µ‚½‚ç“à‘¤AŠO‘¤‚ğ“ü‚ê‘Ö‚¦‚éˆ—
-        // Šp“x‚ª360‚ğ’´‚¦‚½‚ç— •\‚ğ•Ï‚¦‚ÄAŠp“x•Ï”‚ğ0‚É‚·‚é
-        if (fDegree <= 0 && State == RotateState.OUTSIDE) {
-            fDegree = 720.0f;
-            Set_State(RotateState.INSIDE);
+        // è§’åº¦ã®ãƒ–ãƒ¼ãƒ«å‡¦ç†
+        if (fDegree >= 200 && fDegree <= 220) {
+            isDegree = true;
         }
-        else if (fDegree <= 360 && State == RotateState.INSIDE) {
-            Set_State(RotateState.OUTSIDE);
+
+        // ä¸€å‘¨ã—ãŸã‚‰å†…å´ã€å¤–å´ã‚’å…¥ã‚Œæ›¿ãˆã‚‹å‡¦ç†
+        if (isDegree && State == RotateState.OUTSIDE) {
+            if (fRadius >= 5 && State == RotateState.OUTSIDE) {
+                Console.WriteLine(fRadius -= 0.02f);
+            }
+            else {
+                isDegree = false;
+                Set_State(RotateState.INSIDE);
+            }
+        }
+        else if (isDegree && State == RotateState.INSIDE) {
+            if (fRadius <= 9 && State == RotateState.INSIDE) {
+                    Console.WriteLine(fRadius += 0.02f);
+            }
+            else {
+                isDegree = false;
+                Set_State(RotateState.OUTSIDE);
+            }
         }
 
         gGateTimerController.transform.LookAt(this.transform);
@@ -93,19 +111,19 @@ public class CGate : MonoBehaviour {
         fDegree = d;
     }
 
-    // ‰ñ“]ƒXƒe[ƒg•ÏXŠÖ”setter
+    // ï¿½ï¿½]ï¿½Xï¿½eï¿½[ï¿½gï¿½ÏXï¿½Öï¿½setter
     public void Set_State(RotateState newState) {
         State = newState;
         switch (State) {
             case RotateState.INSIDE:
-                //“à‘¤‰ñ“]—p‚Ìˆ—
+                //ï¿½ï¿½ï¿½ï¿½ï¿½]ï¿½pï¿½Ìï¿½ï¿½ï¿½
                 fRadius = 5.0f;
                 if (fDegree < 360.0f) {
                     fDegree += 360.0f;
                 }
                 break;
             case RotateState.OUTSIDE:
-                //ŠO‘¤‰ñ“]—pˆ—
+                //ï¿½Oï¿½ï¿½ï¿½ï¿½]ï¿½pï¿½ï¿½ï¿½ï¿½
                 fRadius = 9.0f;
                 if (fDegree > 360.0f) {
                     fDegree -= 360.0f;
@@ -117,12 +135,12 @@ public class CGate : MonoBehaviour {
 
 
     void OnTriggerEnter(Collider col) {
-        // ’Ê‰ßƒIƒuƒWƒFƒNƒg”»’è
+        // ï¿½Ê‰ßƒIï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½ï¿½ï¿½ï¿½
         if (col.gameObject.tag == "RotateObject") {
             GameObject lamp = csOrderManager.Get_gClearLamp(iPassNum);
             OBJECT_SHAPE order = csOrderManager.Get_Order(iPassNum);
 
-            // w—ß‚Æˆê’v
+            // ï¿½wï¿½ß‚Æˆï¿½v
             if (order == col.gameObject.GetComponent<CRotateObject>().Get_Shape()) {
                 iMatchNum++;
                 lamp.GetComponent<Renderer>().material.color = Color.green;
@@ -131,7 +149,7 @@ public class CGate : MonoBehaviour {
                 lamp.GetComponent<Renderer>().material.color = Color.red;
             }
 
-            // ’Ê‰ß‚µ‚½ƒIƒuƒWƒFƒNƒg‚ğíœ
+            // ï¿½Ê‰ß‚ï¿½ï¿½ï¿½ï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½ï¿½íœ
             CObjectManager.Instance.Remove(col.gameObject);
             CObjectManager.Instance.AcceleRemove(col.gameObject);
             Destroy(col.gameObject);
@@ -141,22 +159,22 @@ public class CGate : MonoBehaviour {
 
             int ordernum = csOrderManager.Get_iOrderNum();
 
-            // w—ß”‚ÌƒIƒuƒWƒFƒNƒg‚ª’Ê‰ß‚µ‚½‚çƒŠƒZƒbƒg
+            // ï¿½wï¿½ßï¿½ï¿½ÌƒIï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½ï¿½ï¿½Ê‰ß‚ï¿½ï¿½ï¿½ï¿½çƒŠï¿½Zï¿½bï¿½g
             if (iPassNum == ordernum)
             {
                 if (iMatchNum == ordernum)
                 {
-                    // ƒNƒŠƒAƒXƒ^ƒ“ƒv¶¬
+                    // ï¿½Nï¿½ï¿½ï¿½Aï¿½Xï¿½^ï¿½ï¿½ï¿½vï¿½ï¿½ï¿½ï¿½
                     //Instantiate(gClear, new Vector3(20, 0, -10 + iClearNum * 5),
                     //    Quaternion.Euler(0, 180, 0));
 
                     //========== 2021/5/09
-                    // ƒXƒRƒA‚ğ‹L˜^‚·‚é‚Ì‚É•K—v‚È‚Ì‚Å‘«‚µ‚Ü‚µ‚½@by²X–Ø
+                    // ï¿½Xï¿½Rï¿½Aï¿½ï¿½Lï¿½^ï¿½ï¿½ï¿½ï¿½Ì‚É•Kï¿½vï¿½È‚Ì‚Å‘ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½ï¿½@byï¿½ï¿½ï¿½Xï¿½ï¿½
                     CScore.AddScore();
-                    //-- 2021.5.15’Ç‰Á sasaki
+                    //-- 2021.5.15ï¿½Ç‰ï¿½ sasaki
                     gPanelGreen.SetActive(true);
 
-                    // w—ß¶¬
+                    // ï¿½wï¿½ßï¿½ï¿½ï¿½
                     csOrderManager.CreateOrder(3);
                     iClearNum++;
                 }
@@ -165,10 +183,10 @@ public class CGate : MonoBehaviour {
                         GameObject l = csOrderManager.Get_gClearLamp(i);
                         l.GetComponent<Renderer>().material.color = Color.white;
                     }
-                    //-- 2021.5.15’Ç‰Á sasaki
+                    //-- 2021.5.15ï¿½Ç‰ï¿½ sasaki
                     gPanelRed.SetActive(true);
                 }
-                // V‚µ‚¢ƒIƒuƒWƒFƒNƒg¶¬
+                // ï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½ï¿½ï¿½ï¿½
                 CObjectManager.Instance.Create(3);
 
                 csGateTimerController.Reset();
