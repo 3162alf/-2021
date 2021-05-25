@@ -154,6 +154,7 @@ public class CScoreManager : MonoBehaviour
             }
             for (int l = 0; l < iDigits; l++)
                 stock += stack.Pop();
+
             GameObject.Find("score" + (i + 1).ToString()).GetComponent<Text>().text = stock;
         }
     }
