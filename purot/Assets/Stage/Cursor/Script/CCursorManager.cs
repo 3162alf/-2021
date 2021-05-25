@@ -7,7 +7,8 @@
     2021.04.26 @Author Hirano Tomoki
 ================================================================================
     History
-        
+        210525 Sasaki
+            ポーズ画面の時にオブジェクトが回転しないような処理追加(69~71行目)
 
 /*============================================================================*/
 
@@ -65,6 +66,9 @@ public class CCursorManager : MonoBehaviour {
     }
 
     void Update() {
+        if (Mathf.Approximately(Time.timeScale, 0f)){
+            return;
+        }
         // 水平方向と垂直方向のスティックの傾きを取得
         fHorizontal = Input.GetAxis(stHorStickName);
         fVertivcal = Input.GetAxis(stVerStickName);

@@ -11,6 +11,8 @@
             SphereCast追加
         20210515 Misaki Sasaki
             入れ替え時にエフェクトでるようにしてます。
+        20210525 Sasaki
+            ポーズ画面の時にオブジェクトが回転しないような処理追加(83~85行目)
 /*============================================================================*/
 
 using System.Collections;
@@ -80,6 +82,9 @@ public class CCursorController : MonoBehaviour {
 
     void Update() {
 
+        if (Mathf.Approximately(Time.timeScale, 0f)){
+            return;
+        }
         // 移動用の計算
         vMovePos.x = Mathf.Cos(gCursorManager.GetComponent<CCursorManager>().Get_fRad() + (Mathf.PI / 2)) * gCursorManager.GetComponent<CCursorManager>().Get_fCreateRad();
         vMovePos.z = Mathf.Sin(gCursorManager.GetComponent<CCursorManager>().Get_fRad() + (Mathf.PI / 2)) * gCursorManager.GetComponent<CCursorManager>().Get_fCreateRad();
