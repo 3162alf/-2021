@@ -75,8 +75,8 @@ Material:
     - _WireframeVal: 0.05
     - _ZWrite: 1
     m_Colors:
-    - _BackColor: {r: 0.003921569, g: 0.7254902, b: 1, a: 1}
+    - _BackColor: {r: 0.5529412, g: 0.003921569, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _FrontColor: {r: 0.0037735105, g: 0.7267452, b: 1, a: 1}
+    - _FrontColor: {r: 0.5529412, g: 0.003921569, b: 1, a: 1}
   m_BuildTextureStacks: []
