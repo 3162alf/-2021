@@ -46,3 +46,4 @@ MonoBehaviour:
   tTimer: {fileID: 0}
   fTotalTime: 100
   gGate: {fileID: 8935154527543490480, guid: 776cb4e32488d134ab00cef0085fbd40, type: 3}
+  stButton0Name: Xbox_A

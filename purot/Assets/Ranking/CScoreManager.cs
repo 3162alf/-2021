@@ -1,13 +1,21 @@
-/*============================================================================== 
+/*==============================================================================
+     Project
+    [CScoreManager.cs]
+    ・ランキング表示をするためのスコア処理。
+--------------------------------------------------------------------------------
+    2021.05.06 Tamura Yusuke
+==============================================================================
     History    
         2021.05.09 @Author Sasaki Misaki
             25行目を見てください。そっと、スコアの数値をぶちこむ処理追加してます。
-　============================================================================*/
+============================================================================*/
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class CScoreManager : MonoBehaviour
 {
@@ -19,17 +27,23 @@ public class CScoreManager : MonoBehaviour
 
     private List<CPlayerscore> PlayerScore = new List<CPlayerscore>();
     private CPlayerscore OverwriteScore = new CPlayerscore();
+    public int iDigits = 3;  // 表示する桁数
 
     private void Start()
     {
-        //========== 2021/5/09
-        // スコアを表示するのに必要なので = の後ろ書き換えました。　by佐々木
-        OverwriteScore.score = CScore.GetScore();
+        
         Load();
 
-        OverwriteRecord();
+        if (CSceneManager.GetRecently() == "ResultScene")
+        {
+            //========== 2021/5/09
+            // スコアを表示するのに必要なので = の後ろ書き換えました。　by佐々木
+            OverwriteScore.score = CScore.GetScore();
+            OverwriteRecord();
+        }
 
         SaveScore();
+
         ScoreDisplay();
     }
 
@@ -48,6 +62,7 @@ public class CScoreManager : MonoBehaviour
 
     void OverwriteRecord()
     {
+        
         int i = 0;
         for (i = 0; i < PlayerScore.Count; i++)
         {
@@ -57,7 +72,6 @@ public class CScoreManager : MonoBehaviour
                 i = 10;
                 break;
             }
-
         }
         if (i < 10)
         {
@@ -110,9 +124,38 @@ public class CScoreManager : MonoBehaviour
 
     public void ScoreDisplay()
     {
+        Stack<string> stack = new Stack<string>();
+
         for (int i = 0; i < PlayerScore.Count; i++)
         {
-            GameObject.Find("score" + (i + 1).ToString()).GetComponent<Text>().text = PlayerScore[i].score.ToString();
+            int scorenumber = 0;
+            string stock = "";
+            int score = PlayerScore[i].score;
+
+            // カンスト用の最大数値を作る
+            int count_stop_score = 1;
+            for (int j = 0; j < iDigits; j++)
+            {
+                count_stop_score *= 10;
+            }
+            //最大値の補正処理
+            if (PlayerScore[i].score >= count_stop_score)
+            {
+                PlayerScore[i].score = count_stop_score - 1;
+            }
+
+            // 文字表示
+            for (int k = 0; k < iDigits; k++)
+            {
+                scorenumber = score % 10;
+                score /= 10;
+
+                stack.Push(Convert.ToString(scorenumber));
+            }
+            for (int l = 0; l < iDigits; l++)
+                stock += stack.Pop();
+
+            GameObject.Find("score" + (i + 1).ToString()).GetComponent<Text>().text = stock;
         }
     }
 }

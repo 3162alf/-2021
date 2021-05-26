@@ -9,7 +9,10 @@
     History
         20210502 Hirano
             SphereCast追加
-
+        20210515 Misaki Sasaki
+            入れ替え時にエフェクトでるようにしてます。
+        20210525 Sasaki
+            ポーズ画面の時にオブジェクトが回転しないような処理追加(83~85行目)
 /*============================================================================*/
 
 using System.Collections;
@@ -39,14 +42,22 @@ public class CCursorController : MonoBehaviour {
     // 現状では、〇ボタン以外の入力処理は必要ないので、コメントアウトしています。
     // 必要になったらその都度外します。
 
-    //[SerializeField, TooltipAttribute("□ボタンの登録名")]
-    //private string stButton0Name = "joystickbutton0";  // □ボタン
-    //[SerializeField, TooltipAttribute("×ボタンの登録名")]
-    //private string stButton1Name = "joystickbutton1";  // ×ボタン
-    [SerializeField, TooltipAttribute("〇ボタンの登録名")]
-    private string stButton2Name = "joystickbutton2";    // 〇ボタン
-    //[SerializeField, TooltipAttribute("△ボタンの登録名")]
-    //private string stButton3Name = "joystickbutton3";  // △ボタン
+    //[SerializeField, TooltipAttribute("Aボタンの登録名")]
+    //private string stButton0Name = "joystickbutton0";  // Aボタン
+    [SerializeField, TooltipAttribute("Bボタンの登録名")]
+    private string stButton1Name = "joystickbutton1";  // Bボタン
+    //[SerializeField, TooltipAttribute("Xボタンの登録名")]
+    //private string stButton2Name = "joystickbutton2";    // Xボタン
+    //[SerializeField, TooltipAttribute("Yボタンの登録名")]
+    //private string stButton3Name = "joystickbutton3";  // Yボタン
+
+    // 入れ替え時にワープホールを出すために追加 ---2020/5/15 佐々木
+    [SerializeField] public GameObject PAR;    // パーティクル本体を格納
+    [SerializeField] public GameObject PAR_1;    // パーティクル本体を格納
+    private GameObject pParticleObject = default;
+    private GameObject pParticleObject_1 = default;
+    private ParticleSystem pParticleSystem = default;
+    private ParticleSystem pParticleSystem_1 = default;
 
     //--------------------------------------------------------------------------
 
@@ -55,24 +66,37 @@ public class CCursorController : MonoBehaviour {
         gCursorManager = GameObject.Find("PFB_CursorManager");
         vMovePos.y = 0.0f;
 
-        // 色を灰色に変更する。
+        // 色を赤色に変更する。
         GetComponent<Renderer>().material.color = Color.red;
+
+        // パーティクルを生成
+        pParticleObject = (GameObject)Instantiate(PAR);
+        pParticleObject_1 = (GameObject)Instantiate(PAR_1);
+        // パーティクル制御用にコンポーネントを取得
+        pParticleSystem = pParticleObject.GetComponent<ParticleSystem>();
+        pParticleSystem_1 = pParticleObject_1.GetComponent<ParticleSystem>();
+        // 急にパーティクルが再生されることがないように予め停止させる
+        pParticleSystem.Stop();
+        pParticleSystem_1.Stop();
     }
 
     void Update() {
 
+        if (Mathf.Approximately(Time.timeScale, 0f)){
+            return;
+        }
         // 移動用の計算
         vMovePos.x = Mathf.Cos(gCursorManager.GetComponent<CCursorManager>().Get_fRad() + (Mathf.PI / 2)) * gCursorManager.GetComponent<CCursorManager>().Get_fCreateRad();
         vMovePos.z = Mathf.Sin(gCursorManager.GetComponent<CCursorManager>().Get_fRad() + (Mathf.PI / 2)) * gCursorManager.GetComponent<CCursorManager>().Get_fCreateRad();
 
         transform.position = new Vector3(vMovePos.x, vMovePos.y, vMovePos.z);
 
-        if (Input.GetButtonDown(stButton2Name) || Input.GetKeyDown(KeyCode.Space)) {
+        if (Input.GetButtonDown(stButton1Name) || Input.GetKeyDown(KeyCode.Space)) {
             CreateSphereCast(gCursorManager.transform.position, this.transform.position);
         }
         // debug用(押している間、rayを飛ばし続ける)
         // rayの長さなどを確認したい場合は入力処理をこちらに切り替えてください。
-        //if (Input.GetButton(stButton2Name) || Input.GetKey(KeyCode.Return)) {
+        //if (Input.GetButton(stButton1Name) || Input.GetKey(KeyCode.Return)) {
         //    CreateRay(gCursorManager.transform.position, this.transform.position);
         //}
 
@@ -121,6 +145,13 @@ public class CCursorController : MonoBehaviour {
 
             if (!rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Get_isAccele()) {
                 if (COrderManager.Instance.Get_Order(0) != rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Get_Shape()) {
+
+                    // パーティクル再生
+                    pParticleObject.transform.position = new Vector3(rhHitObject.transform.position.x, rhHitObject.transform.position.y + 1.0f, rhHitObject.transform.position.z);
+                    pParticleObject_1.transform.position = new Vector3(rhHitObject.transform.position.x, rhHitObject.transform.position.y + 1.0f, rhHitObject.transform.position.z);
+                    pParticleSystem.Play();
+                    pParticleSystem_1.Play();
+
                     // ひっくり返す処理
                     if (rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Get_RotateState() == RotateState.OUTSIDE) {
                         rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Set_State(RotateState.INSIDE);
