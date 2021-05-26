@@ -9,14 +9,11 @@ public class CName : MonoBehaviour{
     SpriteRenderer sr;
     public CNamemanager manager;
     
-    void Start(){
-
+    void Start() {
         manager = transform.parent.gameObject.GetComponent<CNamemanager>();
         sr = gameObject.GetComponent<SpriteRenderer>();
-        sr.sprite = word[manager.iSavename[iNamenumber]];
-      
+        sr.sprite = word[manager.iSavename[iNamenumber]]; 
     }
-
 
     void Update(){
 

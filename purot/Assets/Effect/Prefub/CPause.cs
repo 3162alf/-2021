@@ -10,7 +10,7 @@ public class CPause : MonoBehaviour
     private GameObject gPausePanelInstance;
 
     [SerializeField, TooltipAttribute("ホームボタンの登録名")]
-    private string stButtonName = "Xbox_Home";    // 〇ボタン
+    private string stButtonName = "Xbox_Home";    // HOMEボタン
 
     void Start()
     {

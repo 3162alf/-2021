@@ -21,7 +21,7 @@ public class CScoreManager : MonoBehaviour
 {
     public class CPlayerscore
     {
-        public string name;
+        public int[] name = new int[3];
         public int score;
     }
 
@@ -29,6 +29,11 @@ public class CScoreManager : MonoBehaviour
     private CPlayerscore OverwriteScore = new CPlayerscore();
     public int iDigits = 3;  // •\¦‚·‚éŒ…”
 
+    // –¼‘O‚ª”š‚Å‚â‚Á‚Ä‚­‚é‚Ì‚Å‚»‚ê‚ğ•Û‘¶‚µ‚È‚¢‚Æ‚¢‚¯‚È‚¢‚Ì‚Åì‚è‚Ü‚µ‚½B
+    public void SetName(int[] name)
+    {
+
+    }
     private void Start()
     {
         
@@ -55,7 +60,10 @@ public class CScoreManager : MonoBehaviour
             int saveNum = i + 1;
 
             PlayerPrefs.SetInt("Score" + saveNum.ToString(), PlayerScore[i].score);
-            PlayerPrefs.SetString("Name" + saveNum.ToString(), PlayerScore[i].name);
+            for (int j = 0; j < 3; j++)
+            {
+                PlayerPrefs.SetInt("Name" + saveNum.ToString(), PlayerScore[i].name[j]);
+            }
         }
         PlayerPrefs.Save();
     }
@@ -106,11 +114,16 @@ public class CScoreManager : MonoBehaviour
 
                 if (PlayerPrefs.HasKey("Name" + loadNum.ToString()))
                 {
-                    playerscore.name = PlayerPrefs.GetString("Name" + loadNum.ToString());
+                    for (int j = 0; j < 3; j++)
+                    {
+                        playerscore.name[j] = PlayerPrefs.GetInt("Name" + loadNum.ToString());
 
-                    PlayerPrefs.SetString("Name" + saveNum, playerscore.name);
-
+                        PlayerPrefs.SetInt("Name" + saveNum, playerscore.name[j]);
+                        Debug.Log(playerscore.name[j]);
+                    }
                     PlayerScore.Add(playerscore);
+
+
 
                     saveNum += 1;
                 }

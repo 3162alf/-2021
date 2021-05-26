@@ -76,8 +76,14 @@ public class CSceneManager : MonoBehaviour{
         SceneManager.LoadScene("TitleScene");
     }
 
+
     public static string GetRecently()
     {
         return stRecentlyScene;
+    }
+
+    public static void SetRecently(string name)
+    {
+        stRecentlyScene = name;
     }
 }
