@@ -49,11 +49,14 @@ public class CBackGroundController : MonoBehaviour
     private int iRandomElement;
 
     // RGBの変数用
-    private byte iColorRed;
-    private byte iColorGreen;
-    private byte iColorBlue;
+    private byte bColorRed;
+    private byte bColorGreen;
+    private byte bColorBlue;
 
-    private bool bReturnColor;
+    private bool isReturnColor;
+
+
+    [SerializeField] private float fColorLv;
 
     void Start() {
         // 開始時の背景を生成
@@ -63,10 +66,10 @@ public class CBackGroundController : MonoBehaviour
         gChild.GetComponent<Renderer>().material = material;
         iObjectCount++;
 
-        iColorRed = 1;
-        iColorGreen = 1;
-        iColorBlue = 255;
-        bReturnColor = false;
+        bColorRed = 1;
+        bColorGreen = 1;
+        bColorBlue = 255;
+        isReturnColor = false;
     }
 
     void Update() {
@@ -76,46 +79,46 @@ public class CBackGroundController : MonoBehaviour
         }
 
         // 色を変える分岐式
-        if (!bReturnColor) {
-            iColorRed++;
+        if (!isReturnColor) {
+            bColorRed++;
         }
         else {
-            iColorRed--;
+            bColorRed--;
         }
 
-        if (iColorRed >= 254) {
-            iColorRed = 254;
-            iColorBlue--;
+        if (bColorRed >= 254) {
+            bColorRed = 254;
+            bColorBlue--;
 
-            if(iColorBlue <= 1) {
-                iColorBlue = 1;
-                iColorGreen++;
+            if(bColorBlue <= 1) {
+                bColorBlue = 1;
+                bColorGreen++;
 
-                if(iColorGreen >= 254) {
-                    iColorGreen = 254;
-                    bReturnColor = true;
+                if(bColorGreen >= 254) {
+                    bColorGreen = 254;
+                    isReturnColor = true;
                 }
             }
         }
 
-        if(iColorRed <= 1) {
-            iColorRed = 1;
-            iColorBlue++;
+        if(bColorRed <= 1) {
+            bColorRed = 1;
+            bColorBlue++;
 
-            if(iColorBlue >= 254) {
-                iColorBlue = 254;
-                iColorGreen--;
+            if(bColorBlue >= 254) {
+                bColorBlue = 254;
+                bColorGreen--;
 
-                if(iColorGreen <= 1) {
-                    iColorGreen = 1;
-                    bReturnColor = false;
+                if(bColorGreen <= 1) {
+                    bColorGreen = 1;
+                    isReturnColor = false;
                 }
             }
         }
 
         // マテリアルの色をセット
-        material.SetColor("_FrontColor", new Color32(iColorRed, iColorGreen, iColorBlue, 255));
-        material.SetColor("_BackColor", new Color32(iColorRed, iColorGreen, iColorBlue, 255));
+        material.SetColor("_FrontColor", new Color32((byte)(bColorRed * fColorLv), (byte)(bColorGreen * fColorLv), (byte)(bColorBlue * fColorLv), 255));
+        material.SetColor("_BackColor", new Color32((byte)(bColorRed * fColorLv), (byte)(bColorGreen * fColorLv), (byte)(bColorBlue * fColorLv), 255));
 
         // 有無の確認
         if (gBackGround01 != null) {

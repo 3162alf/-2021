@@ -43,6 +43,9 @@ public class CGate : MonoBehaviour {
 
     private GameObject gCanvas; // �p�l���̐e�ɂ������L�����o�X
 
+    private CCreateTrail CCreateTrail;
+    [SerializeField] private GameObject TrailManager;
+
     // Start is called before the first frame update
     void Start() {
         iMatchNum = 0;
@@ -63,6 +66,8 @@ public class CGate : MonoBehaviour {
         gPanelGreen.GetComponent<RectTransform>().sizeDelta = new Vector2(1920.0f, 1080.0f);
         gPanelGreen.gameObject.transform.parent = gCanvas.gameObject.transform;
         gPanelGreen.SetActive(false);
+
+        CCreateTrail = TrailManager.GetComponent<CCreateTrail>();
     }
 
     // Update is called once per frame
@@ -173,7 +178,8 @@ public class CGate : MonoBehaviour {
 
                     //========== 2021/5/09
                     // �X�R�A��L�^����̂ɕK�v�Ȃ̂ő����܂����@by���X��
-                    CScore.AddScore();
+                    //CScore.AddScore();
+                    CCreateTrail.Create();
                     //-- 2021.5.15�ǉ� sasaki
                     gPanelGreen.SetActive(true);
 

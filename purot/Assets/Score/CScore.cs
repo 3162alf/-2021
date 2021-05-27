@@ -19,6 +19,7 @@ public class CScore : MonoBehaviour {
     public Text tScore;
 
     private static int iScore;
+    private float fScore;
     public static GameObject gScoreObj; // TextオブジェクトをあとでFindして入れる、リザルトでだけ使う
 
     void Start() {
@@ -29,9 +30,15 @@ public class CScore : MonoBehaviour {
         if (SceneManager.GetActiveScene().name == "ResultScene") {
             DispScore();
         }
+
+        fScore = 0.0f;
     }
 
     void Update() {
+
+        iScore = (int)fScore;
+        fScore = iScore;
+
         if (tScore != null) {
             // テキストにスコア表示
             tScore.text = iScore.ToString() + "/100";
@@ -44,6 +51,11 @@ public class CScore : MonoBehaviour {
 
     public static int GetScore() {
         return iScore;
+    }
+
+    public void AddFScore() {
+        fScore += 0.34f;
+        Debug.Log(fScore);
     }
 
     public static void DispScore() {
