@@ -1,14 +1,21 @@
-﻿
-// 仮のオブジェクト生成用スクリプトなので詳しくは書きません
-// 作るだけで消してないんで、あんまりいっぱい生成しないでください
-
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CCreate : MonoBehaviour
-{
+public class CCreateTrail : MonoBehaviour {
+
+
     [SerializeField] private GameObject[] obj;
+
+    // Start is called before the first frame update
+    void Start() {
+
+    }
+
+    // Update is called once per frame
+    void Update() {
+
+    }
 
     public void Create() {
         for (int i = 0; i < obj.Length; i++)

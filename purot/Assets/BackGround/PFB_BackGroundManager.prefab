@@ -49,3 +49,4 @@ MonoBehaviour:
   - {fileID: 919132149155446097, guid: 086a2a6796a635e4a8656d9910d23e83, type: 3}
   material: {fileID: 2100000, guid: ad7a9bc4d56e8204e882989f7fdb3a74, type: 2}
   fSpeed: 1
+  fColorLv: 0.75

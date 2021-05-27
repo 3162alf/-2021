@@ -116,6 +116,8 @@ MonoBehaviour:
     type: 3}
   gPanelObjectGreen: {fileID: 2097459571336424740, guid: 6df1f7776cbe92440b3d7f5e9ba644f3,
     type: 3}
+  TrailManager: {fileID: 530796005663342667, guid: ad5e3735abb68c3498616e9fc2195bd7,
+    type: 3}
 --- !u!54 &1902362772890249024
 Rigidbody:
   m_ObjectHideFlags: 0

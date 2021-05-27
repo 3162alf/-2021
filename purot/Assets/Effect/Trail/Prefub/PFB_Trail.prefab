@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &6406868927711020620
+--- !u!1 &4148020284029974460
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,38 +8,38 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6406868927711020609}
-  - component: {fileID: 6406868927711020610}
-  - component: {fileID: 6406868927711020611}
-  m_Layer: 0
+  - component: {fileID: 4148020284029974449}
+  - component: {fileID: 4148020284029974450}
+  - component: {fileID: 4148020284029974451}
+  m_Layer: 5
   m_Name: PFB_Trail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6406868927711020609
+--- !u!4 &4148020284029974449
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6406868927711020620}
+  m_GameObject: {fileID: 4148020284029974460}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -20, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!96 &6406868927711020610
+--- !u!96 &4148020284029974450
 TrailRenderer:
   serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6406868927711020620}
+  m_GameObject: {fileID: 4148020284029974460}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -139,20 +139,22 @@ TrailRenderer:
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
   m_Emitting: 1
---- !u!114 &6406868927711020611
+--- !u!114 &4148020284029974451
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6406868927711020620}
+  m_GameObject: {fileID: 4148020284029974460}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a21218e8d832fb449a1318792ed633d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gTrail: {fileID: 6406868927711020620}
-  gRelayObject1: {fileID: 0}
-  gRelayObject2: {fileID: 0}
-  gTarget: {fileID: 0}
+  gRelayObject1: {fileID: 5896235771631775832, guid: 39c352f4f0553a443a2c343eedb5c375,
+    type: 3}
+  gRelayObject2: {fileID: 1342080375046613573, guid: bcae6ae77d66a554baaa7195047b3285,
+    type: 3}
+  gTarget: {fileID: 8873466372020889084, guid: 911ab7a415c0e1e41a1dc9027c005360, type: 3}
   iMiddlePoints: 30
+  Score: {fileID: 7764665100475276257, guid: 8f3a300097322d745afb7b129414baef, type: 3}
