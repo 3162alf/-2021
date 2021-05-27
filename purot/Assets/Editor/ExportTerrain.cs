@@ -39,6 +39,7 @@ class ExportTerrain : EditorWindow
         EditorWindow.GetWindow<ExportTerrain>().Show();
     }
 
+    [Obsolete]
     void OnGUI()
     {
         if (!terrain)
@@ -60,6 +61,7 @@ class ExportTerrain : EditorWindow
         }
     }
 
+    [Obsolete]
     void Export()
     {
         string fileName = EditorUtility.SaveFilePanel("Export .obj file", "", "Terrain", "obj");

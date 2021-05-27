@@ -137,6 +137,9 @@ public class CGate : MonoBehaviour {
     void OnTriggerEnter(Collider col) {
         // �ʉ߃I�u�W�F�N�g����
         if (col.gameObject.tag == "RotateObject") {
+
+            GetComponent<CCreateEffect>().CreateEffect();
+
             GameObject lamp = csOrderManager.Get_gClearLamp(iPassNum);
             OBJECT_SHAPE order = csOrderManager.Get_Order(iPassNum);
 
