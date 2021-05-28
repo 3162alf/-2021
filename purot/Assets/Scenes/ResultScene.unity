@@ -1337,5 +1337,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PFB_ResultAudioManager
       objectReference: {fileID: 0}
+    - target: {fileID: 8458420322255165894, guid: fdc8bcbe6b445164d8f403655f61e979,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fdc8bcbe6b445164d8f403655f61e979, type: 3}

@@ -10,7 +10,8 @@
             125~127�s�ڂ���Ă��������B�����ƁA�X�R�A��Add���鏈���ǉ����Ă܂��B
         2021.5.15 @Author Misaki Sasaki 
             36~,52~,156~,169~�s�ځB�I�[�_�[���s/�������ɐԂ�/�΃p�l�����o��悤�ɂ��܂����B
-            
+        2021.05.27
+            SE用にいろいろ追加
 /*============================================================================*/
 using System.Collections;
 using System.Collections.Generic;
@@ -46,6 +47,13 @@ public class CGate : MonoBehaviour {
     private CCreateTrail CCreateTrail;
     [SerializeField] private GameObject TrailManager;
 
+    // SE用
+    [SerializeField] private AudioClip aSEClear;    // SE格納するやつ
+    [SerializeField] private AudioClip aSEMiss;     // SE格納するやつ
+    private GameObject gCamera;                     // AudioSource取得用
+    AudioSource aAudioSourceGreen;                  // コンポーネント取得用
+    AudioSource aAudioSourceRed;                    // コンポーネント取得用
+
     // Start is called before the first frame update
     void Start() {
         iMatchNum = 0;
@@ -68,6 +76,13 @@ public class CGate : MonoBehaviour {
         gPanelGreen.SetActive(false);
 
         CCreateTrail = TrailManager.GetComponent<CCreateTrail>();
+
+        // カメラ(SE用)を取得
+        gCamera = Camera.main.gameObject;
+
+        // コンポーネント取得
+        aAudioSourceGreen = gCamera.GetComponent<AudioSource>();
+        aAudioSourceRed = gCamera.GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -183,6 +198,9 @@ public class CGate : MonoBehaviour {
                     //-- 2021.5.15�ǉ� sasaki
                     gPanelGreen.SetActive(true);
 
+                    Debug.Log("SE!!");
+                    aAudioSourceGreen.PlayOneShot(aSEClear);
+
                     // �w�ߐ���
                     csOrderManager.CreateOrder(3);
                     iClearNum++;
@@ -194,6 +212,9 @@ public class CGate : MonoBehaviour {
                     }
                     //-- 2021.5.15�ǉ� sasaki
                     gPanelRed.SetActive(true);
+
+                    Debug.Log("SE!!");
+                    aAudioSourceRed.PlayOneShot(aSEMiss);
                 }
                 // �V�����I�u�W�F�N�g����
                 CObjectManager.Instance.Create(3);

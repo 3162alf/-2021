@@ -6,6 +6,8 @@
     2021.04.22 @Author Tsubasa Ono
 ================================================================================
     History
+        2021.05.27 Ota
+            SEように色々追加
             
 /*============================================================================*/
 using System.Collections;
@@ -17,14 +19,17 @@ public class CSceneManager : MonoBehaviour{
 
     private static string stRecentlyScene = "";
 
-    [SerializeField]
-    private AudioClip aSE01;
+    // SE用
+    [SerializeField] private AudioClip aSE01;           // SE格納するやつ
+    private GameObject gCamera;                         // AudioSource取得用
+    AudioSource aAudioSource;                           // コンポーネント取得用
 
-    AudioSource aAudioSource;
+    void Start() {
+        // カメラ(SE用)取得
+        gCamera = Camera.main.gameObject;
 
-    void Start()
-    {
-        aAudioSource = GetComponent<AudioSource>();
+        // コンポーネント取得
+        aAudioSource = gCamera.GetComponent<AudioSource>();
     }
 
     //タイトル画面からゲーム画面に遷移
