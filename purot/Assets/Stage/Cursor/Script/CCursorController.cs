@@ -13,6 +13,8 @@
             入れ替え時にエフェクトでるようにしてます。
         20210525 Sasaki
             ポーズ画面の時にオブジェクトが回転しないような処理追加(83~85行目)
+        20210527 Ota
+            SEいれる
 /*============================================================================*/
 
 using System.Collections;
@@ -59,6 +61,11 @@ public class CCursorController : MonoBehaviour {
     //private ParticleSystem pParticleSystem = default;
     //private ParticleSystem pParticleSystem_1 = default;
 
+    // SE用
+    [SerializeField] private AudioClip aSE01;       // SE格納するやつ
+    private GameObject gCamera;                     // AudioSource取得用
+    AudioSource aAudioSource;                       // コンポーネント取得用
+
     //--------------------------------------------------------------------------
 
     void Start() {
@@ -78,6 +85,12 @@ public class CCursorController : MonoBehaviour {
         //// 急にパーティクルが再生されることがないように予め停止させる
         //pParticleSystem.Stop();
         //pParticleSystem_1.Stop();
+
+        // カメラ(SE用)取得
+        gCamera = Camera.main.gameObject;
+
+        // コンポーネント取得
+        aAudioSource = gCamera.GetComponent<AudioSource>();
     }
 
     void Update() {
@@ -93,6 +106,8 @@ public class CCursorController : MonoBehaviour {
 
         if (Input.GetButtonDown(stButton1Name) || Input.GetKeyDown(KeyCode.Space)) {
             CreateSphereCast(gCursorManager.transform.position, this.transform.position);
+            Debug.Log("SE!!");
+            aAudioSource.PlayOneShot(aSE01);
         }
         // debug用(押している間、rayを飛ばし続ける)
         // rayの長さなどを確認したい場合は入力処理をこちらに切り替えてください。
@@ -102,6 +117,8 @@ public class CCursorController : MonoBehaviour {
 
         // 中心を向かせる
         gCursorManager.transform.LookAt(this.transform);
+
+
     }
 
     // Rayを飛ばす関数(衝突判定込み)

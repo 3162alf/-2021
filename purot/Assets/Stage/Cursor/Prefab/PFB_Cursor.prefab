@@ -115,5 +115,4 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   stButton1Name: Xbox_B
-  PAR: {fileID: 4840839839557749346, guid: ad2195e89750e84449b4fffedf1b7da5, type: 3}
-  PAR_1: {fileID: 4567908136032275834, guid: 1f5fee960a4109c48b38b3020f72dddb, type: 3}
+  aSE01: {fileID: 8300000, guid: 2043203057793154a977325d26e55b8f, type: 3}
