@@ -23,7 +23,7 @@ public class COrderManager : CSingletonMonoBehaviour<COrderManager> {
 
     // Start is called before the first frame update
     void Start() {
-        CreateOrder(3);
+        //CreateOrder(3);
     }
 
     // Update is called once per frame
@@ -78,13 +78,22 @@ public class COrderManager : CSingletonMonoBehaviour<COrderManager> {
             // 指令の重複をなくす
             nums.RemoveAt(rand);
 
+            float st = 0;
+
+            if(n % 2 == 0) {
+                st = 2.5f + 5 * (n / 2.0f - 1);
+            }
+            else {
+                st = 5 * (n / 2);
+            }
+
             // 指令生成
             gOrderList.Add(Instantiate(gOrderSource[(int)OrderList[i]],
-                new Vector3(-18, 0, 5 - i * 5), Quaternion.Euler(0, 180, 0)));
+                new Vector3(-18, 0, st - i * 5), Quaternion.Euler(0, 180, 0)));
 
             // クリアランプ生成
             gClearLampList.Add(Instantiate(gClearLamp,
-                new Vector3(-20, 0, 5 - i * 5), Quaternion.Euler(0, 0, 0)));
+                new Vector3(-20, 0, st - i * 5), Quaternion.Euler(0, 0, 0)));
         }
     }
 }
