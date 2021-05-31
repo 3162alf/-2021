@@ -106,7 +106,7 @@ public class CCursorController : MonoBehaviour {
 
         if (Input.GetButtonDown(stButton1Name) || Input.GetKeyDown(KeyCode.Space)) {
             CreateSphereCast(gCursorManager.transform.position, this.transform.position);
-            Debug.Log("SE!!");
+           // Debug.Log("SE!!");
             aAudioSource.PlayOneShot(aSE01);
         }
         // debug用(押している間、rayを飛ばし続ける)
@@ -133,7 +133,7 @@ public class CCursorController : MonoBehaviour {
         // RaycastAll(rRay : 原点、飛ばす方向, iDistance : 長さ, lmLayerMask : 衝突処理を行うレイヤーを制限)
         rhHits = Physics.RaycastAll(rRay, iDistance, lmLayerMask);
         foreach (RaycastHit rhHitObject in rhHits) {
-            Debug.Log("Rayが" + stTagName + "に当たった");
+           // Debug.Log("Rayが" + stTagName + "に当たった");
 
             // ひっくり返す処理
             if (rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Get_RotateState() == RotateState.OUTSIDE) {
@@ -158,7 +158,7 @@ public class CCursorController : MonoBehaviour {
         // SpereCastAll( rSphereRay : 原点、飛ばす方向　, fSphereCastRadius : SphereCastの大きさ　, iDistance : rayの最大距離　, lmLayerMask : 衝突処理を行うレイヤー)
         rhSphereHits = Physics.SphereCastAll(rSphereRay, fSphereCastRadius, iDistance, lmLayerMask);
         foreach (RaycastHit rhHitObject in rhSphereHits) {
-            Debug.Log("SphereCastが" + stTagName + "に当たった");
+            //Debug.Log("SphereCastが" + stTagName + "に当たった");
 
             if (!rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Get_isAccele()) {
                 if (COrderManager.Instance.Get_Order(0) != rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Get_Shape()) {
