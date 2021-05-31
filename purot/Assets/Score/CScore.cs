@@ -20,7 +20,7 @@ public class CScore : MonoBehaviour {
 
     private static int iScore;
     private int iScoreParam;
-    private float fScore;
+    private static float fScore = 0.0f;
     public static GameObject gScoreObj; // TextオブジェクトをあとでFindして入れる、リザルトでだけ使う
 
     void Start() {
@@ -32,13 +32,14 @@ public class CScore : MonoBehaviour {
             DispScore();
         }
 
-        fScore = 0.0f;
+        
     }
 
     void Update() {
 
         iScore = (int)fScore;
         fScore = iScore;
+
 
         if (tScore != null) {
             // テキストにスコア表示
@@ -73,6 +74,6 @@ public class CScore : MonoBehaviour {
     }
 
     public static void ResetScore() {
-        iScore = 0;
+        fScore = 0.0f;
     }
 }

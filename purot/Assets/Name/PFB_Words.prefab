@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 375653610385446378}
   - component: {fileID: 8731207577745307343}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: PFB_Words
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -123,6 +123,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: PFB_Word_0 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 3930569672964460038, guid: 9b3792d02ea11cb4e9c93fe210749f4d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 3930569672964460039, guid: 9b3792d02ea11cb4e9c93fe210749f4d,
         type: 3}
       propertyPath: iNamenumber
@@ -203,6 +208,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: PFB_Word_0 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 3930569672964460038, guid: 9b3792d02ea11cb4e9c93fe210749f4d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 3930569672964460039, guid: 9b3792d02ea11cb4e9c93fe210749f4d,
         type: 3}
       propertyPath: iNamenumber
@@ -282,6 +292,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PFB_Word_0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3930569672964460038, guid: 9b3792d02ea11cb4e9c93fe210749f4d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9b3792d02ea11cb4e9c93fe210749f4d, type: 3}

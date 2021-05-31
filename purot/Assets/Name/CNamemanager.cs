@@ -24,10 +24,13 @@ public class CNameManager : MonoBehaviour{
 
     [SerializeField] GameObject gPanel;
 
+    private CScoreManager csmScript;
+
     // CScoreManager‚ÉstringŒ^‚É‚µ‚½ó‘Ô‚Å–¼‘O‚ğˆø‚«“n‚·‚Ì‚Ég—p
     public int[] GetName(){
         return iSavename;
     }
+
     public void SetName(int[] iName){
 
         for (int j = 0; j < 3; j++){
@@ -57,6 +60,9 @@ public class CNameManager : MonoBehaviour{
         {
             gPanel.SetActive(true);
         }
+
+
+        csmScript = GameObject.Find("ScoreDisplay").GetComponent<CScoreManager>();
     }
     
     void Update(){
@@ -111,6 +117,7 @@ public class CNameManager : MonoBehaviour{
         if(Input.GetButtonDown(stButtonNameA) || Input.GetKeyDown(KeyCode.Z))
         {
             bIsEnd = true;
+            csmScript.Set_bIs(false);
         }
     }
 }
