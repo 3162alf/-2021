@@ -114,14 +114,14 @@ public class CGateTimerController : MonoBehaviour {
 
                             if(deg <= 400 && deg >= 320) {
                                 cs.Set_isInverse(true);
-                                cs.Set_fDegreeSub(180 + (400 - deg) * 4);
+                                cs.Set_fDegreeSub(180 + (400 - deg) * 3.5f);
                             }
                         }
                         else {
                             cs.Set_State(RotateState.OUTSIDE);
                             if(deg <= 760 && deg >= 690) {
                                 cs.Set_isInverse(true);
-                                cs.Set_fDegreeSub((760 - deg) * 4);
+                                cs.Set_fDegreeSub((760 - deg) * 3.5f);
                             }
                         }
 

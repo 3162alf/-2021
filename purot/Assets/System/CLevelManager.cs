@@ -33,6 +33,8 @@ public class CLevelManager : CSingletonMonoBehaviour<CLevelManager> {
 
     // Start is called before the first frame update
     void Start() {
+        COrderManager.Instance.CreateOrder(Level[iLevel].iOrderNum);
+
         // オブジェクト展開
         OBJECT_SHAPE first = COrderManager.Instance.Get_Order(0);
         CObjectManager.Instance.AddCreateList(first);
@@ -47,15 +49,19 @@ public class CLevelManager : CSingletonMonoBehaviour<CLevelManager> {
 
     // Update is called once per frame
     void Update() {
+        //if (CScore.GetScore() >= Level[iLevel].iGoal) {
+        //    iLevel++;
+        //    gScore.GetComponent<CScore>().Set_iScoreParam(Level[iLevel].iGoal);
+        //    CObjectManager.Instance.Create(Level[iLevel].iObjectNum - Level[iLevel - 1].iObjectNum);
+        //}
+    }
+
+    public void UpdateLevel() {
         if (CScore.GetScore() >= Level[iLevel].iGoal) {
             iLevel++;
             gScore.GetComponent<CScore>().Set_iScoreParam(Level[iLevel].iGoal);
             CObjectManager.Instance.Create(Level[iLevel].iObjectNum - Level[iLevel - 1].iObjectNum);
         }
-    }
-
-    public void UpdateLevel() {
-        
     }
 
     // オブジェクト数getter

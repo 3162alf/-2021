@@ -243,7 +243,7 @@ public class CGate : MonoBehaviour {
 
                     //========== 2021/5/09
                     // �X�R�A��L�^����̂ɕK�v�Ȃ̂ő����܂����@by���X��
-                    //CScore.AddScore();
+                    CScore.AddScore();
                     CCreateTrail.Create();
                     //-- 2021.5.15�ǉ� sasaki
                     gPanelGreen.SetActive(true);
