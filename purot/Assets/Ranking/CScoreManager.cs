@@ -39,7 +39,17 @@ public class CScoreManager : MonoBehaviour
     public GameObject gNameManagerObj;
     private CNameManager cnmScript;
 
-    bool bIs;
+    private bool bIs;                   // 
+
+    private string stOldScene;
+
+    SpriteRenderer sr;
+    private CName cnScript;
+
+    public void Set_bIs(bool bis) {
+        bIs = bis;
+    }
+
     private void Start()
     {
         aAudioSource = GetComponent<AudioSource>();
@@ -48,35 +58,75 @@ public class CScoreManager : MonoBehaviour
         gNameManagerObj = GameObject.Find("PFB_Words");
         cnmScript = gNameManagerObj.GetComponent<CNameManager>();
 
+        
+
         Load();
 
-        bIs = false;
+
+        if (CSceneManager.GetRecently() == "ResultScene")
+        {
+            OverwritePlayer.name = cnmScript.GetName();
+            OverwritePlayer.score = CScore.GetScore();
+
+
+            //OverwriteRecord();
+
+            Debug.Log(OverwritePlayer.name[0]);
+            Debug.Log(OverwritePlayer.name[1]);
+            Debug.Log(OverwritePlayer.name[2]);
+            Debug.Log(OverwritePlayer.score);
+        }
+
+        OverwriteRecord();
+
+        SaveScore();
+        ScoreDisplay();
+
+
+
+        bIs = true;
+        stOldScene = CSceneManager.GetRecently();
+        cnScript = GameObject.Find("PFB_Word_0").GetComponent<CName>();
+
+
     }
+
     void Update()
     {
-        if(!bIs)
-        {
-            // リザルトから飛んできた場合は名前とスコアを登録する
-            if (CSceneManager.GetRecently() == "ResultScene")
-            {
-                OverwritePlayer.name = cnmScript.GetName();
-                OverwritePlayer.score = CScore.GetScore();
-                OverwriteRecord();
-            }
+        //if(!bIs)
+        //{
+        //    // リザルトから飛んできた場合は名前とスコアを登録する
+        //    if (stOldScene == "ResultScene")
+        //    {
+        //        OverwritePlayer.name = cnmScript.GetName();
+                //OverwritePlayer.score = CScore.GetScore();
 
-            SaveScore();
-            ScoreDisplay();
+        //        Load();
+        //        OverwriteRecord();
 
-            bIs = true;
-        }
+        //        Debug.Log(OverwritePlayer.name[0]);
+        //        Debug.Log(OverwritePlayer.name[1]);
+        //        Debug.Log(OverwritePlayer.name[2]);
+        //    }
+
+        //    SaveScore();
+        //    ScoreDisplay();
+
+        //    bIs = true;
+        //}
+
+        Debug.Log(OverwritePlayer.score);
+
         // ホームボタンを押したらタイトルに戻るように遷移（自動でできるようにしたかったの。。。）
-        if (Input.GetButtonDown(stButtonNameHome))
+        if (Input.GetButtonDown(stButtonNameHome) || Input.GetKeyDown(KeyCode.M))
         {
+            CScore.ResetScore();
             aAudioSource.PlayOneShot(aSE01);
             CSceneManager.SetRecently("TitleScene");
             SceneManager.LoadScene("TitleScene");
         }
     }
+
     public void SaveScore()
     {
         //3
@@ -84,9 +134,9 @@ public class CScoreManager : MonoBehaviour
         {
             int saveNum = i + 1;
 
-            PlayerPrefs.SetInt("SCORE", lPlayer[i].score);
+            PlayerPrefs.SetInt("SCORE" + saveNum.ToString(), lPlayer[i].score);
 
-            for (int j = 0; j < 0; j++)
+            for (int j = 0; j < 3; j++)
             {
                 // カンマ区切りで一つに変える
                 lPlayer[i].sName = lPlayer[i].sName + lPlayer[i].name[j].ToString() + ",";
@@ -141,8 +191,10 @@ public class CScoreManager : MonoBehaviour
                 CPlayer playerscore = new CPlayer();
                 playerscore.score = PlayerPrefs.GetInt("SCORE" + loadNum.ToString());
 
-                PlayerPrefs.SetInt("SCORE" + saveNum, playerscore.score);
+                PlayerPrefs.SetInt("SCORE" + loadNum.ToString(), playerscore.score);
 
+
+                lPlayer.Add(playerscore);
                 if (PlayerPrefs.HasKey("NAME" + loadNum.ToString()))
                 {
                     playerscore.sName = PlayerPrefs.GetString("NAME" + loadNum.ToString());
@@ -151,20 +203,15 @@ public class CScoreManager : MonoBehaviour
                     string[] strArray = str.Split(',');
                     playerscore.name = Array.ConvertAll(strArray, int.Parse);
 
-                    lPlayer.Add(playerscore);
-
-                    saveNum += 1;
-
+                    //lPlayer.Add(playerscore);
+                    //saveNum += 1;
 
                     Debug.Log("セットネ～ム");
                     cnmScript.SetName(playerscore.name);
                 }
             }
-            else
-            {
-                saveNum += 1;
-            }
 
+            saveNum += 1;
         }
     }
 
@@ -204,4 +251,6 @@ public class CScoreManager : MonoBehaviour
             GameObject.Find("score" + (i + 1).ToString()).GetComponent<Text>().text = stock;
         }
     }
+
+   
 }
