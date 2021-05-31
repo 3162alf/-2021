@@ -20,7 +20,7 @@ public class CBackGroundController : MonoBehaviour
 {
     // 背景のプレハブをそれぞれ入れる
     [SerializeField]
-    private GameObject[] gPrefab = new GameObject[3];
+    private GameObject[] gPrefab = new GameObject[2];
 
     // ワイヤーフレームを付けるための変数
     public Material material;
@@ -136,7 +136,7 @@ public class CBackGroundController : MonoBehaviour
             if (tTransform01.position.y >= 700.0f && iObjectCount < 2)
             {
                 // 3個の背景からランダムに生成
-                iRandomElement = Random.Range(0, 3);
+                iRandomElement = Random.Range(0, 2);
                 gBackGround02 = Instantiate(gPrefab[iRandomElement], new Vector3(-350.0f, -800.0f, -100.0f), Quaternion.Euler(90.0f, 0.0f, 0.0f)) as GameObject;
                 gBackGround02.transform.localScale = new Vector3(1, 1, 3);
                 GameObject gChild02 = gBackGround02.transform.Find("default").gameObject;
@@ -170,7 +170,7 @@ public class CBackGroundController : MonoBehaviour
             // 一種類目を出す
             if (tTransform02.position.y >= 700.0f && iObjectCount < 2) {
                 // 3個の背景からランダムに生成
-                iRandomElement = Random.Range(0, 3);
+                iRandomElement = Random.Range(0, 2);
                 gBackGround01 = Instantiate(gPrefab[iRandomElement], new Vector3(-350.0f, -800.0f, -100.0f), Quaternion.Euler(90.0f, 0.0f, 0.0f)) as GameObject;
                 gBackGround01.transform.localScale = new Vector3(1, 1, 3);
                 GameObject gChild01 = gBackGround01.transform.Find("default").gameObject;
