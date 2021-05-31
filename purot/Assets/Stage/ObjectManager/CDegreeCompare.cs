@@ -27,6 +27,7 @@ public class CDegreeCompare : IComparer<GameObject> {
 
 
         GameObject g = CObjectManager.Instance.Get_gObject(0);
+
         float deg_s = 0;
         if (g != null) {
             // オブジェクトリストの先頭のオブジェクトの角度取得

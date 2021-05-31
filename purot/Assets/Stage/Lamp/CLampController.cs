@@ -104,28 +104,28 @@ public class CLampController : MonoBehaviour {
 
     // 20210404_Hirano
     // rayを飛ばす関数(debug用に可視化)
-    private void CreateRay(Vector3 vPos, Vector3 vDir) {
+    //private void CreateRay(Vector3 vPos, Vector3 vDir) {
 
-        // rayの生成位置と方向を指定
-        rRay = new Ray(vPos, vDir);
-        // rayの可視化
-        Debug.DrawRay(rRay.origin, rRay.direction * iDistance, Color.red);
+    //    // rayの生成位置と方向を指定
+    //    rRay = new Ray(vPos, vDir);
+    //    // rayの可視化
+    //    Debug.DrawRay(rRay.origin, rRay.direction * iDistance, Color.red);
 
-        // rayを飛ばし、衝突しているオブジェクトをすべて探す。
-        // RaycastAll(rRay : 原点、飛ばす方向, iDistance : 長さ, lmLayerMask : 衝突処理を行うレイヤーを制限)
-        rhHits = Physics.RaycastAll(rRay, iDistance, lmLayerMask);
-        foreach (RaycastHit rhHitObject in rhHits) {
-            Debug.Log("Rayが" + stTagName + "に当たった");
+    //    // rayを飛ばし、衝突しているオブジェクトをすべて探す。
+    //    // RaycastAll(rRay : 原点、飛ばす方向, iDistance : 長さ, lmLayerMask : 衝突処理を行うレイヤーを制限)
+    //    rhHits = Physics.RaycastAll(rRay, iDistance, lmLayerMask);
+    //    foreach (RaycastHit rhHitObject in rhHits) {
+    //        Debug.Log("Rayが" + stTagName + "に当たった");
 
-            // ひっくり返す処理
-            if (rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Get_RotateState() == RotateState.OUTSIDE) {
-                rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Set_State(RotateState.INSIDE);
-            }
-            else if (rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Get_RotateState() == RotateState.INSIDE) {
-                rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Set_State(RotateState.OUTSIDE);
-            }
-        }
-    }
+    //        // ひっくり返す処理
+    //        if (rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Get_RotateState() == RotateState.OUTSIDE) {
+    //            rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Set_State(RotateState.INSIDE);
+    //        }
+    //        else if (rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Get_RotateState() == RotateState.INSIDE) {
+    //            rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Set_State(RotateState.OUTSIDE);
+    //        }
+    //    }
+    //}
 
     // 20210404_Hirano
     // SphereCastを飛ばす関数
@@ -142,18 +142,18 @@ public class CLampController : MonoBehaviour {
         foreach (RaycastHit rhHitObject in rhSphereHits) {
             Debug.Log("SphereCastが" + stTagName + "に当たった");
 
-            if (!rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Get_isAccele()) {
-                if (COrderManager.Instance.Get_Order(0) != rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Get_Shape()) {
-                    // ひっくり返す処理
-                    if (rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Get_RotateState() == RotateState.OUTSIDE) {
-                        rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Set_State(RotateState.INSIDE);
-                    }
-                    else if (rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Get_RotateState() == RotateState.INSIDE) {
-                        rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Set_State(RotateState.OUTSIDE);
-                    }
-                    CObjectManager.Instance.Accele(rhHitObject.collider.gameObject);
-                }
-            }
+            //if (!rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Get_isAccele()) {
+            //    if (COrderManager.Instance.Get_Order(0) != rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Get_Shape()) {
+            //        // ひっくり返す処理
+            //        if (rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Get_RotateState() == RotateState.OUTSIDE) {
+            //            rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Set_State(RotateState.INSIDE);
+            //        }
+            //        else if (rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Get_RotateState() == RotateState.INSIDE) {
+            //            rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Set_State(RotateState.OUTSIDE);
+            //        }
+            //        CObjectManager.Instance.Accele(rhHitObject.collider.gameObject);
+            //    }
+            //}
         }
     }
 

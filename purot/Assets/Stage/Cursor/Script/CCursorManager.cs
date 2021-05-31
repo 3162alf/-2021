@@ -54,7 +54,7 @@ public class CCursorManager : MonoBehaviour {
         fPosX = Mathf.Cos(Mathf.PI / 2) * fCreateRad;
         fPosZ = Mathf.Sin(Mathf.PI / 2) * fCreateRad;
 
-        vCreatePos = new Vector3(fPosX, 2.0f, fPosZ);
+        vCreatePos = new Vector3(fPosX, 1.0f, fPosZ);
 
         // Lampオブジェクトを生成
         gCursor = Instantiate(

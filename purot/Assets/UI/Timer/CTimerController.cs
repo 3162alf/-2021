@@ -34,7 +34,8 @@ public class CTimerController : MonoBehaviour {
     void Start() {
         // 総合時間の算出と初期化
         fTotalTime = fMinute * 60 + fSeconds;
-        fOldSeconds = 0.0f;      
+        fOldSeconds = 0.0f;
+        tTimer.text = fMinute.ToString("00") + ":" + ((int)fSeconds).ToString("00");
     }
 
     void Update() {

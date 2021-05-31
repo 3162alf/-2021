@@ -101,11 +101,13 @@ public class CCursorController : MonoBehaviour {
         // à⁄ìÆópÇÃåvéZ
         vMovePos.x = Mathf.Cos(gCursorManager.GetComponent<CCursorManager>().Get_fRad() + (Mathf.PI / 2)) * gCursorManager.GetComponent<CCursorManager>().Get_fCreateRad();
         vMovePos.z = Mathf.Sin(gCursorManager.GetComponent<CCursorManager>().Get_fRad() + (Mathf.PI / 2)) * gCursorManager.GetComponent<CCursorManager>().Get_fCreateRad();
-
+        vMovePos.y = 1.0f;
+         
         transform.position = new Vector3(vMovePos.x, vMovePos.y, vMovePos.z);
 
         if (Input.GetButtonDown(stButton1Name) || Input.GetKeyDown(KeyCode.Space)) {
-            CreateSphereCast(gCursorManager.transform.position, this.transform.position);
+            vMovePos.y = 0.0f;
+            CreateSphereCast(gCursorManager.transform.position, vMovePos);
            // Debug.Log("SE!!");
             aAudioSource.PlayOneShot(aSE01);
         }
@@ -136,12 +138,12 @@ public class CCursorController : MonoBehaviour {
            // Debug.Log("RayÇ™" + stTagName + "Ç…ìñÇΩÇ¡ÇΩ");
 
             // Ç–Ç¡Ç≠ÇËï‘Ç∑èàóù
-            if (rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Get_RotateState() == RotateState.OUTSIDE) {
-                rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Set_State(RotateState.INSIDE);
-            }
-            else if (rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Get_RotateState() == RotateState.INSIDE) {
-                rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Set_State(RotateState.OUTSIDE);
-            }
+            //if (rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Get_RotateState() == RotateState.OUTSIDE) {
+            //    rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Set_State(RotateState.INSIDE);
+            //}
+            //else if (rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Get_RotateState() == RotateState.INSIDE) {
+            //    rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Set_State(RotateState.OUTSIDE);
+            //}
         }
     }
 
@@ -170,14 +172,14 @@ public class CCursorController : MonoBehaviour {
                     //pParticleSystem_1.Play();
 
                     // Ç–Ç¡Ç≠ÇËï‘Ç∑èàóù
-                    if (rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Get_RotateState() == RotateState.OUTSIDE) {
-                        rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Set_State(RotateState.INSIDE);
-                    }
-                    else if (rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Get_RotateState() == RotateState.INSIDE) {
-                        rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Set_State(RotateState.OUTSIDE);
+                    //if (rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Get_RotateState() == RotateState.OUTSIDE) {
+                    //    rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Set_State(RotateState.INSIDE);
+                    //}
+                    //else if (rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Get_RotateState() == RotateState.INSIDE) {
+                    //    rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Set_State(RotateState.OUTSIDE);
 
-                    }
-                    CObjectManager.Instance.Accele(rhHitObject.collider.gameObject);
+                    //}
+                    CObjectManager.Instance.Inverse(rhHitObject.collider.gameObject);
                 }
             }
         }

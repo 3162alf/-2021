@@ -27,19 +27,18 @@ public enum RotateState {
 public enum OBJECT_SHAPE {                     // �I�u�W�F�N�g�̌`��
     CUBE,
     SPHERE,
-    TORUS,
+    TRIANGLE,
     RAMIEL,
     STELLA,
     HOURGLASS,
     SATURN,
-    ATOM,
+    TRIPLE,
     MAX
 }
 
 public class CObjectManager : CSingletonMonoBehaviour<CObjectManager> {
-    private List<GameObject> gObjectList = new List<GameObject>();     // �I�u�W�F�N�g���X�g
-    private List<GameObject> gAcceleList = new List<GameObject>();     // �I�u�W�F�N�g���X�g
-    private List<OBJECT_SHAPE> CreateList = new List<OBJECT_SHAPE>();  // �������X�g
+    [SerializeField] private List<GameObject> gObjectList = new List<GameObject>();     // �I�u�W�F�N�g���X�g
+    [SerializeField] private List<OBJECT_SHAPE> CreateList = new List<OBJECT_SHAPE>();  // �������X�g
 
     [SerializeField] private GameObject[] gObjectSource;          // �I�u�W�F�N�g�\�[�X
     [SerializeField] private float fInterval;                     // �z�u�Ԋu
@@ -68,22 +67,22 @@ public class CObjectManager : CSingletonMonoBehaviour<CObjectManager> {
             //if (iTimer >= fInterval / fAcceleSpeed + 30) {
             if (iTimer >= 60) {
                 // �d�Ȃ�Ȃ��悤�ɐ����ʒu�𒲐�
-                float sd = 0.0f;
+                float sd = 180.0f;
                 float rad = 9.0f;
                 RotateState rs = RotateState.OUTSIDE;
                 if (gObjectList.Count > 0) {
                     float ld = gObjectList[gObjectList.Count - 1].GetComponent<CRotateObject>().Get_fDegree();
 
-                    /*if (ld >= 180 && ld <= 520) {
-                        sd = 0;
+                    if (ld >= 190 && ld <= 520) {
+                        sd = 180;
                         rad = fOutRadius;
                         rs = RotateState.OUTSIDE;
                     }
                     else {
-                        sd = 0;
+                        sd = 520;
                         rad = fInRadius;
                         rs = RotateState.INSIDE;
-                    }*/
+                    }
                 }
                 Vector3 pos = new Vector3(rad * Mathf.Sin((sd + 180) * Mathf.Deg2Rad),
                                           0.0f,
@@ -95,13 +94,17 @@ public class CObjectManager : CSingletonMonoBehaviour<CObjectManager> {
 
                 // �p�����[�^�Z�b�g
                 CRotateObject cs = tmp.GetComponent<CRotateObject>();
-                cs.Set_fSpeed(fAcceleSpeed);
                 cs.Set_fDegree(sd);
                 cs.Set_Shape(CreateList[0]);
                 cs.Set_State(rs);
 
-                Accele(tmp);
+                tmp.GetComponent<CRotateObject>().Set_isAccele(true);
+
                 CreateList.RemoveAt(0);
+
+                gObjectList.Add(tmp);
+                Sort();
+
 
                 iTimer = 0;
             }
@@ -119,6 +122,15 @@ public class CObjectManager : CSingletonMonoBehaviour<CObjectManager> {
             Sort(first);
         }
         //}
+
+        for(int i = 0; i < gObjectList.Count; i++) {
+            gObjectList[i].GetComponent<CRotateObject>().UpdateObject();
+        }
+    }
+
+    public void Sort() {
+        CDegreeCompare comp = new CDegreeCompare();
+        gObjectList.Sort(comp);
     }
 
     // �I�u�W�F�N�g�����֐�(����:�����ʒu�A�`��A����O��)
@@ -136,11 +148,6 @@ public class CObjectManager : CSingletonMonoBehaviour<CObjectManager> {
 
         for (int i = 0; i < gObjectList.Count; i++) {
             CRotateObject cro = gObjectList[i].GetComponent<CRotateObject>();
-            nums.Remove((int)cro.Get_Shape());
-        }
-
-        for (int i = 0; i < gAcceleList.Count; i++) {
-            CRotateObject cro = gAcceleList[i].GetComponent<CRotateObject>();
             nums.Remove((int)cro.Get_Shape());
         }
 
@@ -166,13 +173,6 @@ public class CObjectManager : CSingletonMonoBehaviour<CObjectManager> {
         }
     }
 
-    // �I�u�W�F�N�g�폜�֐�
-    public void AcceleRemove(GameObject g) {
-        if (gAcceleList.Contains(g)) {
-            gAcceleList.Remove(g);
-        }
-    }
-
     public void AddCreateList(OBJECT_SHAPE first) {
         CreateList.Add(first);
     }
@@ -181,8 +181,10 @@ public class CObjectManager : CSingletonMonoBehaviour<CObjectManager> {
     public void Sort(OBJECT_SHAPE first) {
         // �擪�ɂ���I�u�W�F�N�g��index�擾
         int firstid = 0;
+        GameObject firstobj = null;
         for (int i = 0; i < gObjectList.Count; i++) {
             if (gObjectList[i].GetComponent<CRotateObject>().Get_Shape() == first) {
+                firstobj = gObjectList[i];
                 firstid = i;
                 break;
             }
@@ -191,37 +193,43 @@ public class CObjectManager : CSingletonMonoBehaviour<CObjectManager> {
         if (firstid == 0) {
             return;
         }
-
+        
         // �ז��ȃI�u�W�F�N�g������
         for (int i = 0; i < firstid; i++) {
-            GameObject g = gObjectList[0];
-            gObjectList.Remove(g);
-
+            GameObject g = gObjectList[i];
             g.GetComponent<CRotateObject>().Set_isAccele(true);
-            g.GetComponent<CRotateObject>().Set_fSpeed(fAcceleSpeed);
+        }
+
+        gObjectList.RemoveAt(firstid);
+        gObjectList.Insert(0, firstobj);
+
+    }
+
+    public void Inverse(GameObject g) {
+        if (!g.GetComponent<CRotateObject>().Get_isInverse() &&
+            !g.GetComponent<CRotateObject>().Get_isInverse2()) {
+            // オブジェクトリストから削除
+            int i;
+            i = Get_iRanking(g);
+
+            g.GetComponent<CRotateObject>().Set_isInverse(true);
+            g.GetComponent<CRotateObject>().Set_isSort(true);
+
+            // ���̃I�u�W�F�N�g����������ċl�߂�
+            for (int j = i + 1; j < gObjectList.Count; j++) {
+                gObjectList[j].GetComponent<CRotateObject>().Set_isAccele(true);
+            }
+
+            CRotateObject cs = g.GetComponent<CRotateObject>();
+            cs.InvDegree();
         }
     }
 
+
     // �I�u�W�F�N�g�����������
     public void Accele(GameObject g) {
-        // �I�u�W�F�N�g���X�g����폜
-        int i;
-        for (i = 0; i < gObjectList.Count; i++) {
-            if (gObjectList[i] == g) {
-                gObjectList.RemoveAt(i);
-                break;
-            }
-        }
-
         // ����������
-        gAcceleList.Add(g);
         g.GetComponent<CRotateObject>().Set_isAccele(true);
-        g.GetComponent<CRotateObject>().Set_fSpeed(fAcceleSpeed);
-
-        // ���̃I�u�W�F�N�g����������ċl�߂�
-        for (int j = i; j < gObjectList.Count; j++) {
-            gObjectList[j].GetComponent<CRotateObject>().Set_fSpeed(fAcceleSpeed);
-        }
     }
 
     // �Ԋugetter
