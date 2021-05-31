@@ -85,13 +85,7 @@ public class CCursorManager : MonoBehaviour {
         // スティックの傾きをラジアン角に変換
         fDeg = Mathf.Atan2(fVertivcal, fHorizontal) * Mathf.Rad2Deg - 90;
 
-        // ラジアン角がマイナスにならないように補正
-        if (fDeg < 0) {
-            fDeg += 360;
-        }
-
         fOldDeg = fDeg;
-
         fRad = fDeg * Mathf.Deg2Rad;
     }
 

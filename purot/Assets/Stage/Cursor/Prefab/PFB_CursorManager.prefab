@@ -46,5 +46,5 @@ MonoBehaviour:
   stHorStickName: Horizontal
   stVerStickName: Vertical
   fDeadZone: 0.01
-  gCursor: {fileID: 6834114222476496243, guid: 5ec3e3674af7aa54fabf8de9d7851823, type: 3}
-  fCreateRad: 6
+  gCursor: {fileID: 1844363952383597332, guid: c83d3e1853c9c044b9cc50804875748c, type: 3}
+  fCreateRad: 6.8
