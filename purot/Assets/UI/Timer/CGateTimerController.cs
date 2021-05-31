@@ -53,6 +53,9 @@ public class CGateTimerController : MonoBehaviour {
         // テキストに秒数を表示
         tTimer.text = iSecond.ToString("00");
 
+        if (GameObject.Find(gGate.name + "(Clone)")) {
+            tTimer.text = "00";
+        }
         /* 下限値の設定
         if (iSecond <= 0) {
             tTimer.text = "00";
@@ -60,7 +63,7 @@ public class CGateTimerController : MonoBehaviour {
         }*/
 
         // 時間が来たらまたはプレイヤーの意思で回収
-        if(iSecond == 0 || Input.GetKeyDown(KeyCode.Return)|| Input.GetButtonDown(stButton0Name)) {
+        if (iSecond == 0 || Input.GetKeyDown(KeyCode.Return) || Input.GetButtonDown(stButton0Name)) {
             // ゲートが二つ出るのを防ぐ
             if (GameObject.Find(gGate.name + "(Clone)") == null) {
                 List<GameObject> list = csObjectManager.Get_gObjectList();
@@ -69,7 +72,7 @@ public class CGateTimerController : MonoBehaviour {
                     OBJECT_SHAPE order = csOrderManager.Get_Order(0);
 
                     // 指令の最初のオブジェクトの位置にゲートを出す
-                    GameObject first = new GameObject();
+                    GameObject first = null;
 
                     int i;
                     for (i = 0; i < list.Count; i++) {
@@ -80,16 +83,49 @@ public class CGateTimerController : MonoBehaviour {
                     }
 
                     if (i < list.Count) {
-                        Vector3 pos = first.transform.position;
+                        float deg = first.GetComponent<CRotateObject>().Get_fDegree();
+                        float subdeg = first.GetComponent<CRotateObject>().Get_fDegreeSub();
+                        deg += 30;
+                        Vector3 pos;
 
-                        GameObject gate = Instantiate(gGate, pos, Quaternion.Euler(115, 90, 0),
-                            transform) as GameObject;
+                        if (deg >= 330 && deg <= 690) {
+                            subdeg = 180;
+                        }
+                        else {
+                            subdeg = 0.0f; 
+                        }
+
+                        pos.x = 7 * Mathf.Sin((deg + 180) * Mathf.Deg2Rad)
+                        + 2 * Mathf.Cos(subdeg * Mathf.Deg2Rad) * Mathf.Sin((deg + 180) * Mathf.Deg2Rad);
+
+                        pos.y = 2 * Mathf.Sin(subdeg * Mathf.Deg2Rad);
+
+                        pos.z = 7 * Mathf.Cos((deg + 180) * Mathf.Deg2Rad)
+                        + 2 * Mathf.Cos(subdeg * Mathf.Deg2Rad) * Mathf.Cos((deg + 180) * Mathf.Deg2Rad);
+
+                        GameObject gate = Instantiate(gGate, pos, Quaternion.Euler(0, 90, 0));
+                        //transform) as GameObject;
 
                         CGate cs = gate.GetComponent<CGate>();
-                        CRotateObject cro = list[i].GetComponent<CRotateObject>();
+                        CRotateObject cro = first.GetComponent<CRotateObject>();
 
-                        cs.Set_State(cro.Get_RotateState());
-                        cs.Set_fDegree(cro.Get_fDegree());
+                        if(deg >= 330 && deg < 690) {
+                            cs.Set_State(RotateState.INSIDE);
+
+                            if(deg <= 400 && deg >= 320) {
+                                cs.Set_isInverse(true);
+                                cs.Set_fDegreeSub(180 + (400 - deg) * 4);
+                            }
+                        }
+                        else {
+                            cs.Set_State(RotateState.OUTSIDE);
+                            if(deg <= 760 && deg >= 690) {
+                                cs.Set_isInverse(true);
+                                cs.Set_fDegreeSub((760 - deg) * 4);
+                            }
+                        }
+
+                        cs.Set_fDegree(deg);
 
                         fTotalTime = 0;
                     }

@@ -19,6 +19,7 @@ public class CScore : MonoBehaviour {
     public Text tScore;
 
     private static int iScore;
+    private int iScoreParam;
     private float fScore;
     public static GameObject gScoreObj; // TextオブジェクトをあとでFindして入れる、リザルトでだけ使う
 
@@ -41,7 +42,7 @@ public class CScore : MonoBehaviour {
 
         if (tScore != null) {
             // テキストにスコア表示
-            tScore.text = iScore.ToString() + "/100";
+            tScore.text = iScore.ToString() + "/" + iScoreParam.ToString();
         }
     }
 
@@ -51,6 +52,10 @@ public class CScore : MonoBehaviour {
 
     public static int GetScore() {
         return iScore;
+    }
+
+    public void Set_iScoreParam(int i) {
+        iScoreParam = i;
     }
 
     public void AddFScore() {

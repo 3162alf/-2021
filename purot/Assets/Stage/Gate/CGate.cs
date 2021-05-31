@@ -29,9 +29,10 @@ public class CGate : MonoBehaviour {
     private float fRadius = 9f;        // ��]���a
     private float fSpeed = 0.5f;       // ��]���x
     private float fDegree;             // �p�x
+    private float fDegreeSub;          // �p�x
     private RotateState State;         // �I�u�W�F�N�g�̉�]���
 
-    private bool isDegree;             // 角度
+    private bool isInverse = false;             // 角度
 
     private GameObject gGateTimerController;            // LampManager�̃I�u�W�F�N�g��i�[
     private CGateTimerController csGateTimerController; // �Q�[�g�^�C�}�[�X�N���v�g
@@ -87,48 +88,98 @@ public class CGate : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+        // 角度のブール処理
+        if ((fDegree <= 400 && fDegree >= 390) ||
+            (fDegree <= 40 && fDegree >= 30)) {
+            isInverse = true;
+        }
 
+        if (isInverse) {
+            float sp = 1.0f;
+
+            fDegreeSub += sp;
+
+            if (State == RotateState.OUTSIDE) {
+                fRadius -= 4 / (180.0f / sp);
+
+                if (fDegreeSub >= 180) {
+                    isInverse = false;
+                    Set_State(RotateState.INSIDE);
+                }
+            }
+            else if (State == RotateState.INSIDE) {
+                fRadius += 4 / (180.0f / sp);
+
+                if (fDegreeSub >= 360) {
+                    isInverse = false;
+                    Set_State(RotateState.OUTSIDE);
+                }
+            }
+        }
+
+        float s = 180 * 0.05f / Mathf.PI / fRadius;
         // �p�x���Z
-        fDegree -= fSpeed;
+        fDegree -= s;
 
         Vector3 pos;
 
         // �ʒu�X�V
-        pos.x = fRadius * Mathf.Sin((fDegree) * Mathf.Deg2Rad);
-        pos.y = 0.0f;
-        pos.z = fRadius * Mathf.Cos((fDegree) * Mathf.Deg2Rad);
+        pos.x = 7 * Mathf.Sin((fDegree + 180) * Mathf.Deg2Rad)
+        + 2 * Mathf.Cos(fDegreeSub * Mathf.Deg2Rad) * Mathf.Sin((fDegree + 180) * Mathf.Deg2Rad);
+
+        pos.y = 2 * Mathf.Sin(fDegreeSub * Mathf.Deg2Rad);
+
+        pos.z = 7 * Mathf.Cos((fDegree + 180) * Mathf.Deg2Rad)
+        + 2 * Mathf.Cos(fDegreeSub * Mathf.Deg2Rad) * Mathf.Cos((fDegree + 180) * Mathf.Deg2Rad);
+
         transform.position = pos;
 
         // 角度のブール処理
-        if (fDegree >= 200 && fDegree <= 220) {
-            isDegree = true;
-        }
+        //if (fDegree >= 200 && fDegree <= 220) {
+        //    isInverse = true;
+        //}
 
         // 一周したら内側、外側を入れ替える処理
-        if (isDegree && State == RotateState.OUTSIDE) {
-            if (fRadius >= 5 && State == RotateState.OUTSIDE) {
-                Console.WriteLine(fRadius -= 0.02f);
-            }
-            else {
-                isDegree = false;
-                Set_State(RotateState.INSIDE);
-            }
-        }
-        else if (isDegree && State == RotateState.INSIDE) {
-            if (fRadius <= 9 && State == RotateState.INSIDE) {
-                    Console.WriteLine(fRadius += 0.02f);
-            }
-            else {
-                isDegree = false;
-                Set_State(RotateState.OUTSIDE);
-            }
-        }
+        //if (isDegree && State == RotateState.OUTSIDE) {
+        //    if (fRadius >= 5 && State == RotateState.OUTSIDE) {
+        //        Console.WriteLine(fRadius -= 0.02f);
+        //    }
+        //    else {
+        //        isDegree = false;
+        //        Set_State(RotateState.INSIDE);
+        //    }
+        //}
+        //else if (isDegree && State == RotateState.INSIDE) {
+        //    if (fRadius <= 9 && State == RotateState.INSIDE) {
+        //            Console.WriteLine(fRadius += 0.02f);
+        //    }
+        //    else {
+        //        isDegree = false;
+        //        Set_State(RotateState.OUTSIDE);
+        //    }
+        //}
+        Vector3 p = transform.position;
+        p += new Vector3(Mathf.Sin((fDegree + 90) * Mathf.Deg2Rad),
+                         -0.5f,
+                         Mathf.Cos((fDegree + 90) * Mathf.Deg2Rad));
+        transform.LookAt(p);
 
-        gGateTimerController.transform.LookAt(this.transform);
+        if (fDegree < 0) {
+            fDegree += 720;
+        }
+        //gGateTimerController.transform.LookAt(this.transform);
     }
 
     public void Set_fDegree(float d) {
         fDegree = d;
+    }
+
+    public void Set_fDegreeSub(float f) {
+        fDegreeSub = f;
+    }
+
+    public void Set_isInverse(bool b) {
+        isInverse = b;
     }
 
     // ��]�X�e�[�g�ύX�֐�setter
@@ -138,6 +189,7 @@ public class CGate : MonoBehaviour {
             case RotateState.INSIDE:
                 //�����]�p�̏���
                 fRadius = 5.0f;
+                fDegreeSub = 180;
                 if (fDegree < 360.0f) {
                     fDegree += 360.0f;
                 }
@@ -145,6 +197,7 @@ public class CGate : MonoBehaviour {
             case RotateState.OUTSIDE:
                 //�O����]�p����
                 fRadius = 9.0f;
+                fDegreeSub = 0.0f;
                 if (fDegree > 360.0f) {
                     fDegree -= 360.0f;
                 }
@@ -160,7 +213,7 @@ public class CGate : MonoBehaviour {
 
             GetComponent<CCreateEffect>().CreateEffect();
 
-            GameObject lamp = csOrderManager.Get_gClearLamp(iPassNum);
+            GameObject lamp = csOrderManager.Get_gClearLamp(iPassNum).transform.GetChild(6).gameObject;
             OBJECT_SHAPE order = csOrderManager.Get_Order(iPassNum);
 
             // �w�߂ƈ�v
@@ -174,19 +227,16 @@ public class CGate : MonoBehaviour {
 
             // �ʉ߂����I�u�W�F�N�g��폜
             CObjectManager.Instance.Remove(col.gameObject);
-            CObjectManager.Instance.AcceleRemove(col.gameObject);
             Destroy(col.gameObject);
-            Debug.Log("hit");
+            //Debug.Log("hit");
 
             iPassNum++;
 
             int ordernum = csOrderManager.Get_iOrderNum();
 
             // �w�ߐ��̃I�u�W�F�N�g���ʉ߂����烊�Z�b�g
-            if (iPassNum == ordernum)
-            {
-                if (iMatchNum == ordernum)
-                {
+            if (iPassNum == ordernum) {
+                if (iMatchNum == ordernum) {
                     // �N���A�X�^���v����
                     //Instantiate(gClear, new Vector3(20, 0, -10 + iClearNum * 5),
                     //    Quaternion.Euler(0, 180, 0));
@@ -201,13 +251,14 @@ public class CGate : MonoBehaviour {
                     Debug.Log("SE!!");
                     aAudioSourceGreen.PlayOneShot(aSEClear);
 
+                    CLevelManager.Instance.UpdateLevel();
                     // �w�ߐ���
-                    csOrderManager.CreateOrder(3);
+                    csOrderManager.CreateOrder(CLevelManager.Instance.Get_iOrderNum());
                     iClearNum++;
                 }
                 else {
                     for (int i = 0; i < ordernum; i++) {
-                        GameObject l = csOrderManager.Get_gClearLamp(i);
+                        GameObject l = csOrderManager.Get_gClearLamp(i).transform.GetChild(6).gameObject; ;
                         l.GetComponent<Renderer>().material.color = Color.white;
                     }
                     //-- 2021.5.15�ǉ� sasaki
@@ -217,10 +268,10 @@ public class CGate : MonoBehaviour {
                     aAudioSourceRed.PlayOneShot(aSEMiss);
                 }
                 // �V�����I�u�W�F�N�g����
-                CObjectManager.Instance.Create(3);
+                CObjectManager.Instance.Create(ordernum);
 
                 csGateTimerController.Reset();
-                gGateTimerController.transform.LookAt(new Vector3(0,0,10));
+                gGateTimerController.transform.LookAt(new Vector3(0, 0, 10));
                 Destroy(this.gameObject);
             }
         }
