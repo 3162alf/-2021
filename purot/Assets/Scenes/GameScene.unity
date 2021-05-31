@@ -651,7 +651,7 @@ PrefabInstance:
     - target: {fileID: 872228002909891486, guid: 289f13f78e2694441b7a5e4b17cfbb93,
         type: 3}
       propertyPath: fCreateRad
-      value: 7
+      value: 6.8
       objectReference: {fileID: 0}
     - target: {fileID: 5720957434481504239, guid: 289f13f78e2694441b7a5e4b17cfbb93,
         type: 3}
@@ -1454,7 +1454,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 72
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -1946,6 +1946,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PFB_GameAudioManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 6074177915482027702, guid: 5aaf5f049c3eb0146a365deadfb3e2d4,
+        type: 3}
+      propertyPath: Loop
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6074177915482027702, guid: 5aaf5f049c3eb0146a365deadfb3e2d4,
         type: 3}
