@@ -43,4 +43,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4a09cda3ab1da944b7f3cee44ad1214, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iObjectNum: 5
+  Level:
+  - iObjectNum: 3
+    iOrderNum: 3
+    iGoal: 3
+    fGateTime: 20
+    fSpeed: 0.05
+  - iObjectNum: 4
+    iOrderNum: 3
+    iGoal: 5
+    fGateTime: 20
+    fSpeed: 0.05
+  - iObjectNum: 5
+    iOrderNum: 4
+    iGoal: 10
+    fGateTime: 20
+    fSpeed: 0.05
+  - iObjectNum: 6
+    iOrderNum: 4
+    iGoal: 15
+    fGateTime: 20
+    fSpeed: 0.05
+  - iObjectNum: 7
+    iOrderNum: 5
+    iGoal: 20
+    fGateTime: 20
+    fSpeed: 0.05
+  - iObjectNum: 8
+    iOrderNum: 5
+    iGoal: 25
+    fGateTime: 20
+    fSpeed: 0.05

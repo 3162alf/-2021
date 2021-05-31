@@ -195,6 +195,11 @@ PrefabInstance:
       propertyPath: iObjectNum
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 8043210675754063063, guid: 2f3c14d64a3fbac44b182bd68317ffd1,
+        type: 3}
+      propertyPath: Level.Array.data[0].iObjectNum
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2f3c14d64a3fbac44b182bd68317ffd1, type: 3}
 --- !u!1001 &632900264
@@ -863,7 +868,7 @@ PrefabInstance:
         type: 3}
       propertyPath: gObjectSource.Array.data[7]
       value: 
-      objectReference: {fileID: 7409227540137151819, guid: eca176c18b6bcef439754fe78b44cf51,
+      objectReference: {fileID: 8172718235868762146, guid: 969a8ce085088b848b6d348b97fc534d,
         type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 000a339e7f8cf5a41a0bcc98708d6157, type: 3}
@@ -1495,7 +1500,7 @@ PrefabInstance:
     - target: {fileID: 153211143048736466, guid: ef0ab3d110162864097011965d933d1c,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 153211143048736466, guid: ef0ab3d110162864097011965d933d1c,
         type: 3}
@@ -1615,7 +1620,7 @@ PrefabInstance:
         type: 3}
       propertyPath: gClearLamp
       value: 
-      objectReference: {fileID: 5437368608403735769, guid: 2783df7318a556c47a4c466f620222da,
+      objectReference: {fileID: 9137489138905292491, guid: 422c6175d703ec74e9bdde8c658c18d4,
         type: 3}
     - target: {fileID: 4721083915103639527, guid: b30d11cc01887fc428ef1b4970a04a80,
         type: 3}
@@ -1693,6 +1698,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PFB_Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 3151243742010488217, guid: b916f45295802804da19ee2f7fef99f3,
+        type: 3}
+      propertyPath: m_Text
+      value: 3:00
       objectReference: {fileID: 0}
     - target: {fileID: 3151243742010488217, guid: b916f45295802804da19ee2f7fef99f3,
         type: 3}

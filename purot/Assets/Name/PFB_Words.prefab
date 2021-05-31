@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 375653610385446378}
-  - component: {fileID: 375653610385446379}
+  - component: {fileID: 8731207577745307343}
   m_Layer: 0
   m_Name: PFB_Words
   m_TagString: Untagged
@@ -34,7 +34,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &375653610385446379
+--- !u!114 &8731207577745307343
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -47,7 +47,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   iSavename: 000000000000000000000000
+  sName: 
   i: 0
+  stButtonNameA: Xbox_A
+  stButtonNameB: Xbox_B
+  stButtonNameLB: Xbox_LB
+  stButtonNameRB: Xbox_RB
+  bIsEnd: 0
+  bIsUse: 0
+  gPanel: {fileID: 0}
 --- !u!1001 &375653608860977529
 PrefabInstance:
   m_ObjectHideFlags: 0

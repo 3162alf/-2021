@@ -19,51 +19,81 @@ using UnityEngine.SceneManagement;
 
 public class CScoreManager : MonoBehaviour
 {
-    public class CPlayerscore
+    public class CPlayer
     {
         public int[] name = new int[3];
+        public string sName = null;
         public int score;
     }
 
-    private List<CPlayerscore> PlayerScore = new List<CPlayerscore>();
-    private CPlayerscore OverwriteScore = new CPlayerscore();
+    private List<CPlayer> lPlayer = new List<CPlayer>();
+    private CPlayer OverwritePlayer = new CPlayer();
     public int iDigits = 3;  // 表示する桁数
 
-    // 名前が数字でやってくるのでそれを保存しないといけないので作りました。
-    public void SetName(int[] name)
-    {
+    [SerializeField, TooltipAttribute("ホームボタンの登録名")]
+    private string stButtonNameHome = "Xbox_Home";    // ホームボタン
+    [SerializeField] private AudioClip aSE01;
+    AudioSource aAudioSource;
 
-    }
+    // CNameManagerの読み込み
+    public GameObject gNameManagerObj;
+    private CNameManager cnmScript;
+
+    bool bIs;
     private void Start()
     {
-        
+        aAudioSource = GetComponent<AudioSource>();
+
+        // CNameManagerの取得
+        gNameManagerObj = GameObject.Find("PFB_Words");
+        cnmScript = gNameManagerObj.GetComponent<CNameManager>();
+
         Load();
 
-        if (CSceneManager.GetRecently() == "ResultScene")
-        {
-            //========== 2021/5/09
-            // スコアを表示するのに必要なので = の後ろ書き換えました。　by佐々木
-            OverwriteScore.score = CScore.GetScore();
-            OverwriteRecord();
-        }
-
-        SaveScore();
-
-        ScoreDisplay();
+        bIs = false;
     }
+    void Update()
+    {
+        if(!bIs)
+        {
+            // リザルトから飛んできた場合は名前とスコアを登録する
+            if (CSceneManager.GetRecently() == "ResultScene")
+            {
+                OverwritePlayer.name = cnmScript.GetName();
+                OverwritePlayer.score = CScore.GetScore();
+                OverwriteRecord();
+            }
 
+            SaveScore();
+            ScoreDisplay();
+
+            bIs = true;
+        }
+        // ホームボタンを押したらタイトルに戻るように遷移（自動でできるようにしたかったの。。。）
+        if (Input.GetButtonDown(stButtonNameHome))
+        {
+            aAudioSource.PlayOneShot(aSE01);
+            CSceneManager.SetRecently("TitleScene");
+            SceneManager.LoadScene("TitleScene");
+        }
+    }
     public void SaveScore()
     {
         //3
-        for (int i = 0; i < PlayerScore.Count; i++)
+        for (int i = 0; i < lPlayer.Count; i++)
         {
             int saveNum = i + 1;
 
-            PlayerPrefs.SetInt("Score" + saveNum.ToString(), PlayerScore[i].score);
-            for (int j = 0; j < 3; j++)
+            PlayerPrefs.SetInt("SCORE", lPlayer[i].score);
+
+            for (int j = 0; j < 0; j++)
             {
-                PlayerPrefs.SetInt("Name" + saveNum.ToString(), PlayerScore[i].name[j]);
+                // カンマ区切りで一つに変える
+                lPlayer[i].sName = lPlayer[i].sName + lPlayer[i].name[j].ToString() + ",";
             }
+            PlayerPrefs.SetString("NAME", lPlayer[i].sName);
+            Debug.Log(lPlayer[i].sName);
+
         }
         PlayerPrefs.Save();
     }
@@ -72,27 +102,28 @@ public class CScoreManager : MonoBehaviour
     {
         
         int i = 0;
-        for (i = 0; i < PlayerScore.Count; i++)
+        for (i = 0; i < lPlayer.Count; i++)
         {
-            if (PlayerScore[i].score < OverwriteScore.score)
+            if (lPlayer[i].score < OverwritePlayer.score)
             {
-                PlayerScore.Insert(i, OverwriteScore);
+                lPlayer.Insert(i, OverwritePlayer);
+ 
                 i = 10;
                 break;
             }
         }
         if (i < 10)
         {
-            PlayerScore.Add(OverwriteScore);
+            lPlayer.Add(OverwritePlayer);
         }
-        if (PlayerScore.Count > 10)
+        if (lPlayer.Count > 10)
         {
-            PlayerScore.RemoveAt(PlayerScore.Count - 1);
+            lPlayer.RemoveAt(lPlayer.Count - 1);
         }
 
-        if (PlayerScore.Count == 0)
+        if (lPlayer.Count == 0)
         {
-            PlayerScore.Add(OverwriteScore);
+            lPlayer.Add(OverwritePlayer);
         }
     }
 
@@ -105,33 +136,35 @@ public class CScoreManager : MonoBehaviour
         {
             int loadNum = saveNum + 1;
 
-            if (PlayerPrefs.HasKey("Score" + loadNum.ToString()))
+            if (PlayerPrefs.HasKey("SCORE" + loadNum.ToString()))
             {
-                CPlayerscore playerscore = new CPlayerscore();
-                playerscore.score = PlayerPrefs.GetInt("Score" + loadNum.ToString());
+                CPlayer playerscore = new CPlayer();
+                playerscore.score = PlayerPrefs.GetInt("SCORE" + loadNum.ToString());
 
-                PlayerPrefs.SetInt("Score" + saveNum, playerscore.score);
+                PlayerPrefs.SetInt("SCORE" + saveNum, playerscore.score);
 
-                if (PlayerPrefs.HasKey("Name" + loadNum.ToString()))
+                if (PlayerPrefs.HasKey("NAME" + loadNum.ToString()))
                 {
-                    for (int j = 0; j < 3; j++)
-                    {
-                        playerscore.name[j] = PlayerPrefs.GetInt("Name" + loadNum.ToString());
+                    playerscore.sName = PlayerPrefs.GetString("NAME" + loadNum.ToString());
 
-                        PlayerPrefs.SetInt("Name" + saveNum, playerscore.name[j]);
-                        Debug.Log(playerscore.name[j]);
-                    }
-                    PlayerScore.Add(playerscore);
+                    string str = playerscore.sName;
+                    string[] strArray = str.Split(',');
+                    playerscore.name = Array.ConvertAll(strArray, int.Parse);
 
-
+                    lPlayer.Add(playerscore);
 
                     saveNum += 1;
+
+
+                    Debug.Log("セットネ～ム");
+                    cnmScript.SetName(playerscore.name);
                 }
             }
             else
             {
                 saveNum += 1;
             }
+
         }
     }
 
@@ -139,11 +172,11 @@ public class CScoreManager : MonoBehaviour
     {
         Stack<string> stack = new Stack<string>();
 
-        for (int i = 0; i < PlayerScore.Count; i++)
+        for (int i = 0; i < lPlayer.Count; i++)
         {
             int scorenumber = 0;
             string stock = "";
-            int score = PlayerScore[i].score;
+            int score = lPlayer[i].score;
 
             // カンスト用の最大数値を作る
             int count_stop_score = 1;
@@ -152,9 +185,9 @@ public class CScoreManager : MonoBehaviour
                 count_stop_score *= 10;
             }
             //最大値の補正処理
-            if (PlayerScore[i].score >= count_stop_score)
+            if (lPlayer[i].score >= count_stop_score)
             {
-                PlayerScore[i].score = count_stop_score - 1;
+                lPlayer[i].score = count_stop_score - 1;
             }
 
             // 文字表示

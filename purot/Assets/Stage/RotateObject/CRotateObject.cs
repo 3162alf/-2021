@@ -25,111 +25,191 @@ using System;
 
 public class CRotateObject : MonoBehaviour {
     [SerializeField] private float fRadius;        // 回転半径
-    [SerializeField] private float fSpeed;         // 回転速度
 
     [SerializeField] private OBJECT_SHAPE Shape;   // オブジェクトの形状
     [SerializeField] private RotateState State;    // オブジェクトの回転状態
 
-    private float fDegree;                         // 角度
+    [SerializeField] private float fDegree;         // 角度
+    [SerializeField] private float fDegreeSub;      // 角度サブ
+    [SerializeField] private float fDegreeSub2;     // 角度サブ2
 
-    private bool isDegree;                         // 角度
+    [SerializeField] private Vector3 vRotate;       // 初期姿勢
 
-    private bool isAccele = false;                 // 加速フラグ
+    [SerializeField] private float fSubSpeed = 10.0f;                // サブスピード
 
-    //private bool isChange = false;                 //入れ替え時のソートブール
+    [SerializeField] private bool isInverse = false;                 // 角度
+    [SerializeField] private bool isInverse2 = false;                 // 角度
+    [SerializeField] private bool isSort = false;                    // ソートフラグ
+    [SerializeField] private bool isAccele = false;                  // 加速フラグ
+
+    //private bool isChange = false;                //入れ替え時のソートブール
 
     // Start is called before the first frame update
     void Start() {
-
+        transform.eulerAngles = vRotate;
     }
 
     // Update is called once per frame
-    void Update() {
-        //ポーズ画面の時にオブジェクトが回転しないような処理
+    public void UpdateObject() {
+        // ポーズ画面の時にオブジェクトが回転しないような処理
         if (Mathf.Approximately(Time.timeScale, 0f)) {
             return;
         }
 
-        //現在の位置を取得
+        // 現在の位置を取得
         Vector3 pos = this.gameObject.transform.position;
 
-        /*float s = 180 * fSpeed / Mathf.PI / fRadius;
-
-        // 角度加算
-        fDegree += s;
-
-        Vector3 pos;
-
-        // 位置更新
-        pos.x = fRadius * Mathf.Sin((fDegree + 180) * Mathf.Deg2Rad);
-        pos.y = 0.0f;
-        pos.z = fRadius * Mathf.Cos((fDegree + 180) * Mathf.Deg2Rad);
-        transform.position = pos;*/
-
         // 角度のブール処理
-        if (fDegree >= 140 && fDegree <= 170) {
-            isDegree = true;
+        if ((fDegree >= 330 && fDegree <= 340) ||
+            (fDegree >= 690 && fDegree <= 700)) {
+            isInverse2 = true;
+        }
+
+        if (isInverse2) {
+            float sp = 1.0f;
+            if (isAccele)
+                sp *= 10;
+
+            fDegreeSub2 -= sp;
+
+            if (State == RotateState.OUTSIDE) {
+                fRadius -= 4 / (180.0f / sp);
+
+                if (fDegreeSub2 <= -180) {
+                    isInverse2 = false;
+                    Set_State(RotateState.INSIDE);
+                    fDegreeSub2 = 0;
+                }
+            }
+            else if (State == RotateState.INSIDE) {
+                fRadius += 4 / (180.0f / sp);
+
+                if (fDegreeSub2 <= -180) {
+                    isInverse2 = false;
+                    Set_State(RotateState.OUTSIDE);
+                    fDegreeSub2 = 0.0f;
+                }
+            }
+        }
+        if(fDegreeSub <= -360) {
+            fDegreeSub += 360;
         }
 
         // 一周したら内側、外側を入れ替える処理
-        if (isDegree && State == RotateState.OUTSIDE) {
-            if (fRadius >= 5 && State == RotateState.OUTSIDE) {
-                if (isAccele == false) {
-                    Console.WriteLine(fRadius -= 0.02f);
-                    if (pos.y >= -2.0f) {
-                        Console.WriteLine(pos.y -= 0.01f);
-                    }
-                    else if (pos.y <= 0.0f) {
-                        Console.WriteLine(pos.y += 0.01f);
-                    }
-                }
-                else {
-                    Console.WriteLine(fRadius -= 0.1f);
-                    if (pos.y >= -2.0f) {
-                        Console.WriteLine(pos.y -= 0.05f);
-                    }
-                    else if (pos.y <= 0.0f) {
-                        Console.WriteLine(pos.y += 0.05f);
+        if (isInverse) {
+            fDegreeSub -= 10;
+
+            if (State == RotateState.OUTSIDE) {
+                fRadius -= 4 / (180.0f / 10);
+
+                if (fDegreeSub <= -180) {
+                    isInverse = false;
+                    Set_State(RotateState.INSIDE);
+                    fDegreeSub = -180.0f;
+                    fDegreeSub2 = 0;
+                    if (isSort) {
+                        isAccele = true;
+                        isSort = false;
                     }
                 }
             }
-            else {
-                isDegree = false;
-                Set_State(RotateState.INSIDE);
-            }
-        }
-        else if (isDegree && State == RotateState.INSIDE) {
-            if (fRadius <= 9 && State == RotateState.INSIDE) {
-                if (isAccele == false) {
-                    Console.WriteLine(fRadius += 0.02f);
+            else if (State == RotateState.INSIDE) {
+                fRadius += 4 / (180.0f / 10);
+
+                if (fDegreeSub <= -360) {
+                    isInverse = false;
+                    Set_State(RotateState.OUTSIDE);
+                    fDegreeSub = 0.0f;
+                    fDegreeSub2 = 0;
+
+                    if (isSort) {
+                        isAccele = true;
+                        isSort = false;
+                    }
                 }
-                else {
-                    Console.WriteLine(fRadius += 0.1f);
-                }
-            }
-            else {
-                isDegree = false;
-                Set_State(RotateState.OUTSIDE);
             }
         }
 
-        float s = 180 * fSpeed / Mathf.PI / fRadius;
+        // 加速時
+        if (isAccele) {
+            if (Shape != COrderManager.Instance.Get_Order(0)) {
+                // オブジェクトリスト取得
+                List<GameObject> list = CObjectManager.Instance.Get_gObjectList();
+
+                for (int i = 0; i < list.Count; i++) {
+                    if (list[i] != this.gameObject &&
+                        !list[i].GetComponent<CRotateObject>().Get_isInverse()) {
+                        float deg = list[i].GetComponent<CRotateObject>().Get_fDegree();
+                        float diff = deg - fDegree;
+                        if (diff < 0) {
+                            diff += 720;
+                        }
+                        if (diff < 360) {
+                            float len = diff / 360 * 2 * Mathf.PI * fRadius;
+                            if (len <= 3.0f) {
+                                if (!list[i].GetComponent<CRotateObject>().Get_isAccele()) {
+                                    isAccele = false;
+                                }
+                                fDegree = deg - 3.0f * 360 / 2 / Mathf.PI / fRadius;
+                                CObjectManager.Instance.Sort();
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        if (!isInverse2) {
+            if (State == RotateState.INSIDE) {
+                if (fDegree < 360) {
+                    fDegree += 360;
+                }
+                else if (fDegree >= 720) {
+                    fDegree -= 720;
+                }
+            }
+            else {
+                if (fDegree > 360) {
+                    fDegree -= 360;
+                }
+                if (fDegree < 0) {
+                    fDegree += 360;
+                }
+            }
+        }
+
+        float speed = CObjectManager.Instance.Get_fSpeed();
+        if (isAccele) {
+            speed = CObjectManager.Instance.Get_fAcceleSpeed();
+        }
+
+        float s = 180 * speed / Mathf.PI / fRadius;
 
         // 角度加算
         fDegree += s;
 
         //Vector3 pos;
 
+        float rad = (9 - 5) / 2;
+        float rad2 = (9 + 5) / 2;
+
         // 位置更新
-        pos.x = fRadius * Mathf.Sin((fDegree) * Mathf.Deg2Rad);
-        pos.y = 0.0f;
-        pos.z = fRadius * Mathf.Cos((fDegree) * Mathf.Deg2Rad);
+        pos.x = rad2 * Mathf.Sin((fDegree + 180) * Mathf.Deg2Rad)
+            + rad * Mathf.Cos((fDegreeSub+fDegreeSub2) * Mathf.Deg2Rad) * Mathf.Sin((fDegree + 180) * Mathf.Deg2Rad);
+
+        pos.y = rad * Mathf.Sin((fDegreeSub + fDegreeSub2) * Mathf.Deg2Rad);
+
+        pos.z = rad2 * Mathf.Cos((fDegree + 180) * Mathf.Deg2Rad)
+            + rad * Mathf.Cos((fDegreeSub + fDegreeSub2) * Mathf.Deg2Rad) * Mathf.Cos((fDegree + 180) * Mathf.Deg2Rad);
+
         transform.position = pos;
 
-        if (Shape == COrderManager.Instance.Get_Order(0)) {
-            CObjectManager.Instance.Add(this.gameObject);
-            fSpeed = CObjectManager.Instance.Get_fSpeed();
-            isAccele = false;
+        if (isAccele) {
+            if (Shape == COrderManager.Instance.Get_Order(0)) {
+                CObjectManager.Instance.Add(this.gameObject);
+                isAccele = false;
+            }
         }
 
 
@@ -142,70 +222,58 @@ public class CRotateObject : MonoBehaviour {
         //}
 
         // 加速中
-        if (isAccele) {
-            List<GameObject> list = CObjectManager.Instance.Get_gObjectList();
-            if (list.Count > 0) {
-                GameObject last = list[list.Count - 1];
-                float deg = last.GetComponent<CRotateObject>().Get_fDegree();
+        //if (isSort) {
+        //    List<GameObject> list = CObjectManager.Instance.Get_gObjectList();
+        //    if (list.Count > 0) {
+        //        GameObject last = list[list.Count - 1];
+        //        float deg = last.GetComponent<CRotateObject>().Get_fDegree();
 
-                float diff = deg - fDegree;
-                if (diff < 0) {
-                    diff += 360;
-                }
+        //        float diff = deg - fDegree;
+        //        if (diff < 0) {
+        //            diff += 720;
+        //        }
 
-                float len = diff / 360 * 2 * Mathf.PI * fRadius;
+        //        float len = diff / 360 * 2 * Mathf.PI * fRadius;
 
-                if (len < 3.0f && State == last.GetComponent<CRotateObject>().Get_RotateState()) {
-                    isAccele = false;
-                    fSpeed = CObjectManager.Instance.Get_fSpeed();
-                    CObjectManager.Instance.Add(this.gameObject);
-                    CObjectManager.Instance.AcceleRemove(this.gameObject);
-                }
-            }
-        }
-        else {
-            int ranking = CObjectManager.Instance.Get_iRanking(this.gameObject);
-            if (ranking > 0) {
-                GameObject obj = CObjectManager.Instance.Get_gObject(ranking - 1);
-                //if (State == obj.GetComponent<CRotateObject>().Get_RotateState()) {
-                float deg = obj.GetComponent<CRotateObject>().Get_fDegree();
-
-                float diff = deg - fDegree;
-                if (diff < 0) {
-                    diff += 360;
-                }
-
-                if (diff <= 3.0f * 360 / 2 / Mathf.PI / fRadius)
-                    fSpeed = CObjectManager.Instance.Get_fSpeed();
-
-                fDegree = deg - 3.0f * 360 / 2 / Mathf.PI / fRadius;
-                //}
-            }
-        }
-        if (fDegree >= 360) {
-            fDegree = 0;
-        }
+        //        if (len < 3.0f) {
+        //            isAccele = false;
+        //            fSpeed = CObjectManager.Instance.Get_fSpeed();
+        //            CObjectManager.Instance.Add(this.gameObject);
+        //            CObjectManager.Instance.AcceleRemove(this.gameObject);
+        //        }
+        //    }
+        //}
     }
 
+
     // 回転ステート変更関数setter
+    // 外側が0～360度、内側が360～720度
     public void Set_State(RotateState newState) {
         State = newState;
         switch (State) {
             case RotateState.INSIDE:
                 //内側回転用の処理
                 fRadius = 5.0f;
-                /*if (fDegree < 360.0f) {
+                fDegreeSub = -180;
+                if (fDegree <= 360.0f) {
                     fDegree += 360.0f;
-                }*/
+                }
                 break;
             case RotateState.OUTSIDE:
                 //外側回転用処理
                 fRadius = 9.0f;
-                /*if (fDegree > 360.0f) {
+                fDegreeSub = 0;
+                if (fDegree >= 360.0f) {
                     fDegree -= 360.0f;
-                }*/
+                }
                 break;
             default: break;
+        }
+    }
+    public void InvDegree() {
+        fDegree += 360.0f;
+        if (fDegree >= 720.0f) {
+            fDegree -= 720.0f;
         }
     }
 
@@ -214,8 +282,13 @@ public class CRotateObject : MonoBehaviour {
         return fDegree;
     }
 
+    // 角度getter
+    public float Get_fDegreeSub() {
+        return fDegreeSub;
+    }
+
     // 回転ステートgetter
-    public RotateState Get_RotateState() {
+    public RotateState Get_State() {
         return State;
     }
 
@@ -228,9 +301,12 @@ public class CRotateObject : MonoBehaviour {
         return isAccele;
     }
 
-    // スピードsetter
-    public void Set_fSpeed(float s) {
-        fSpeed = s;
+    public bool Get_isInverse() {
+        return isInverse;
+    }
+
+    public bool Get_isInverse2() {
+        return isInverse2;
     }
 
     // 初期位置setter
@@ -246,5 +322,15 @@ public class CRotateObject : MonoBehaviour {
     // 加速フラグsetter
     public void Set_isAccele(bool b) {
         isAccele = b;
+    }
+
+    // 加速フラグsetter
+    public void Set_isSort(bool b) {
+        isSort = b;
+    }
+
+    // ソートフラグsetter
+    public void Set_isInverse(bool b) {
+        isInverse = b;
     }
 }

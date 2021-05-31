@@ -1,15 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 using UnityEngine.SceneManagement;
 
-public class CNamemanager : MonoBehaviour{
+public class CNameManager : MonoBehaviour{
     
-    public  int[] iSavename = new int[3];
+    public int[] iSavename = new int[3];
+    public string sName = null;
     public int i = 0;
 
-    [SerializeField, TooltipAttribute("ホームボタンの登録名")]
-    private string stButtonNameHome = "Xbox_Home";    // ホームボタン
     [SerializeField, TooltipAttribute("ホームボタンの登録名")]
     private string stButtonNameA = "Xbox_A";    // ホームボタン
     [SerializeField, TooltipAttribute("ホームボタンの登録名")]
@@ -18,20 +18,45 @@ public class CNamemanager : MonoBehaviour{
     private string stButtonNameLB = "Xbox_LB";    // LBボタン
     [SerializeField, TooltipAttribute("ホームボタンの登録名")]
     private string stButtonNameRB = "Xbox_RB";    // RBボタン
-    bool bIsEnd;
-    [SerializeField] bool bIsYou;   // 特定の名前だけ入力させたいのでこのフラグがtrueの場合は入力可能にする
-    [SerializeField] private AudioClip aSE01;
-    AudioSource aAudioSource;
 
-    void Start(){
+    public bool bIsEnd;
+    public bool bIsUse;
 
-        iSavename[0] = 0;
-        iSavename[1] = 0;
-        iSavename[2] = 0;
+    [SerializeField] GameObject gPanel;
+
+    // CScoreManagerにstring型にした状態で名前を引き渡すのに使用
+    public int[] GetName(){
+        return iSavename;
+    }
+    public void SetName(int[] iName){
+
+        for (int j = 0; j < 3; j++){
+
+            iSavename[j] = iName[j];
+        }
+    }
+    void Start()
+    {
+        //iSavename[0] = 0;
+        //iSavename[1] = 0;
+        //iSavename[2] = 0;
 
         bIsEnd = false;
-       // bIsYou = false;
-        aAudioSource = GetComponent<AudioSource>();
+        bIsUse = true;
+
+        gPanel = GameObject.Find("NamePanel");
+        /*
+        if (CSceneManager.GetRecently() != "ResultScene")
+        {
+            gPanel.SetActive(false);
+            bIsUse = false;
+            bIsEnd = true;
+        }
+        */
+       // else
+        {
+            gPanel.SetActive(true);
+        }
     }
     
     void Update(){
@@ -39,20 +64,14 @@ public class CNamemanager : MonoBehaviour{
         // 名前入力を決定終了したら無駄にUpdateの処理をおこなわないようにreturnする。
         if (bIsEnd)
         {
-            if(bIsYou)
-            {
-                // ホームボタンを押したらタイトルに戻るように遷移（自動でできるようにしたかったの。。。）
-                if (Input.GetButtonDown(stButtonNameHome))
-                {
-                    aAudioSource.PlayOneShot(aSE01);
-                    CSceneManager.SetRecently("TitleScene");
-                    SceneManager.LoadScene("TitleScene");
-                }
-            }
+            if (bIsUse)
+            {      
+                bIsUse = false;
+                gPanel.SetActive(false);
+            }            
             return;
         }
-
-        if (bIsYou && !bIsEnd)
+        if (bIsUse && !bIsEnd)
         {
 
             if (Input.GetKeyDown(KeyCode.D) || Input.GetButtonDown(stButtonNameRB))
@@ -89,7 +108,7 @@ public class CNamemanager : MonoBehaviour{
             }
         }
 
-        if(Input.GetButtonDown(stButtonNameA))
+        if(Input.GetButtonDown(stButtonNameA) || Input.GetKeyDown(KeyCode.Z))
         {
             bIsEnd = true;
         }

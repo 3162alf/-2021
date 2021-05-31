@@ -101,12 +101,14 @@ public class CCursorController : MonoBehaviour {
         // 移動用の計算
         vMovePos.x = Mathf.Cos(gCursorManager.GetComponent<CCursorManager>().Get_fRad() + (Mathf.PI / 2)) * gCursorManager.GetComponent<CCursorManager>().Get_fCreateRad();
         vMovePos.z = Mathf.Sin(gCursorManager.GetComponent<CCursorManager>().Get_fRad() + (Mathf.PI / 2)) * gCursorManager.GetComponent<CCursorManager>().Get_fCreateRad();
-
+        vMovePos.y = 1.0f;
+         
         transform.position = new Vector3(vMovePos.x, vMovePos.y, vMovePos.z);
 
         if (Input.GetButtonDown(stButton1Name) || Input.GetKeyDown(KeyCode.Space)) {
-            CreateSphereCast(gCursorManager.transform.position, this.transform.position);
-            Debug.Log("SE!!");
+            vMovePos.y = 0.0f;
+            CreateSphereCast(gCursorManager.transform.position, vMovePos);
+           // Debug.Log("SE!!");
             aAudioSource.PlayOneShot(aSE01);
         }
         // debug用(押している間、rayを飛ばし続ける)
@@ -133,15 +135,15 @@ public class CCursorController : MonoBehaviour {
         // RaycastAll(rRay : 原点、飛ばす方向, iDistance : 長さ, lmLayerMask : 衝突処理を行うレイヤーを制限)
         rhHits = Physics.RaycastAll(rRay, iDistance, lmLayerMask);
         foreach (RaycastHit rhHitObject in rhHits) {
-            Debug.Log("Rayが" + stTagName + "に当たった");
+           // Debug.Log("Rayが" + stTagName + "に当たった");
 
             // ひっくり返す処理
-            if (rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Get_RotateState() == RotateState.OUTSIDE) {
-                rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Set_State(RotateState.INSIDE);
-            }
-            else if (rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Get_RotateState() == RotateState.INSIDE) {
-                rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Set_State(RotateState.OUTSIDE);
-            }
+            //if (rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Get_RotateState() == RotateState.OUTSIDE) {
+            //    rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Set_State(RotateState.INSIDE);
+            //}
+            //else if (rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Get_RotateState() == RotateState.INSIDE) {
+            //    rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Set_State(RotateState.OUTSIDE);
+            //}
         }
     }
 
@@ -158,7 +160,7 @@ public class CCursorController : MonoBehaviour {
         // SpereCastAll( rSphereRay : 原点、飛ばす方向　, fSphereCastRadius : SphereCastの大きさ　, iDistance : rayの最大距離　, lmLayerMask : 衝突処理を行うレイヤー)
         rhSphereHits = Physics.SphereCastAll(rSphereRay, fSphereCastRadius, iDistance, lmLayerMask);
         foreach (RaycastHit rhHitObject in rhSphereHits) {
-            Debug.Log("SphereCastが" + stTagName + "に当たった");
+            //Debug.Log("SphereCastが" + stTagName + "に当たった");
 
             if (!rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Get_isAccele()) {
                 if (COrderManager.Instance.Get_Order(0) != rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Get_Shape()) {
@@ -170,14 +172,14 @@ public class CCursorController : MonoBehaviour {
                     //pParticleSystem_1.Play();
 
                     // ひっくり返す処理
-                    if (rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Get_RotateState() == RotateState.OUTSIDE) {
-                        rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Set_State(RotateState.INSIDE);
-                    }
-                    else if (rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Get_RotateState() == RotateState.INSIDE) {
-                        rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Set_State(RotateState.OUTSIDE);
+                    //if (rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Get_RotateState() == RotateState.OUTSIDE) {
+                    //    rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Set_State(RotateState.INSIDE);
+                    //}
+                    //else if (rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Get_RotateState() == RotateState.INSIDE) {
+                    //    rhHitObject.collider.gameObject.GetComponent<CRotateObject>().Set_State(RotateState.OUTSIDE);
 
-                    }
-                    CObjectManager.Instance.Accele(rhHitObject.collider.gameObject);
+                    //}
+                    CObjectManager.Instance.Inverse(rhHitObject.collider.gameObject);
                 }
             }
         }
