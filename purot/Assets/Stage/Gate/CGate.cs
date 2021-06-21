@@ -134,30 +134,6 @@ public class CGate : MonoBehaviour {
 
         transform.position = pos;
 
-        // 角度のブール処理
-        //if (fDegree >= 200 && fDegree <= 220) {
-        //    isInverse = true;
-        //}
-
-        // 一周したら内側、外側を入れ替える処理
-        //if (isDegree && State == RotateState.OUTSIDE) {
-        //    if (fRadius >= 5 && State == RotateState.OUTSIDE) {
-        //        Console.WriteLine(fRadius -= 0.02f);
-        //    }
-        //    else {
-        //        isDegree = false;
-        //        Set_State(RotateState.INSIDE);
-        //    }
-        //}
-        //else if (isDegree && State == RotateState.INSIDE) {
-        //    if (fRadius <= 9 && State == RotateState.INSIDE) {
-        //            Console.WriteLine(fRadius += 0.02f);
-        //    }
-        //    else {
-        //        isDegree = false;
-        //        Set_State(RotateState.OUTSIDE);
-        //    }
-        //}
         Vector3 p = transform.position;
         p += new Vector3(Mathf.Sin((fDegree + 90) * Mathf.Deg2Rad),
                          -0.5f,

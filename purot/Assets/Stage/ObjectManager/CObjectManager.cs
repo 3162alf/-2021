@@ -56,7 +56,7 @@ public class CObjectManager : CSingletonMonoBehaviour<CObjectManager> {
 
     // Update is called once per frame
     void Update() {
-        //ポーズ画面の時にオブジェクトが生成しないような処理
+        // ポーズ画面の時にオブジェクトが生成しないような処理
         if (Mathf.Approximately(Time.timeScale, 0f)) {
             return;
         }
@@ -103,7 +103,7 @@ public class CObjectManager : CSingletonMonoBehaviour<CObjectManager> {
                 CreateList.RemoveAt(0);
 
                 gObjectList.Add(tmp);
-                Sort();
+                //Sort();
 
 
                 iTimer = 0;
