@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 301707189123730277}
   - component: {fileID: 8020783487129124494}
+  - component: {fileID: 5731682455350157675}
   m_Layer: 0
   m_Name: PFB_ScoreObj
   m_TagString: Untagged
@@ -44,3 +45,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tScore: {fileID: 88131986756468496, guid: a41f5a11e9dc212459deaf88d69ead41, type: 3}
+--- !u!210 &5731682455350157675
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7764665100475276257}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0

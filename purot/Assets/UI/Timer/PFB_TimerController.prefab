@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &4183536177019432149
+--- !u!1 &9130500764733692103
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,8 +8,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4183536177019432147}
-  - component: {fileID: 4183536177019432146}
+  - component: {fileID: 9130500764733692100}
+  - component: {fileID: 9130500764733692101}
+  - component: {fileID: 9130500764733692102}
   m_Layer: 0
   m_Name: PFB_TimerController
   m_TagString: Untagged
@@ -17,32 +18,42 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4183536177019432147
+--- !u!4 &9130500764733692100
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4183536177019432149}
+  m_GameObject: {fileID: 9130500764733692103}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 437.61948, y: 193.6312, z: 178.39044}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4183536177019432146
+--- !u!210 &9130500764733692101
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9130500764733692103}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!114 &9130500764733692102
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4183536177019432149}
+  m_GameObject: {fileID: 9130500764733692103}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 484cb240928a2e741af676d61a625703, type: 3}
+  m_Script: {fileID: 11500000, guid: fc1204a071be8b447ba9e10d8a5b5742, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tTimer: {fileID: 0}
-  fMinute: 2
+  fMinute: 3
   fSeconds: 0
