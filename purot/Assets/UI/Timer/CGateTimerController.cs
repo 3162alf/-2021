@@ -109,19 +109,19 @@ public class CGateTimerController : MonoBehaviour {
                         CGate cs = gate.GetComponent<CGate>();
                         CRotateObject cro = first.GetComponent<CRotateObject>();
 
-                        if(deg >= 330 && deg < 690) {
+                        if(deg >= 330 && deg <= 690) {
                             cs.Set_State(RotateState.INSIDE);
 
-                            if(deg <= 400 && deg >= 320) {
+                            if(deg <= 400 && deg >= 330) {
                                 cs.Set_isInverse(true);
-                                cs.Set_fDegreeSub(180 + (400 - deg) * 3.5f);
+                                cs.Set_fDegreeSub(180 + (400 - deg) * 3.0f);
                             }
                         }
                         else {
                             cs.Set_State(RotateState.OUTSIDE);
                             if(deg <= 760 && deg >= 690) {
                                 cs.Set_isInverse(true);
-                                cs.Set_fDegreeSub((760 - deg) * 3.5f);
+                                cs.Set_fDegreeSub((760 - deg) * 3.0f);
                             }
                         }
 
