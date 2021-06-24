@@ -34,6 +34,7 @@ public class CLevelManager : CSingletonMonoBehaviour<CLevelManager> {
     // Start is called before the first frame update
     void Start() {
         COrderManager.Instance.CreateOrder(Level[iLevel].iOrderNum);
+        CClearLampManager.Instance.CreateLamp(Level[iLevel].iOrderNum);
 
         // オブジェクト展開
         OBJECT_SHAPE first = COrderManager.Instance.Get_Order(0);

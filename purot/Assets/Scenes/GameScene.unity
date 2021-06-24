@@ -1316,7 +1316,7 @@ MonoBehaviour:
   iIteration: 30
   fThreshold: 0
   fSoftThreshold: 1
-  fIntensity: 1
+  fIntensity: 1.5
   bDebug: 0
   Material: {fileID: 2100000, guid: 4e0979ffb0dae904ab478de4d468c580, type: 2}
 --- !u!81 &2144730593
@@ -1453,6 +1453,86 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef0ab3d110162864097011965d933d1c, type: 3}
+--- !u!1001 &1553493953552264049
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 580775392439702501, guid: f82b2054950e1054e9fcd98a3b4b94e6,
+        type: 3}
+      propertyPath: m_Name
+      value: PFB_ClearLampManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066093017471740747, guid: f82b2054950e1054e9fcd98a3b4b94e6,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066093017471740747, guid: f82b2054950e1054e9fcd98a3b4b94e6,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066093017471740747, guid: f82b2054950e1054e9fcd98a3b4b94e6,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066093017471740747, guid: f82b2054950e1054e9fcd98a3b4b94e6,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066093017471740747, guid: f82b2054950e1054e9fcd98a3b4b94e6,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066093017471740747, guid: f82b2054950e1054e9fcd98a3b4b94e6,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066093017471740747, guid: f82b2054950e1054e9fcd98a3b4b94e6,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066093017471740747, guid: f82b2054950e1054e9fcd98a3b4b94e6,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066093017471740747, guid: f82b2054950e1054e9fcd98a3b4b94e6,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066093017471740747, guid: f82b2054950e1054e9fcd98a3b4b94e6,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2066093017471740747, guid: f82b2054950e1054e9fcd98a3b4b94e6,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7605931545601946526, guid: f82b2054950e1054e9fcd98a3b4b94e6,
+        type: 3}
+      propertyPath: gClearLamp
+      value: 
+      objectReference: {fileID: 9137489138905292491, guid: 422c6175d703ec74e9bdde8c658c18d4,
+        type: 3}
+    - target: {fileID: 7605931545601946526, guid: f82b2054950e1054e9fcd98a3b4b94e6,
+        type: 3}
+      propertyPath: fBloomStrength
+      value: 10
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f82b2054950e1054e9fcd98a3b4b94e6, type: 3}
 --- !u!1001 &1924387833771220294
 PrefabInstance:
   m_ObjectHideFlags: 0

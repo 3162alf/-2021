@@ -36,6 +36,8 @@ public class CGate : MonoBehaviour {
 
     private GameObject gGateTimerController;            // LampManager�̃I�u�W�F�N�g��i�[
     private CGateTimerController csGateTimerController; // �Q�[�g�^�C�}�[�X�N���v�g
+    private bool bLampReset = false;
+    private int iResetTimer = 0;
 
     //-- 2021.5.15�ǉ� sasaki
     [SerializeField] private GameObject gPanelObjectRed;    // �p�l���v���n�u�i�ԁj
@@ -189,16 +191,15 @@ public class CGate : MonoBehaviour {
 
             GetComponent<CCreateEffect>().CreateEffect();
 
-            GameObject lamp = csOrderManager.Get_gClearLamp(iPassNum).transform.GetChild(6).gameObject;
             OBJECT_SHAPE order = csOrderManager.Get_Order(iPassNum);
 
             // �w�߂ƈ�v
             if (order == col.gameObject.GetComponent<CRotateObject>().Get_Shape()) {
                 iMatchNum++;
-                lamp.GetComponent<Renderer>().material.color = Color.green;
+                CClearLampManager.Instance.Lighting(iPassNum, Color.green);
             }
             else {
-                lamp.GetComponent<Renderer>().material.color = Color.red;
+                CClearLampManager.Instance.Lighting(iPassNum, Color.red);
             }
 
             // �ʉ߂����I�u�W�F�N�g��폜
@@ -230,13 +231,11 @@ public class CGate : MonoBehaviour {
                     CLevelManager.Instance.UpdateLevel();
                     // �w�ߐ���
                     csOrderManager.CreateOrder(CLevelManager.Instance.Get_iOrderNum());
+                    CClearLampManager.Instance.CreateLamp(CLevelManager.Instance.Get_iOrderNum());
                     iClearNum++;
                 }
                 else {
-                    for (int i = 0; i < ordernum; i++) {
-                        GameObject l = csOrderManager.Get_gClearLamp(i).transform.GetChild(6).gameObject; ;
-                        l.GetComponent<Renderer>().material.color = Color.white;
-                    }
+                    
                     //-- 2021.5.15�ǉ� sasaki
                     gPanelRed.SetActive(true);
 
@@ -245,6 +244,7 @@ public class CGate : MonoBehaviour {
                 }
                 // �V�����I�u�W�F�N�g����
                 CObjectManager.Instance.Create(ordernum);
+                CClearLampManager.Instance.LightingOff();
 
                 csGateTimerController.Reset();
                 gGateTimerController.transform.LookAt(new Vector3(0, 0, 10));

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5191705829584682650}
   - component: {fileID: -2566475007114253316}
   - component: {fileID: 8212300972367304819}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PFB_Lamp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -60,7 +60,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 7309800f87f81574f8b0d8397b98df77, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
