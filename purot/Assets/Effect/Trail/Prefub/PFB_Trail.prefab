@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4148020284029974449}
   - component: {fileID: 4148020284029974450}
   - component: {fileID: 4148020284029974451}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: PFB_Trail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -157,4 +157,3 @@ MonoBehaviour:
     type: 3}
   gTarget: {fileID: 8873466372020889084, guid: 911ab7a415c0e1e41a1dc9027c005360, type: 3}
   iMiddlePoints: 30
-  Score: {fileID: 7764665100475276257, guid: 8f3a300097322d745afb7b129414baef, type: 3}

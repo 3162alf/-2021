@@ -14,12 +14,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class COrderManager : CSingletonMonoBehaviour<COrderManager> {
-    [SerializeField] private GameObject[] gOrderSource;              // 指令オブジェクト配列
-    [SerializeField] private GameObject gClearLamp;                  // クリアランプ
+    [SerializeField] private GameObject[] gOrderSource;                   // 指令オブジェクト配列
 
     private List<OBJECT_SHAPE> OrderList = new List<OBJECT_SHAPE>();      // 指令リスト
     private List<GameObject> gOrderList = new List<GameObject>();         // 指令オブジェクト
-    private List<GameObject> gClearLampList = new List<GameObject>();     // クリアランプスタンプ
 
     // Start is called before the first frame update
     void Start() {
@@ -41,11 +39,6 @@ public class COrderManager : CSingletonMonoBehaviour<COrderManager> {
         return OrderList[id];
     }
 
-    // 指定した番号のクリアランプgetter
-    public GameObject Get_gClearLamp(int id) {
-        return gClearLampList[id];
-    }
-
     // 指令生成関数(引数:指令数)
     public void CreateOrder(int n) {
         // 指令の種類
@@ -54,12 +47,10 @@ public class COrderManager : CSingletonMonoBehaviour<COrderManager> {
         // 前回の指令を破棄
         for (int i = 0; i < gOrderList.Count; i++) {
             Destroy(gOrderList[i]);
-            Destroy(gClearLampList[i]);
         }
 
         // リスト初期化
         gOrderList.Clear();
-        gClearLampList.Clear();
         OrderList.Clear();
 
         List<int> nums = new List<int>();
@@ -90,10 +81,6 @@ public class COrderManager : CSingletonMonoBehaviour<COrderManager> {
             // 指令生成
             gOrderList.Add(Instantiate(gOrderSource[(int)OrderList[i]],
                 new Vector3(-18, 0, st - i * 5), Quaternion.Euler(0, 180, 0)));
-
-            // クリアランプ生成
-            gClearLampList.Add(Instantiate(gClearLamp,
-                new Vector3(-20, 0, st - i * 5), Quaternion.Euler(0, 0, 0)));
         }
     }
 }
