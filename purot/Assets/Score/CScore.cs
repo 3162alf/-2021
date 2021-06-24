@@ -1,7 +1,7 @@
-/*==============================================================================
+ï»¿/*==============================================================================
     Project
     [CScore.cs]
-    EƒXƒRƒA‚Åg‚¢‚»‚¤‚È‚â‚Â‹}ç¯—pˆÓ‚µ‚Ü‚µ‚½B
+    ãƒ»ã‚¹ã‚³ã‚¢ã§ä½¿ã„ãã†ãªã‚„ã¤æ€¥é½ç”¨æ„ã—ã¾ã—ãŸã€‚
 --------------------------------------------------------------------------------
     2021.05.09 Sasaki Misaki
 ================================================================================
@@ -24,21 +24,21 @@ public class CScore : MonoBehaviour {
     private static int iScore;
     private int iScoreParam;
     private static float fScore = 0.0f;
-    public static GameObject gScoreObj; // TextƒIƒuƒWƒFƒNƒg‚ğ‚ ‚Æ‚ÅFind‚µ‚Ä“ü‚ê‚éAƒŠƒUƒ‹ƒg‚Å‚¾‚¯g‚¤
+    public static GameObject gScoreObj; // Textã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ã‚ã¨ã§Findã—ã¦å…¥ã‚Œã‚‹ã€ãƒªã‚¶ãƒ«ãƒˆã§ã ã‘ä½¿ã†
 
 
-    // ƒXƒvƒ‰ƒCƒg•\¦ŠÖ˜A
-    Vector3 vInitPos;                    // •\¦ˆÊ’u
-    private int iPoint;                  // •\¦‚·‚é’l
-    private float fSize = 1;             // •\¦ƒTƒCƒY
-    private static int iSort = 0;        // ”š‚Ì•\¦‡
-    private const int SORT_MAX = 30000;  // ƒ\[ƒg‚·‚é”’l‚ÌÅ‘å”
-    private int iOldScore = 0;           // ƒXƒRƒA‚Ì·•ªŠm”F—p
-    private int iOldScoreParam = 0;      // ƒXƒRƒAƒpƒ‰ƒ[ƒ^‚Ì·•ªŠm”F—p
+    // ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆè¡¨ç¤ºé–¢é€£
+    Vector3 vInitPos;                    // è¡¨ç¤ºä½ç½®
+    private int iPoint;                  // è¡¨ç¤ºã™ã‚‹å€¤
+    private float fSize = 1;             // è¡¨ç¤ºã‚µã‚¤ã‚º
+    private static int iSort = 0;        // æ•°å­—ã®è¡¨ç¤ºé †
+    private const int SORT_MAX = 30000;  // ã‚½ãƒ¼ãƒˆã™ã‚‹æ•°å€¤ã®æœ€å¤§æ•°
+    private int iOldScore = 0;           // ã‚¹ã‚³ã‚¢ã®å·®åˆ†ç¢ºèªç”¨
+    private int iOldScoreParam = 0;      // ã‚¹ã‚³ã‚¢ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã®å·®åˆ†ç¢ºèªç”¨
 
 
     void Start() {
-        // ˆê‰ñ‚¾‚¯Às‚µ‚½‚¢‚©‚çƒXƒ^[ƒg‚É‘‚«‚Ü‚µ‚½BŒã‰÷‚Í‚µ‚Ä‚¢‚Ü‚·B
+        // ä¸€å›ã ã‘å®Ÿè¡Œã—ãŸã„ã‹ã‚‰ã‚¹ã‚¿ãƒ¼ãƒˆã«æ›¸ãã¾ã—ãŸã€‚å¾Œæ‚”ã¯ã—ã¦ã„ã¾ã™ã€‚
         if (SceneManager.GetActiveScene().name == "GameScene") {
             iScore = 0;
         }
@@ -46,7 +46,7 @@ public class CScore : MonoBehaviour {
             DispScore();
         }
 
-        // ƒXƒRƒA•\¦‰Šú‰»
+        // ã‚¹ã‚³ã‚¢è¡¨ç¤ºåˆæœŸåŒ–
         Init(iScore, new Vector3(0, 0, 0));
         CreateScoreSprite(iScoreParam, -4.0f);
     }
@@ -55,29 +55,29 @@ public class CScore : MonoBehaviour {
         iScore = (int)fScore;
         fScore = iScore;
 
-        // ƒXƒ‰ƒbƒVƒ…‚Ì‚İ•\¦
+        // ã‚¹ãƒ©ãƒƒã‚·ãƒ¥ã®ã¿è¡¨ç¤º
         if (tScore != null) {
             tScore.text = "/";
         }
 
-        // ’¼‘O‚ÌƒXƒRƒA‚ªˆá‚Á‚Ä‚¢‚½‚ç•\¦‚ğØ‚è‘Ö‚¦‚é
+        // ç›´å‰ã®ã‚¹ã‚³ã‚¢ãŒé•ã£ã¦ã„ãŸã‚‰è¡¨ç¤ºã‚’åˆ‡ã‚Šæ›¿ãˆã‚‹
         if(iScore != iOldScore || iScoreParam != iOldScoreParam) {
-            Debug.Log("’Ê‚Á‚½");
+            Debug.Log("é€šã£ãŸ");
 
-            // qƒIƒuƒWƒFƒNƒg‚ªƒ^ƒCƒ}[‚ÌƒXƒvƒ‰ƒCƒg‚È‚Ì‚Å‚»‚ê‚ğÁ‚·
+            // å­ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãŒã‚¿ã‚¤ãƒãƒ¼ã®ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆãªã®ã§ãã‚Œã‚’æ¶ˆã™
             GameObject obj = GameObject.Find("PFB_ScoreObj");
 
-            // Œ»İ‚ÌƒXƒRƒA•\¦‚ğíœ
+            // ç¾åœ¨ã®ã‚¹ã‚³ã‚¢è¡¨ç¤ºã‚’å‰Šé™¤
             foreach (Transform child in obj.transform) {
                 Destroy(child.gameObject);
             }
 
-            // ƒXƒRƒA‚Ì•\¦
+            // ã‚¹ã‚³ã‚¢ã®è¡¨ç¤º
             CreateScoreSprite(iScore, 0.0f);
             CreateScoreSprite(iScoreParam, -4.0f);
         }
 
-        // ’¼‘O‚ÌƒXƒRƒA’B‚ğXV
+        // ç›´å‰ã®ã‚¹ã‚³ã‚¢é”ã‚’æ›´æ–°
         iOldScore = iScore;
         iOldScoreParam = iScoreParam;
     }
@@ -100,11 +100,11 @@ public class CScore : MonoBehaviour {
     }
 
     public static void DispScore() {
-        // ƒIƒuƒWƒFƒNƒg‚©‚çTextƒRƒ“ƒ|[ƒlƒ“ƒg‚ğæ“¾
+        // ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‹ã‚‰Textã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’å–å¾—
         gScoreObj = GameObject.Find("TextScore");
         Text ScoreText = gScoreObj.GetComponent<Text>();
 
-        // ƒeƒLƒXƒg‚Ì•\¦‚ğ“ü‚ê‘Ö‚¦‚é
+        // ãƒ†ã‚­ã‚¹ãƒˆã®è¡¨ç¤ºã‚’å…¥ã‚Œæ›¿ãˆã‚‹
         ScoreText.text = iScore.ToString();
     }
 
@@ -114,15 +114,15 @@ public class CScore : MonoBehaviour {
 
 
     public void Init(int point, Vector3 pos) {
-        // •K—v‚Èî•ñ‚ğŠi”[
+        // å¿…è¦ãªæƒ…å ±ã‚’æ ¼ç´
         this.iPoint = point;
 
-        // •\¦—p‚Ìƒ_ƒ[ƒW‚ğì‚é
+        // è¡¨ç¤ºç”¨ã®ãƒ€ãƒ¡ãƒ¼ã‚¸ã‚’ä½œã‚‹
         CreateScoreSprite(point, 0.0f);
 
         vInitPos = pos;
 
-        // •\¦‡‚ğˆê”Ôã‚É
+        // è¡¨ç¤ºé †ã‚’ä¸€ç•ªä¸Šã«
         GetComponent<SortingGroup>().sortingOrder = iSort;
 
         iSort++;
@@ -132,35 +132,36 @@ public class CScore : MonoBehaviour {
 
     }
 
-    // •`‰æ—p‚Ì”š‚ğì‚é
+    // æç”»ç”¨ã®æ•°å­—ã‚’ä½œã‚‹
     private void CreateScoreSprite(int point, float X) {
 
-        // Œ…‚ğŠ„‚èo‚·
+        // æ¡ã‚’å‰²ã‚Šå‡ºã™
         int iDigit = ChkDigit(point);
 
-        // ”šƒvƒŒƒnƒu‚ğ“Ç‚İ‚ŞAƒeƒXƒg—p‚ÌƒtƒHƒ‹ƒ_‚Æƒtƒ@ƒCƒ‹–¼
-        GameObject obj = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Score/PFB_Score.prefab");
+        // æ•°å­—ãƒ—ãƒ¬ãƒãƒ–ã‚’èª­ã¿è¾¼ã‚€ã€ãƒ†ã‚¹ãƒˆç”¨ã®ãƒ•ã‚©ãƒ«ãƒ€ã¨ãƒ•ã‚¡ã‚¤ãƒ«å
+        //GameObject obj = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Score/PFB_Score.prefab");
+        GameObject obj = (GameObject)Resources.Load("PFB_Score");
 
-        // Œ…‚Ì•ª‚¾‚¯ƒIƒuƒWƒFƒNƒg‚ğì‚è“o˜^‚µ‚Ä‚¢‚­
+        // æ¡ã®åˆ†ã ã‘ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ä½œã‚Šç™»éŒ²ã—ã¦ã„ã
         for (int i = 0; i < iDigit; i++) {
 
             GameObject numObj = Instantiate(obj) as GameObject;
 
             Debug.Log(numObj);
 
-            // q‹Ÿ‚Æ‚µ‚Ä“o˜^
+            // å­ä¾›ã¨ã—ã¦ç™»éŒ²
             numObj.transform.parent = transform;
 
-            // Œ»İƒ`ƒFƒbƒN‚µ‚Ä‚¢‚éŒ…‚Ì”š‚ğŠ„‚èo‚·
+            // ç¾åœ¨ãƒã‚§ãƒƒã‚¯ã—ã¦ã„ã‚‹æ¡ã®æ•°å­—ã‚’å‰²ã‚Šå‡ºã™
             int digNum = GetPointDigit(point, i + 1);
 
-            // ƒ|ƒCƒ“ƒg‚©‚ç”š‚ğØ‚è‘Ö‚¦‚é
+            // ãƒã‚¤ãƒ³ãƒˆã‹ã‚‰æ•°å­—ã‚’åˆ‡ã‚Šæ›¿ãˆã‚‹
             numObj.GetComponent<CScoreController>().ChangeSprite(digNum);
 
-            // ƒTƒCƒY‚ğƒQƒbƒg‚·‚é
+            // ã‚µã‚¤ã‚ºã‚’ã‚²ãƒƒãƒˆã™ã‚‹
             float size_w = numObj.GetComponent<SpriteRenderer>().bounds.size.x;
 
-            // ˆÊ’u‚ğ‚¸‚ç‚· 0.75f‚Í”š‚ÌŠÔŠu‚Ì’²®
+            // ä½ç½®ã‚’ãšã‚‰ã™ 0.75fã¯æ•°å­—ã®é–“éš”ã®èª¿æ•´
             float ajs_x = (size_w * i - (size_w * iDigit) / 2) * 1.0f + X;
             Vector3 pos = new Vector3(numObj.transform.position.x - ajs_x, numObj.transform.position.y, numObj.transform.position.z);
             numObj.transform.position = pos;
@@ -170,18 +171,18 @@ public class CScore : MonoBehaviour {
 
     }
 
-    // ®”‚ÌŒ…”‚ğ•Ô‚·
+    // æ•´æ•°ã®æ¡æ•°ã‚’è¿”ã™
     public static int ChkDigit(int num) {
 
-        //0‚Ìê‡1Œ…‚Æ‚µ‚Ä•Ô‚·
+        //0ã®å ´åˆ1æ¡ã¨ã—ã¦è¿”ã™
         if (num == 0) return 1;
 
-        //‘Î”‚Æ‚â‚ç‚ğg‚Á‚Ä•Ô‚·
+        //å¯¾æ•°ã¨ã‚„ã‚‰ã‚’ä½¿ã£ã¦è¿”ã™
         return (num == 0) ? 1 : ((int)Mathf.Log10(num) + 1);
 
     }
 
-    // ”’l‚Ì’†‚©‚çw’è‚µ‚½Œ…‚Ì’l‚ğ‚©‚¦‚·
+    // æ•°å€¤ã®ä¸­ã‹ã‚‰æŒ‡å®šã—ãŸæ¡ã®å€¤ã‚’ã‹ãˆã™
     public static int GetPointDigit(int num, int digit) {
 
         int res = 0;
