@@ -1,13 +1,13 @@
-/*==============================================================================
+ï»¿/*==============================================================================
     PROJECT ???
     [CTimer.cs]
-    §ŒÀŠÔ‚Ì§Œä‚ğ‚·‚éˆ—
+    åˆ¶é™æ™‚é–“ã®åˆ¶å¾¡ã‚’ã™ã‚‹å‡¦ç†
 --------------------------------------------------------------------------------
     2021.06.20 @Author Kaname Ota
 ================================================================================
     History
         2021.06.20
-            §ŒÀŠÔ‚ğƒXƒvƒ‰ƒCƒg‚Å•\¦
+            åˆ¶é™æ™‚é–“ã‚’ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã§è¡¨ç¤º
             
 /*============================================================================*/
 
@@ -20,28 +20,28 @@ using UnityEngine.SceneManagement;
 
 public class CTimer : MonoBehaviour
 {
-    // •\¦ˆÊ’u
+    // è¡¨ç¤ºä½ç½®
     Vector3 vInitPos;
 
-    // •\¦ŠÖ˜A
-    private int iPoint;                  // •\¦‚·‚é’l
-    private float fSize = 1;             // •\¦ƒTƒCƒY
-    private static int iSort = 0;        // ”š‚Ì•\¦‡
-    private const int SORT_MAX = 30000;  // ƒ\[ƒg‚·‚é”š‚ÌÅ‘å”
+    // è¡¨ç¤ºé–¢é€£
+    private int iPoint;                  // è¡¨ç¤ºã™ã‚‹å€¤
+    private float fSize = 1;             // è¡¨ç¤ºã‚µã‚¤ã‚º
+    private static int iSort = 0;        // æ•°å­—ã®è¡¨ç¤ºé †
+    private const int SORT_MAX = 30000;  // ã‚½ãƒ¼ãƒˆã™ã‚‹æ•°å­—ã®æœ€å¤§æ•°
 
-    // ƒ^ƒCƒ}[ŠÖ˜A
+    // ã‚¿ã‚¤ãƒãƒ¼é–¢é€£
     [SerializeField]
-    private float fMinute;               // •ª”—p•Ï”
+    private float fMinute;               // åˆ†æ•°ç”¨å¤‰æ•°
 
     [SerializeField]
-    private float fSeconds;             // •b”—p•Ï”
-    private float fOldSeconds;          // ˆêŒÂ‘O‚Ì•ª”
-    private float fTotalTime;           // ‘‡ŠÔ
-    private float fCountTime;           // ƒ^ƒCƒ}[Ø‚è‘Ö‚¦‚æ‚¤
+    private float fSeconds;             // ç§’æ•°ç”¨å¤‰æ•°
+    private float fOldSeconds;          // ä¸€å€‹å‰ã®åˆ†æ•°
+    private float fTotalTime;           // ç·åˆæ™‚é–“
+    private float fCountTime;           // ã‚¿ã‚¤ãƒãƒ¼åˆ‡ã‚Šæ›¿ãˆã‚ˆã†
 
 
     void Start() {
-        // ‘‡ŠÔ‚ÌZo‚Æ‰Šú‰»
+        // ç·åˆæ™‚é–“ã®ç®—å‡ºã¨åˆæœŸåŒ–
         fTotalTime = fMinute * 60 + fSeconds;
         fOldSeconds = 0.0f;
         fCountTime = 0.0f;
@@ -51,15 +51,15 @@ public class CTimer : MonoBehaviour
     }
 
     public void Init(int point, Vector3 pos) {
-        // •K—v‚Èî•ñ‚ğŠi”[
+        // å¿…è¦ãªæƒ…å ±ã‚’æ ¼ç´
         this.iPoint = point;
 
-        // •\¦—p‚Ìƒ_ƒ[ƒW‚ğì‚é
+        // è¡¨ç¤ºç”¨ã®ãƒ€ãƒ¡ãƒ¼ã‚¸ã‚’ä½œã‚‹
         CreateNum(point,0.0f);
 
         vInitPos = pos;
 
-        // •\¦‡‚ğˆê”Ôã‚É
+        // è¡¨ç¤ºé †ã‚’ä¸€ç•ªä¸Šã«
         GetComponent<SortingGroup>().sortingOrder = iSort;
         
         iSort++;
@@ -69,43 +69,43 @@ public class CTimer : MonoBehaviour
     }
 
     void Update() {
-        // ‘‡ŠÔ‚ª‚È‚­‚È‚Á‚½‚çˆ—‚ğ”ò‚Î‚·
+        // ç·åˆæ™‚é–“ãŒãªããªã£ãŸã‚‰å‡¦ç†ã‚’é£›ã°ã™
         if (fTotalTime <= 0.0f) {
             return;
         }
 
-        // ‘‡ŠÔ‚ÌXV
+        // ç·åˆæ™‚é–“ã®æ›´æ–°
         fTotalTime = fMinute * 60 + fSeconds;
 
-        // ‘‡ŠÔ‚ÌŒ¸Z
+        // ç·åˆæ™‚é–“ã®æ¸›ç®—
         fTotalTime -= Time.deltaTime;
 
-        // •ª”‚ÌZo
+        // åˆ†æ•°ã®ç®—å‡º
         fMinute = (int)fTotalTime / 60;
 
-        // •b”‚ÌZo
+        // ç§’æ•°ã®ç®—å‡º
         fSeconds = fTotalTime - fMinute * 60;
 
         if ((int)fSeconds != (int)fOldSeconds) {
-            Debug.Log("’Ê‚Á‚½");
+            Debug.Log("é€šã£ãŸ");
         
-            // qƒIƒuƒWƒFƒNƒg‚ªƒ^ƒCƒ}[‚ÌƒXƒvƒ‰ƒCƒg‚È‚Ì‚Å‚»‚ê‚ğÁ‚·
+            // å­ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãŒã‚¿ã‚¤ãƒãƒ¼ã®ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆãªã®ã§ãã‚Œã‚’æ¶ˆã™
             GameObject obj = GameObject.Find("PFB_TimerController");
         
             foreach (Transform child in obj.transform) {
                 Destroy(child.gameObject);
             }
 
-            // ˆê”Ô¶‚Ìƒ[ƒ
+            // ä¸€ç•ªå·¦ã®ã‚¼ãƒ­
             CreateNum(0, 3.5f);
 
-            // ƒRƒƒ“‚²‚è‰Ÿ‚µ¶¬
+            // ã‚³ãƒ­ãƒ³ã”ã‚ŠæŠ¼ã—ç”Ÿæˆ
             CreateColon(0.0f);
 
-            // •ªŠ„
+            // åˆ†å‰²
             CreateNum((int)fMinute, 2.0f);
 
-            // •b”‚Ì•’²®—p
+            // ç§’æ•°ã®å¹…èª¿æ•´ç”¨
             if((int)fSeconds >= 10) {
                 CreateNum((int)fSeconds, -1.3f);
             }
@@ -116,46 +116,46 @@ public class CTimer : MonoBehaviour
             }
         }
 
-        // ˆêŒÂ‘O‚Ì•b”‚ÉŒ»İ‚ÌŠÔ‚ğ‘ã“ü
+        // ä¸€å€‹å‰ã®ç§’æ•°ã«ç¾åœ¨ã®æ™‚é–“ã‚’ä»£å…¥
         fOldSeconds = fSeconds;
 
 
-        // ‘‡ŠÔ‚ª‚È‚­‚È‚Á‚½‚çƒŠƒUƒ‹ƒg‰æ–Ê‚É‘JˆÚ‚·‚é
+        // ç·åˆæ™‚é–“ãŒãªããªã£ãŸã‚‰ãƒªã‚¶ãƒ«ãƒˆç”»é¢ã«é·ç§»ã™ã‚‹
         if (fTotalTime <= 0.0f) {
             SceneManager.LoadScene("ResultScene");
         }
     }
 
-    //•`‰æ—p‚Ì”š‚ğì‚é
+    //æç”»ç”¨ã®æ•°å­—ã‚’ä½œã‚‹
     private void CreateNum(int point, float X) {
 
-        //Œ…‚ğŠ„‚èo‚·
+        //æ¡ã‚’å‰²ã‚Šå‡ºã™
         int iDigit = ChkDigit(point);
 
-        // ”šƒvƒŒƒnƒu‚ğ“Ç‚İ‚ŞAƒeƒXƒg—p‚ÌƒtƒHƒ‹ƒ_‚Æƒtƒ@ƒCƒ‹–¼
-        GameObject obj = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/UI//Timer/PFB_Timer.prefab");
+        // æ•°å­—ãƒ—ãƒ¬ãƒãƒ–ã‚’èª­ã¿è¾¼ã‚€ã€ãƒ†ã‚¹ãƒˆç”¨ã®ãƒ•ã‚©ãƒ«ãƒ€ã¨ãƒ•ã‚¡ã‚¤ãƒ«å
+        //GameObject obj = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/UI//Timer/PFB_Timer.prefab");
+        GameObject obj = (GameObject)Resources.Load("PFB_Timer");
 
-
-        //Œ…‚Ì•ª‚¾‚¯ƒIƒuƒWƒFƒNƒg‚ğì‚è“o˜^‚µ‚Ä‚¢‚­
+        //æ¡ã®åˆ†ã ã‘ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ä½œã‚Šç™»éŒ²ã—ã¦ã„ã
         for (int i = 0; i < iDigit; i++) {
 
             GameObject numObj = Instantiate(obj) as GameObject;
 
             Debug.Log(numObj);
 
-            // q‹Ÿ‚Æ‚µ‚Ä“o˜^
+            // å­ä¾›ã¨ã—ã¦ç™»éŒ²
             numObj.transform.parent = transform;
 
-            // Œ»İƒ`ƒFƒbƒN‚µ‚Ä‚¢‚éŒ…‚Ì”š‚ğŠ„‚èo‚·
+            // ç¾åœ¨ãƒã‚§ãƒƒã‚¯ã—ã¦ã„ã‚‹æ¡ã®æ•°å­—ã‚’å‰²ã‚Šå‡ºã™
             int digNum = GetPointDigit(point, i + 1);
 
-            // ƒ|ƒCƒ“ƒg‚©‚ç”š‚ğØ‚è‘Ö‚¦‚é
+            // ãƒã‚¤ãƒ³ãƒˆã‹ã‚‰æ•°å­—ã‚’åˆ‡ã‚Šæ›¿ãˆã‚‹
             numObj.GetComponent<CTimerController>().ChangeSprite(digNum);
 
-            // ƒTƒCƒY‚ğƒQƒbƒg‚·‚é
+            // ã‚µã‚¤ã‚ºã‚’ã‚²ãƒƒãƒˆã™ã‚‹
             float size_w = numObj.GetComponent<SpriteRenderer>().bounds.size.x;
 
-            // ˆÊ’u‚ğ‚¸‚ç‚· 0.75f‚Í”š‚ÌŠÔŠu‚Ì’²®
+            // ä½ç½®ã‚’ãšã‚‰ã™ 0.75fã¯æ•°å­—ã®é–“éš”ã®èª¿æ•´
             float ajs_x = (size_w * i - (size_w * iDigit) / 2) * 1.0f + X;
             Vector3 pos = new Vector3(numObj.transform.position.x - ajs_x, numObj.transform.position.y, numObj.transform.position.z);
             numObj.transform.position = pos;
@@ -166,38 +166,39 @@ public class CTimer : MonoBehaviour
     }
 
     private void CreateColon(float X) {
-        // ”šƒvƒŒƒnƒu‚ğ“Ç‚İ‚ŞAƒeƒXƒg—p‚ÌƒtƒHƒ‹ƒ_‚Æƒtƒ@ƒCƒ‹–¼
-        GameObject obj = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/UI/Timer/PFB_Timer.prefab");
+        // æ•°å­—ãƒ—ãƒ¬ãƒãƒ–ã‚’èª­ã¿è¾¼ã‚€ã€ãƒ†ã‚¹ãƒˆç”¨ã®ãƒ•ã‚©ãƒ«ãƒ€ã¨ãƒ•ã‚¡ã‚¤ãƒ«å
+        //GameObject obj = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/UI/Timer/PFB_Timer.prefab");
+        GameObject obj = (GameObject)Resources.Load("PFB_Timer");
 
         GameObject numObj = Instantiate(obj) as GameObject;
-        Debug.Log("‚±‚ë‚ñ");
+        Debug.Log("ã“ã‚ã‚“");
         Debug.Log(numObj);
 
-        // q‹Ÿ‚Æ‚µ‚Ä“o˜^
+        // å­ä¾›ã¨ã—ã¦ç™»éŒ²
         numObj.transform.parent = transform;
 
-        // ƒ|ƒCƒ“ƒg‚©‚ç”š‚ğØ‚è‘Ö‚¦‚é
+        // ãƒã‚¤ãƒ³ãƒˆã‹ã‚‰æ•°å­—ã‚’åˆ‡ã‚Šæ›¿ãˆã‚‹
         numObj.GetComponent<CTimerController>().ChangeSprite(10);
 
-        // ˆÊ’u‚ğ‚¸‚ç‚·
+        // ä½ç½®ã‚’ãšã‚‰ã™
         Vector3 pos = new Vector3(numObj.transform.position.x - X, numObj.transform.position.y, numObj.transform.position.z);
         numObj.transform.position = pos;
 
         numObj = null;
     }
 
-    // ®”‚ÌŒ…”‚ğ•Ô‚·
+    // æ•´æ•°ã®æ¡æ•°ã‚’è¿”ã™
     public static int ChkDigit(int num) {
 
-        //0‚Ìê‡1Œ…‚Æ‚µ‚Ä•Ô‚·
+        //0ã®å ´åˆ1æ¡ã¨ã—ã¦è¿”ã™
         if (num == 0) return 1;
 
-        //‘Î”‚Æ‚â‚ç‚ğg‚Á‚Ä•Ô‚·
+        //å¯¾æ•°ã¨ã‚„ã‚‰ã‚’ä½¿ã£ã¦è¿”ã™
         return (num == 0) ? 1 : ((int)Mathf.Log10(num) + 1);
 
     }
     
-    // ”’l‚Ì’†‚©‚çw’è‚µ‚½Œ…‚Ì’l‚ğ‚©‚¦‚·
+    // æ•°å€¤ã®ä¸­ã‹ã‚‰æŒ‡å®šã—ãŸæ¡ã®å€¤ã‚’ã‹ãˆã™
     public static int GetPointDigit(int num, int digit) {
 
         int res = 0;
