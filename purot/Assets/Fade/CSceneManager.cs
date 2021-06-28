@@ -13,6 +13,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class CSceneManager : MonoBehaviour{
@@ -24,71 +25,65 @@ public class CSceneManager : MonoBehaviour{
     private GameObject gCamera;                         // AudioSource取得用
     AudioSource aAudioSource;                           // コンポーネント取得用
 
+    // Fade用
+    float fFadeSpeed = 0.002f;
+    float fRed, fGreen, fBlue, fAlpha;
+    public bool isFadeIn = false;
+    Image IMG_Fade;
+
+
     void Start() {
         // カメラ(SE用)取得
         gCamera = Camera.main.gameObject;
 
         // コンポーネント取得
         aAudioSource = gCamera.GetComponent<AudioSource>();
+
+        // Fade用
+        IMG_Fade = GetComponent<Image>();
+        fRed = IMG_Fade.color.r;
+        fGreen = IMG_Fade.color.g;
+        fBlue = IMG_Fade.color.b;
+        fAlpha = IMG_Fade.color.a;
     }
 
-    //タイトル画面からゲーム画面に遷移
-    public void OnTitletoGame() {
+    //ゲーム画面に遷移
+    public void OnChangeScene_Game(){
+        isFadeIn = true;
         aAudioSource.PlayOneShot(aSE01);
         stRecentlyScene = SceneManager.GetActiveScene().name;
         SceneManager.LoadScene("GameScene");
     }
-
-    // タイトル画面からチュートリアル画面に遷移
-    public void OnTitletoTutorial() {
+    //チュートリアル画面に遷移
+    public void OnChangeScene_Tutorial(){
+        isFadeIn = true;
         aAudioSource.PlayOneShot(aSE01);
         stRecentlyScene = SceneManager.GetActiveScene().name;
         SceneManager.LoadScene("TutorialScene");
     }
-
-    // タイトル画面からランキング画面に遷移
-    public void OnTitletoRanking() {
+    //タイトル画面に遷移
+    public void OnChangeScene_Title() {
+        isFadeIn = true;
+        aAudioSource.PlayOneShot(aSE01);
+        stRecentlyScene = SceneManager.GetActiveScene().name;
+        SceneManager.LoadScene("TitleScene");
+    }
+    //ランキング画面に遷移
+    public void OnChangeScene_Ranking(){
+        isFadeIn = true;
         aAudioSource.PlayOneShot(aSE01);
         stRecentlyScene = SceneManager.GetActiveScene().name;
         SceneManager.LoadScene("RankingScene");
     }
 
-    // リザルト画面からタイトル画面に遷移
-    public void OnResulttoTitle() {
-        aAudioSource.PlayOneShot(aSE01);
-        stRecentlyScene = SceneManager.GetActiveScene().name;
-        SceneManager.LoadScene("TitleScene");
-    }
-
-    // リザルト画面からゲーム画面に遷移
-    public void OnResulttoRetly() {
-        aAudioSource.PlayOneShot(aSE01);
-        stRecentlyScene = SceneManager.GetActiveScene().name;
-        SceneManager.LoadScene("GameScene");
-    }
-
-    // リザルト画面からランキング画面に遷移
-    public void OnResulttoRanking() {
-        aAudioSource.PlayOneShot(aSE01);
-        stRecentlyScene = SceneManager.GetActiveScene().name;
-        SceneManager.LoadScene("RankingScene");
-    }
-
-    //ランキング画面からタイトル画面に遷移
-    public void OnRankingtoTitle() {
-        aAudioSource.PlayOneShot(aSE01);
-        stRecentlyScene = SceneManager.GetActiveScene().name;
-        SceneManager.LoadScene("TitleScene");
-    }
-
-
-    public static string GetRecently()
-    {
+    public static string GetRecently(){
         return stRecentlyScene;
     }
 
-    public static void SetRecently(string name)
-    {
+    public static void SetRecently(string name) { 
         stRecentlyScene = name;
     }
+
+
+  
 }
