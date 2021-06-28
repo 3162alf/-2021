@@ -44,6 +44,11 @@ public class CBezierCurve : MonoBehaviour {
     }
 
     void Update() {
+        // ポーズ画面の時にオブジェクトが回転しないような処理
+        if (Mathf.Approximately(Time.timeScale, 0f)) {
+            return;
+        }
+
         // 終点までの移動割合を計算(Min:0 ～　Max:1)
         float fT = (float)iCnt / (iTotalPoints - 1);
 

@@ -30,6 +30,11 @@ public class CClearLampManager : CSingletonMonoBehaviour<CClearLampManager> {
 
     // Update is called once per frame
     void Update() {
+        // ポーズ画面の時にオブジェクトが回転しないような処理
+        if (Mathf.Approximately(Time.timeScale, 0f)) {
+            return;
+        }
+
         if (bOff) {
             iOffTimer++;
             if(iOffTimer > 60) {
