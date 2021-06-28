@@ -115,7 +115,7 @@ public class CScoreManager : MonoBehaviour
         //    bIs = true;
         //}
 
-        Debug.Log(OverwritePlayer.score);
+        //Debug.Log(OverwritePlayer.score);
 
         // ホームボタンを押したらタイトルに戻るように遷移（自動でできるようにしたかったの。。。）
         if (Input.GetButtonDown(stButtonNameHome) || Input.GetKeyDown(KeyCode.M))
@@ -247,6 +247,7 @@ public class CScoreManager : MonoBehaviour
             }
             for (int l = 0; l < iDigits; l++)
                 stock += stack.Pop();
+
 
             GameObject.Find("score" + (i + 1).ToString()).GetComponent<Text>().text = stock;
         }

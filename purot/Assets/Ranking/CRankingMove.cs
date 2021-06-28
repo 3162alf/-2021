@@ -12,31 +12,43 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 
 public class CRankingMove : MonoBehaviour
 {
-    
-    private GameObject[] gRankObject = new GameObject[10];
-    private GameObject[] gNameObject = new GameObject[10];
-    private GameObject[] gScoreObject = new GameObject[10];
-    private GameObject[] gWakuObject = new GameObject[10];
+
+    [SerializeField] private GameObject[] gRankObjects = new GameObject[10];
+    //private GameObject[] gNameObject = new GameObject[10];
+    [SerializeField] private GameObject[] gScoreObjects = new GameObject[10];
+    //private GameObject[] gWakuObject = new GameObject[10];
 
     [SerializeField] private float fTopPosY;
     [SerializeField] private float fScorePosY;
 
+    public CNameManager cnmScript;
+
     // Start is called before the first frame update
     void Start()
     {
-        SetGameObject();
+        //SetGameObject();
+        //SetPosition();
 
-        SetPosition();
-
+        cnmScript = GameObject.Find("PFB_Words").GetComponent<CNameManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (cnmScript.GetbIsEnd())
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                gRankObjects[i].SetActive(true);
+                gScoreObjects[i].SetActive(true);
+            }
+        }
+        
         
     }
 
@@ -46,18 +58,18 @@ public class CRankingMove : MonoBehaviour
         {
             if (i < 3)
             {
-                gRankObject[i] = GameObject.Find("top" + (i + 1));
-                gRankObject[i].GetComponent<RectTransform>().localScale = new Vector2(0.3f, 0.3f);
-                gScoreObject[i] = GameObject.Find("score" + (i + 1));
-                gScoreObject[i].GetComponent<RectTransform>().localScale = new Vector2(0.15f, 0.15f);
+                gRankObjects[i] = GameObject.Find("top" + (i + 1));
+                gRankObjects[i].GetComponent<RectTransform>().localScale = new Vector2(0.3f, 0.3f);
+                gScoreObjects[i] = GameObject.Find("score" + (i + 1));
+                gScoreObjects[i].GetComponent<RectTransform>().localScale = new Vector2(0.15f, 0.15f);
                 // –¼‘OŒã‚Å’Ç‰Á
             }
             else
             {
-                gRankObject[i] = GameObject.Find("top" + (i + 1));
-                gRankObject[i].GetComponent<RectTransform>().localScale = new Vector2(0.225f, 0.24f);
-                gScoreObject[i] = GameObject.Find("score" + (i + 1));
-                gScoreObject[i].GetComponent<RectTransform>().localScale = new Vector2(0.135f, 0.135f);
+                gRankObjects[i] = GameObject.Find("top" + (i + 1));
+                gRankObjects[i].GetComponent<RectTransform>().localScale = new Vector2(0.225f, 0.24f);
+                gScoreObjects[i] = GameObject.Find("score" + (i + 1));
+                gScoreObjects[i].GetComponent<RectTransform>().localScale = new Vector2(0.135f, 0.135f);
                 // –¼‘OŒã‚Å’Ç‰Á
             }
         }
@@ -69,19 +81,20 @@ public class CRankingMove : MonoBehaviour
         {
             if (i < 3)
             {
-                gRankObject[i].GetComponent<RectTransform>().transform.localPosition = new Vector3(-15.5f, fTopPosY + i * -7.5f, -2.0f);
-                gScoreObject[i].GetComponent<RectTransform>().transform.localPosition = new Vector3(25.0f, fScorePosY + i * -9.6f, -2.0f);
+                gRankObjects[i].GetComponent<RectTransform>().transform.localPosition = new Vector3(-15.5f, fTopPosY + i * -7.5f, -2.0f);
+                gScoreObjects[i].GetComponent<RectTransform>().transform.localPosition = new Vector3(45.0f, fScorePosY + i * -9.6f, -2.0f);
             }
             else
             {
                 if(i == 3)
                 {
                     fTopPosY += -4.0f;
-                    fScorePosY += -3.9f;
+                    fScorePosY += -4.5f;
                 }
-                gRankObject[i].GetComponent<RectTransform>().transform.localPosition = new Vector3(-15.5f, fTopPosY + i * -5.8f, -2.0f);
-                gScoreObject[i].GetComponent<RectTransform>().transform.localPosition = new Vector3(24.0f, fScorePosY + i * -7.0f, -2.0f);
+                gRankObjects[i].GetComponent<RectTransform>().transform.localPosition = new Vector3(-15.5f, fTopPosY + i * -5.8f, -5.0f);
+                gScoreObjects[i].GetComponent<RectTransform>().transform.localPosition = new Vector3(44.0f, fScorePosY + i * -7.0f, -2.0f);
             }
         }
     }
+
 }
