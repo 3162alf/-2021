@@ -109,6 +109,17 @@ public class CGateTimerController : MonoBehaviour {
                         else {
                             subdeg = 0.0f; 
                         }
+                        if (deg >= 330 && deg <= 690) {
+
+                            if (deg <= 400 && deg >= 330) {
+                                subdeg = 180 + (400 - deg) * 3.0f;
+                            }
+                        }
+                        else {
+                            if (deg <= 760 && deg >= 690) {
+                                subdeg = (760 - deg) * 3.0f;
+                            }
+                        }
 
                         pos.x = 7 * Mathf.Sin((deg + 180) * Mathf.Deg2Rad)
                         + 2 * Mathf.Cos(subdeg * Mathf.Deg2Rad) * Mathf.Sin((deg + 180) * Mathf.Deg2Rad);
@@ -119,7 +130,6 @@ public class CGateTimerController : MonoBehaviour {
                         + 2 * Mathf.Cos(subdeg * Mathf.Deg2Rad) * Mathf.Cos((deg + 180) * Mathf.Deg2Rad);
 
                         GameObject gate = Instantiate(gGate, pos, Quaternion.Euler(0, 90, 0));
-                        //transform) as GameObject;
 
                         CGate cs = gate.GetComponent<CGate>();
                         CRotateObject cro = first.GetComponent<CRotateObject>();

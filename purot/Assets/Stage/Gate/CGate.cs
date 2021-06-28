@@ -90,6 +90,11 @@ public class CGate : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+        // ポーズ画面の時にオブジェクトが回転しないような処理
+        if (Mathf.Approximately(Time.timeScale, 0f)) {
+            return;
+        }
+
         // 角度のブール処理
         if ((fDegree <= 400 && fDegree >= 390) ||
             (fDegree <= 40 && fDegree >= 30)) {
@@ -144,6 +149,9 @@ public class CGate : MonoBehaviour {
 
         if (fDegree < 0) {
             fDegree += 720;
+        }
+        if(fDegree > 720) {
+            fDegree -= 720;
         }
         //gGateTimerController.transform.LookAt(this.transform);
     }
