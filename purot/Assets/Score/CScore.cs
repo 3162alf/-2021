@@ -41,6 +41,7 @@ public class CScore : MonoBehaviour {
         // 一回だけ実行したいからスタートに書きました。後悔はしています。
         if (SceneManager.GetActiveScene().name == "GameScene") {
             iScore = 0;
+
         }
         if (SceneManager.GetActiveScene().name == "ResultScene") {
             DispScore();
@@ -80,6 +81,18 @@ public class CScore : MonoBehaviour {
         // 直前のスコア達を更新
         iOldScore = iScore;
         iOldScoreParam = iScoreParam;
+
+        // ランキングにゲーム中のスコア表示されちゃうから削除
+        if (SceneManager.GetActiveScene().name == "RankingScene") {
+
+            GameObject obj = GameObject.Find("PFB_ScoreObj");
+
+            // 現在のスコア表示を削除
+            foreach (Transform child in obj.transform) {
+                Destroy(child.gameObject);
+            }
+
+        }
     }
 
     public static void AddScore() {

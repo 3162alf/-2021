@@ -8,7 +8,9 @@ public class CNameManager : MonoBehaviour{
     
     public int[] iSavename = new int[3];
     public string sName = null;
-    public int i = 0;
+    public int iMojiCount = 0;
+
+    private GameObject canvas;
 
     [SerializeField, TooltipAttribute("ホームボタンの登録名")]
     private string stButtonNameA = "Xbox_A";    // ホームボタン
@@ -19,8 +21,8 @@ public class CNameManager : MonoBehaviour{
     [SerializeField, TooltipAttribute("ホームボタンの登録名")]
     private string stButtonNameRB = "Xbox_RB";    // RBボタン
 
-    public bool bIsEnd;
-    public bool bIsUse;
+    private bool bIsEnd;
+    private bool bIsUse;
 
     [SerializeField] GameObject gPanel;
 
@@ -44,8 +46,8 @@ public class CNameManager : MonoBehaviour{
         //iSavename[1] = 0;
         //iSavename[2] = 0;
 
-        bIsEnd = false;
-        bIsUse = true;
+        bIsEnd = false;  // 終了フラグ
+        bIsUse = true;   // 使っているフラグ
 
         gPanel = GameObject.Find("NamePanel");
         /*
@@ -57,9 +59,9 @@ public class CNameManager : MonoBehaviour{
         }
         */
        // else
-        {
-            gPanel.SetActive(true);
-        }
+        
+        gPanel.SetActive(true);
+        
 
 
         csmScript = GameObject.Find("ScoreDisplay").GetComponent<CScoreManager>();
@@ -83,41 +85,51 @@ public class CNameManager : MonoBehaviour{
             if (Input.GetKeyDown(KeyCode.D) || Input.GetButtonDown(stButtonNameRB))
             {
 
-                iSavename[i] += 1;
+                iSavename[iMojiCount] += 1;
 
-                if (iSavename[i] > 69)
+                if (iSavename[iMojiCount] > 69)
                 {
 
-                    iSavename[i] = 0;
+                    iSavename[iMojiCount] = 0;
 
                 }
-
             }
             if (Input.GetKeyDown(KeyCode.A) || Input.GetButtonDown(stButtonNameLB))
             {
 
-                iSavename[i] -= 1;
+                iSavename[iMojiCount] -= 1;
 
-                if (iSavename[i] < 0)
+                if (iSavename[iMojiCount] < 0)
                 {
 
-                    iSavename[i] = 69;
+                    iSavename[iMojiCount] = 69;
 
                 }
-
             }
             if (Input.GetKeyDown(KeyCode.Return) || Input.GetButtonDown(stButtonNameB))
             {
+                iMojiCount++;
 
-                i += 1;
+                if (iMojiCount >= 3)
+                {
+                    bIsEnd = true;
+                    csmScript.Set_bIs(false);
+                    Destroy(gPanel);
+                }
 
             }
         }
 
-        if(Input.GetButtonDown(stButtonNameA) || Input.GetKeyDown(KeyCode.Z))
-        {
-            bIsEnd = true;
-            csmScript.Set_bIs(false);
-        }
+        //if(Input.GetButtonDown(stButtonNameA))
+        //{
+        //    bIsEnd = true;
+        //    csmScript.Set_bIs(false);
+        //    Destroy(gPanel);
+        //}
+    }
+
+    public bool GetbIsEnd()
+    {
+        return bIsEnd;
     }
 }
