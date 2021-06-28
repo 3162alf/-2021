@@ -7,6 +7,8 @@
 ================================================================================
     History
         20210511 Hirano XBoxコントローラー入力処理追加
+
+        20210628 Ota Kaname タイマーの見た目色々追加
             
 /*============================================================================*/
 using UnityEngine;
@@ -38,9 +40,17 @@ public class CGateTimerController : MonoBehaviour {
 
     // ------------------------------------------------
 
+
+    // 時計の画像回転用
+    private float fRotationSpeed = 0.0f;
+    private GameObject gSecondHand;
+    private int iCalcTime = 30;
+
     void Start() {
         csObjectManager = GameObject.Find("PFB_ObjectManager").GetComponent<CObjectManager>();
         csOrderManager = GameObject.Find("PFB_OrderManager").GetComponent<COrderManager>();
+
+        gSecondHand = GameObject.Find("PFB_SecondHand");
     }
 
     void Update() {
@@ -51,19 +61,24 @@ public class CGateTimerController : MonoBehaviour {
         iSecond = (int)fTotalTime;
 
         // テキストに秒数を表示
-        tTimer.text = iSecond.ToString("00");
+        //tTimer.text = iSecond.ToString("00");
 
-        if (GameObject.Find(gGate.name + "(Clone)")) {
-            tTimer.text = "00";
-        }
+        fRotationSpeed = (iCalcTime - fTotalTime) * (360 / iCalcTime);
+        Debug.Log(fRotationSpeed);
+
+        gSecondHand.transform.eulerAngles = new Vector3(90.0f,0.0f,-fRotationSpeed);
+
+        //if (GameObject.Find(gGate.name + "(Clone)")) {
+        //tTimer.text = "00";
+        //}
         /* 下限値の設定
         if (iSecond <= 0) {
             tTimer.text = "00";
             fTotalTime = 0.0f;
         }*/
 
-        // 時間が来たらまたはプレイヤーの意思で回収
-        if (iSecond == 0 || Input.GetKeyDown(KeyCode.Return) || Input.GetButtonDown(stButton0Name)) {
+        // 時間が来たらまたはプレイヤsss.ーの意思で回収
+        if (fTotalTime <= 0 || Input.GetKeyDown(KeyCode.Return) || Input.GetButtonDown(stButton0Name)) {
             // ゲートが二つ出るのを防ぐ
             if (GameObject.Find(gGate.name + "(Clone)") == null) {
                 List<GameObject> list = csObjectManager.Get_gObjectList();
@@ -131,6 +146,9 @@ public class CGateTimerController : MonoBehaviour {
                     }
                 }
             }
+
+
+            fTotalTime = 0;
         }
     }
 
