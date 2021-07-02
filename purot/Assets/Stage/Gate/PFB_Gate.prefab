@@ -149,5 +149,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gParticle:
-  - {fileID: 4840839839557749346, guid: ad2195e89750e84449b4fffedf1b7da5, type: 3}
+  - {fileID: 5839833347653401302, guid: b9a5458768226894cbc178f919bafd24, type: 3}
   - {fileID: 4567908136032275834, guid: 1f5fee960a4109c48b38b3020f72dddb, type: 3}
