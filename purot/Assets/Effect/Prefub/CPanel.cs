@@ -10,7 +10,7 @@ public class CPanel : MonoBehaviour
     void Start()
     {
         iPanelDispCnt = 0;
-        Debug.Log("パネル生成");
+        //Debug.Log("パネル生成");
     }
 
     // Update is called once per frame
@@ -23,7 +23,7 @@ public class CPanel : MonoBehaviour
             if(iPanelDispCnt >= 23)
             {
                 Destroy(this.gameObject);
-                Debug.Log("パネル破壊");
+                //Debug.Log("パネル破壊");
             }
         }
     }

@@ -38,6 +38,7 @@ public enum OBJECT_SHAPE {                     // �I�u�W�F�N�g�̌`
 
 public class CObjectManager : CSingletonMonoBehaviour<CObjectManager> {
     [SerializeField] private List<GameObject> gObjectList = new List<GameObject>();     // �I�u�W�F�N�g���X�g
+    [SerializeField] private List<GameObject> gAcceleList = new List<GameObject>();     // �I�u�W�F�N�g���X�g
     [SerializeField] private List<OBJECT_SHAPE> CreateList = new List<OBJECT_SHAPE>();  // �������X�g
 
     [SerializeField] private GameObject[] gObjectSource;          // �I�u�W�F�N�g�\�[�X
@@ -61,10 +62,8 @@ public class CObjectManager : CSingletonMonoBehaviour<CObjectManager> {
             return;
         }
 
-        // ���X�g�ɂ���I�u�W�F�N�g�𐶐�
+        // オブジェクト生成
         if (CreateList.Count > 0) {
-            // ���̊Ԋu��J���Đ�������
-            //if (iTimer >= fInterval / fAcceleSpeed + 30) {
             if (iTimer >= 60) {
                 // �d�Ȃ�Ȃ��悤�ɐ����ʒu�𒲐�
                 float sd = 180.0f;
@@ -102,38 +101,27 @@ public class CObjectManager : CSingletonMonoBehaviour<CObjectManager> {
 
                 CreateList.RemoveAt(0);
 
-                gObjectList.Add(tmp);
-                //Sort();
-
+                gAcceleList.Add(tmp);
 
                 iTimer = 0;
             }
             iTimer++;
         }
-        else {
-            // ����������Ƃ��̎��Ԃ�Z�k
-            //iTimer = (int)(fInterval / fSpeed) + 10;
-        }
 
-        // �w�߂̍ŏ��̃I�u�W�F�N�g���擪�ɂȂ�悤��
-        //if (gAcceleList.Count == 0 && CreateList.Count == 0) {
         if (GameObject.Find("PFB_Gate(Clone)") == null) {
             OBJECT_SHAPE first = COrderManager.Instance.Get_Order(0);
             Sort(first);
         }
-        //}
 
-        for(int i = 0; i < gObjectList.Count; i++) {
+        for (int i = 0; i < gObjectList.Count; i++) {
             gObjectList[i].GetComponent<CRotateObject>().UpdateObject();
+        }
+        for(int i = 0; i < gAcceleList.Count; i++) {
+            gAcceleList[i].GetComponent<CRotateObject>().UpdateObject();
         }
     }
 
-    public void Sort() {
-        CDegreeCompare comp = new CDegreeCompare();
-        gObjectList.Sort(comp);
-    }
-
-    // �I�u�W�F�N�g�����֐�(����:�����ʒu�A�`��A����O��)
+    // オブジェクト生成関数
     public void Create(int n) {
         // �I�u�W�F�N�g������_���ȏ����Ŕz�u
         List<int> nums = new List<int>();
@@ -151,6 +139,11 @@ public class CObjectManager : CSingletonMonoBehaviour<CObjectManager> {
             nums.Remove((int)cro.Get_Shape());
         }
 
+        for(int i = 0; i < gAcceleList.Count; i++) {
+            CRotateObject cro = gAcceleList[i].GetComponent<CRotateObject>();
+            nums.Remove((int)cro.Get_Shape());
+        }
+
         // �������X�g�ɒǉ�
         for (int i = 0; i < n; i++) {
             int rand = Random.Range(0, nums.Count);
@@ -159,25 +152,38 @@ public class CObjectManager : CSingletonMonoBehaviour<CObjectManager> {
         }
     }
 
-    // �I�u�W�F�N�g�ǉ��֐�
+    // オブジェクトリストに追加
     public void Add(GameObject g) {
         if (!gObjectList.Contains(g)) {
             gObjectList.Add(g);
         }
     }
 
-    // �I�u�W�F�N�g�폜�֐�
+    // オブジェクトリストから削除
     public void Remove(GameObject g) {
         if (gObjectList.Contains(g)) {
             gObjectList.Remove(g);
         }
+        if (gAcceleList.Contains(g)) {
+            gAcceleList.Remove(g);
+        }
+    }
+
+    public void Accele(GameObject g) {
+        Remove(g);
+        gAcceleList.Add(g);
+    }
+
+    public void Decelerate(GameObject g) {
+        gAcceleList.Remove(g);
+        Add(g);
     }
 
     public void AddCreateList(OBJECT_SHAPE first) {
         CreateList.Add(first);
     }
 
-    // �w�肵���I�u�W�F�N�g���擪�ɗ���悤�ɕ��בւ���
+    // 指定したオブジェクトを先頭に
     public void Sort(OBJECT_SHAPE first) {
         // �擪�ɂ���I�u�W�F�N�g��index�擾
         int firstid = 0;
@@ -196,13 +202,10 @@ public class CObjectManager : CSingletonMonoBehaviour<CObjectManager> {
         
         // �ז��ȃI�u�W�F�N�g������
         for (int i = 0; i < firstid; i++) {
-            GameObject g = gObjectList[i];
+            GameObject g = gObjectList[0];
             g.GetComponent<CRotateObject>().Set_isAccele(true);
+            Accele(g);
         }
-
-        gObjectList.RemoveAt(firstid);
-        gObjectList.Insert(0, firstobj);
-
     }
 
     public void Inverse(GameObject g) {
@@ -213,11 +216,13 @@ public class CObjectManager : CSingletonMonoBehaviour<CObjectManager> {
             i = Get_iRanking(g);
 
             g.GetComponent<CRotateObject>().Set_isInverse(true);
+            Accele(g);
             g.GetComponent<CRotateObject>().Set_isSort(true);
 
             // ���̃I�u�W�F�N�g����������ċl�߂�
-            for (int j = i + 1; j < gObjectList.Count; j++) {
+            for (int j = i; j < gObjectList.Count;) {
                 gObjectList[j].GetComponent<CRotateObject>().Set_isAccele(true);
+                Accele(gObjectList[j]);
             }
 
             CRotateObject cs = g.GetComponent<CRotateObject>();
@@ -226,11 +231,11 @@ public class CObjectManager : CSingletonMonoBehaviour<CObjectManager> {
     }
 
 
-    // �I�u�W�F�N�g�����������
-    public void Accele(GameObject g) {
-        // ����������
-        g.GetComponent<CRotateObject>().Set_isAccele(true);
-    }
+    //// �I�u�W�F�N�g�����������
+    //public void Accele(GameObject g) {
+    //    // ����������
+    //    g.GetComponent<CRotateObject>().Set_isAccele(true);
+    //}
 
     // �Ԋugetter
     public float Get_fInterval() {

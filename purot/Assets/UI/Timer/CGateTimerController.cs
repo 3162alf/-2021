@@ -20,7 +20,7 @@ public class CGateTimerController : MonoBehaviour {
     public Text tTimer;          // テキストを入れる箱
 
     [SerializeField]
-    private float fTotalTime;   // 制限時間の総合時間
+    private float fTotalTime = 0;   // 制限時間の総合時間
     private int iSecond = 0;    // 秒数
 
     [SerializeField] GameObject gGate; // ゲート
@@ -42,9 +42,9 @@ public class CGateTimerController : MonoBehaviour {
 
 
     // 時計の画像回転用
-    private float fRotationSpeed = 0.0f;
+    //private float fRotationSpeed = 0.0f;
     private GameObject gSecondHand;
-    private int iCalcTime = 30;
+    //private int iCalcTime = 30;
 
     void Start() {
         csObjectManager = GameObject.Find("PFB_ObjectManager").GetComponent<CObjectManager>();
@@ -55,7 +55,7 @@ public class CGateTimerController : MonoBehaviour {
 
     void Update() {
         // フレームごとに総合時間から減算
-        fTotalTime -= Time.deltaTime;
+        fTotalTime += Time.deltaTime;
 
         // キャストした総合時間を秒数に代入
         iSecond = (int)fTotalTime;
@@ -63,10 +63,12 @@ public class CGateTimerController : MonoBehaviour {
         // テキストに秒数を表示
         //tTimer.text = iSecond.ToString("00");
 
-        fRotationSpeed = (iCalcTime - fTotalTime) * (360 / iCalcTime);
-        Debug.Log(fRotationSpeed);
+        float gatetime = CLevelManager.Instance.Get_fGateTime();
+        float rad = fTotalTime / gatetime * 360;
+        //Debug.Log(fRotationSpeed);
 
-        gSecondHand.transform.eulerAngles = new Vector3(90.0f,0.0f,-fRotationSpeed);
+        gSecondHand.transform.eulerAngles = new Vector3(90.0f,0.0f,-rad);
+        //gSecondHand.transform.Rotate(0, 0, rad);
 
         //if (GameObject.Find(gGate.name + "(Clone)")) {
         //tTimer.text = "00";
@@ -78,7 +80,7 @@ public class CGateTimerController : MonoBehaviour {
         }*/
 
         // 時間が来たらまたはプレイヤsss.ーの意思で回収
-        if (fTotalTime <= 0 || Input.GetKeyDown(KeyCode.Return) || Input.GetButtonDown(stButton0Name)) {
+        if (fTotalTime >= gatetime || Input.GetKeyDown(KeyCode.Return) || Input.GetButtonDown(stButton0Name)) {
             // ゲートが二つ出るのを防ぐ
             if (GameObject.Find(gGate.name + "(Clone)") == null) {
                 List<GameObject> list = csObjectManager.Get_gObjectList();
@@ -151,19 +153,17 @@ public class CGateTimerController : MonoBehaviour {
                         }
 
                         cs.Set_fDegree(deg);
-
-                        fTotalTime = 0;
                     }
                 }
             }
 
 
-            fTotalTime = 0;
+            fTotalTime = gatetime;
         }
     }
 
     // タイマーリセット関数
     public void Reset() {
-        fTotalTime = 30;
+        fTotalTime = 0;
     }
 }

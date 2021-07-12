@@ -15,6 +15,7 @@ using UnityEngine;
 
 public class COrderManager : CSingletonMonoBehaviour<COrderManager> {
     [SerializeField] private GameObject[] gOrderSource;                   // 指令オブジェクト配列
+    [SerializeField] private GameObject gRimCube;                         // リムライトキューブ
 
     private List<OBJECT_SHAPE> OrderList = new List<OBJECT_SHAPE>();      // 指令リスト
     private List<GameObject> gOrderList = new List<GameObject>();         // 指令オブジェクト

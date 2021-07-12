@@ -143,7 +143,7 @@ public class CBackGroundController : MonoBehaviour
                 gChild02.GetComponent<Renderer>().material = material;
                 iObjectCount++;
 
-                Debug.Log(iRandomElement);
+                //Debug.Log(iRandomElement);
             }
 
             // もう一個が定位置に来たら、片方を消去

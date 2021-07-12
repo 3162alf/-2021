@@ -30,7 +30,7 @@ public class CScore : MonoBehaviour {
     // スプライト表示関連
     Vector3 vInitPos;                    // 表示位置
     private int iPoint;                  // 表示する値
-    private float fSize = 1;             // 表示サイズ
+    //private float fSize = 1;             // 表示サイズ
     private static int iSort = 0;        // 数字の表示順
     private const int SORT_MAX = 30000;  // ソートする数値の最大数
     private int iOldScore = 0;           // スコアの差分確認用
@@ -63,7 +63,7 @@ public class CScore : MonoBehaviour {
 
         // 直前のスコアが違っていたら表示を切り替える
         if(iScore != iOldScore || iScoreParam != iOldScoreParam) {
-            Debug.Log("通った");
+            //Debug.Log("通った");
 
             // 子オブジェクトがタイマーのスプライトなのでそれを消す
             GameObject obj = GameObject.Find("PFB_ScoreObj");
@@ -109,7 +109,7 @@ public class CScore : MonoBehaviour {
 
     public void AddFScore() {
         fScore += 0.34f;
-        Debug.Log(fScore);
+        //Debug.Log(fScore);
     }
 
     public static void DispScore() {
@@ -160,7 +160,7 @@ public class CScore : MonoBehaviour {
 
             GameObject numObj = Instantiate(obj) as GameObject;
 
-            Debug.Log(numObj);
+            //Debug.Log(numObj);
 
             // 子供として登録
             numObj.transform.parent = transform;
