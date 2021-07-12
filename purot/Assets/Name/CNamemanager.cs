@@ -7,8 +7,8 @@ using UnityEngine.SceneManagement;
 public class CNameManager : MonoBehaviour{
     
     public int[] iSavename = new int[3];
-    public string sName = null;
-    public int iMojiCount = 0;
+    //private string sName = null;
+    private int iMojiCount = 0;
 
     private GameObject canvas;
 
@@ -63,7 +63,6 @@ public class CNameManager : MonoBehaviour{
         gPanel.SetActive(true);
         
 
-
         csmScript = GameObject.Find("ScoreDisplay").GetComponent<CScoreManager>();
     }
     
@@ -75,7 +74,7 @@ public class CNameManager : MonoBehaviour{
             if (bIsUse)
             {      
                 bIsUse = false;
-                gPanel.SetActive(false);
+                //gPanel.SetActive(false);
             }            
             return;
         }
@@ -113,19 +112,12 @@ public class CNameManager : MonoBehaviour{
                 if (iMojiCount >= 3)
                 {
                     bIsEnd = true;
-                    csmScript.Set_bIs(false);
-                    Destroy(gPanel);
+                    gPanel.SetActive(false);
                 }
 
             }
         }
 
-        //if(Input.GetButtonDown(stButtonNameA))
-        //{
-        //    bIsEnd = true;
-        //    csmScript.Set_bIs(false);
-        //    Destroy(gPanel);
-        //}
     }
 
     public bool GetbIsEnd()

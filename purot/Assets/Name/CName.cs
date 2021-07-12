@@ -12,7 +12,7 @@ public class CName : MonoBehaviour{
     public CNameManager manager;
     
     void Start() {
-        gObject = GameObject.Find("PFB_Words");
+        //gObject = GameObject.Find("PFB_Words");
         manager = gObject.GetComponent<CNameManager>();
 
         Img = gameObject.GetComponent<Image>();
@@ -24,6 +24,4 @@ public class CName : MonoBehaviour{
         Img.sprite = word[manager.iSavename[iNamenumber]];
 
     }
-
-
 }
