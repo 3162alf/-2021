@@ -69,7 +69,8 @@ public class CLevelManager : CSingletonMonoBehaviour<CLevelManager> {
     public void UpdateLevel() {       
         if (CScore.GetScore() >= Level[iLevel].iGoal) {
             if (isEnd) {// I—¹
-                SceneManager.LoadScene("ResultScene");
+                CSceneManager CSM = GameObject.Find("FadeCanvas").GetComponent<CSceneManager>();
+                CSM.OnChangeScene_Title();
             }
             else {
                 // Œ»İŠÔæ“¾

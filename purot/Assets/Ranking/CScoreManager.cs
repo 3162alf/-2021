@@ -32,8 +32,6 @@ public class CScoreManager : MonoBehaviour
 
     [SerializeField, TooltipAttribute("ホームボタンの登録名")]
     private string stButtonNameHome = "Xbox_Home";    // ホームボタン
-    [SerializeField] private AudioClip aSE01;
-    AudioSource aAudioSource;
 
     // CNameManagerの読み込み
     public GameObject gNameManagerObj;
@@ -52,8 +50,6 @@ public class CScoreManager : MonoBehaviour
 
     void Start()
     {
-        aAudioSource = GetComponent<AudioSource>();
-
         // CNameManagerの取得
         //gNameManagerObj = GameObject.Find("PFB_Words");
         cnmScript = gNameManagerObj.GetComponent<CNameManager>();
@@ -87,13 +83,11 @@ public class CScoreManager : MonoBehaviour
     {
         //NameOverwrite();
 
-        // ホームボタンを押したらタイトルに戻るように遷移（自動でできるようにしたかったの。。。）
+        // ホームボタンかMキーを押したらタイトルに戻るように遷移（自動でできるようにしたかったの。。。）
         if (Input.GetButtonDown(stButtonNameHome) || Input.GetKeyDown(KeyCode.M))
         {
-            CScore.ResetScore();
-            aAudioSource.PlayOneShot(aSE01);
-            CSceneManager.SetRecently("TitleScene");
-            SceneManager.LoadScene("TitleScene");
+            CSceneManager CSM = GameObject.Find("FadeCanvas").GetComponent<CSceneManager>();
+            CSM.OnChangeScene_Title();
         }
     }
 

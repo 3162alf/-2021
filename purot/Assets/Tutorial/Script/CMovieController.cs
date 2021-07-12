@@ -43,7 +43,7 @@ public class CMovieController : MonoBehaviour {
 
 	public void LoopPointReached(VideoPlayer vp)
     {
-		//CSceneManager CSM = GameObject.Find("EventSystem").GetComponent<CSceneManager>();
-		//CSM.OnChangeScene_Title();
+		CSceneManager CSM = GameObject.Find("FadeCanvas").GetComponent<CSceneManager>();
+		CSM.OnChangeScene_Title();
 	}
 }
