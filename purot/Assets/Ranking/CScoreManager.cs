@@ -1,7 +1,7 @@
 /*==============================================================================
      Project
     [CScoreManager.cs]
-    ・ランキング表示をするためのスコア処理。
+    ・ランキング表示をするためのスコアと名前も処理。
 --------------------------------------------------------------------------------
     2021.05.06 Tamura Yusuke
 ==============================================================================
@@ -39,83 +39,53 @@ public class CScoreManager : MonoBehaviour
     public GameObject gNameManagerObj;
     private CNameManager cnmScript;
 
-    private bool bIs;                   // 
+    private bool bDispName = false;
 
     private string stOldScene;
 
-    SpriteRenderer sr;
-    private CName cnScript;
+    public GameObject[] gScoreObject = new GameObject [10];
+    public GameObject[] gNameObject = new GameObject [10];
 
-    public void Set_bIs(bool bis) {
-        bIs = bis;
-    }
+    private static int iNameSize = 3; //全体文字数
+    private static int iMaxPlayer = 10;
 
-    private void Start()
+
+    void Start()
     {
         aAudioSource = GetComponent<AudioSource>();
 
         // CNameManagerの取得
-        gNameManagerObj = GameObject.Find("PFB_Words");
+        //gNameManagerObj = GameObject.Find("PFB_Words");
         cnmScript = gNameManagerObj.GetComponent<CNameManager>();
-
-        
 
         Load();
 
-
         if (CSceneManager.GetRecently() == "ResultScene")
         {
-            OverwritePlayer.name = cnmScript.GetName();
             OverwritePlayer.score = CScore.GetScore();
+            Debug.Log("スコア" + OverwritePlayer.score);
 
-
-            //OverwriteRecord();
-
-            Debug.Log(OverwritePlayer.name[0]);
-            Debug.Log(OverwritePlayer.name[1]);
-            Debug.Log(OverwritePlayer.name[2]);
-            Debug.Log(OverwritePlayer.score);
+            //OverwritePlayer.name = cnmScript.GetName();
+            //Debug.Log(OverwritePlayer.name[0]);
+            //Debug.Log(OverwritePlayer.name[1]);
+            //Debug.Log(OverwritePlayer.name[2]);
         }
+        // 情報上書き
+        OverwriteRecord();  
 
-        OverwriteRecord();
-
+        // 更新したデータをPlayerPrefs
         SaveScore();
+        // ランキング表示
         ScoreDisplay();
+        NameDisplay();
 
-
-
-        bIs = true;
         stOldScene = CSceneManager.GetRecently();
-        cnScript = GameObject.Find("PFB_Word_0").GetComponent<CName>();
-
 
     }
 
     void Update()
     {
-        //if(!bIs)
-        //{
-        //    // リザルトから飛んできた場合は名前とスコアを登録する
-        //    if (stOldScene == "ResultScene")
-        //    {
-        //        OverwritePlayer.name = cnmScript.GetName();
-                //OverwritePlayer.score = CScore.GetScore();
-
-        //        Load();
-        //        OverwriteRecord();
-
-        //        Debug.Log(OverwritePlayer.name[0]);
-        //        Debug.Log(OverwritePlayer.name[1]);
-        //        Debug.Log(OverwritePlayer.name[2]);
-        //    }
-
-        //    SaveScore();
-        //    ScoreDisplay();
-
-        //    bIs = true;
-        //}
-
-        //Debug.Log(OverwritePlayer.score);
+        //NameOverwrite();
 
         // ホームボタンを押したらタイトルに戻るように遷移（自動でできるようにしたかったの。。。）
         if (Input.GetButtonDown(stButtonNameHome) || Input.GetKeyDown(KeyCode.M))
@@ -132,18 +102,20 @@ public class CScoreManager : MonoBehaviour
         //3
         for (int i = 0; i < lPlayer.Count; i++)
         {
+            Debug.Log(lPlayer.Count);
             int saveNum = i + 1;
 
             PlayerPrefs.SetInt("SCORE" + saveNum.ToString(), lPlayer[i].score);
-
-            for (int j = 0; j < 3; j++)
-            {
+            
+            //for (int j = 0; j < 3; j++)
+            //{
                 // カンマ区切りで一つに変える
-                lPlayer[i].sName = lPlayer[i].sName + lPlayer[i].name[j].ToString() + ",";
+            //    lPlayer[i].sName = lPlayer[i].sName + lPlayer[i].name[j].ToString() + ",";
+            //}
+            for(int j=0; j< iNameSize; j++)
+            { 
+                PlayerPrefs.SetInt("NAME" + saveNum.ToString() + j, lPlayer[i].name[j]);
             }
-            PlayerPrefs.SetString("NAME", lPlayer[i].sName);
-            Debug.Log(lPlayer[i].sName);
-
         }
         PlayerPrefs.Save();
     }
@@ -192,22 +164,26 @@ public class CScoreManager : MonoBehaviour
                 playerscore.score = PlayerPrefs.GetInt("SCORE" + loadNum.ToString());
 
                 PlayerPrefs.SetInt("SCORE" + loadNum.ToString(), playerscore.score);
-
+                Debug.Log("セットスコ～ア");
 
                 lPlayer.Add(playerscore);
-                if (PlayerPrefs.HasKey("NAME" + loadNum.ToString()))
+
+                for(int i = 0; i < iNameSize; i++)
                 {
-                    playerscore.sName = PlayerPrefs.GetString("NAME" + loadNum.ToString());
+                    if (PlayerPrefs.HasKey("NAME" + loadNum.ToString() + i))
+                    {
+                        playerscore.name[i] = PlayerPrefs.GetInt("NAME" + loadNum.ToString() + i);
 
-                    string str = playerscore.sName;
-                    string[] strArray = str.Split(',');
-                    playerscore.name = Array.ConvertAll(strArray, int.Parse);
-
-                    //lPlayer.Add(playerscore);
-                    //saveNum += 1;
-
-                    Debug.Log("セットネ～ム");
-                    cnmScript.SetName(playerscore.name);
+                        //string str = playerscore.sName;
+                        //string[] strArray = str.Split(',');
+                        //playerscore.name = Array.ConvertAll(strArray, int.Parse);
+                        //Debug.Log(playerscore.name);
+                        //lPlayer.Add(playerscore);
+                        //saveNum += 1;
+                        lPlayer.Add(playerscore);
+                        Debug.Log("セットネ～ム");
+                        //cnmScript.SetName(playerscore.name);
+                    }
                 }
             }
 
@@ -246,12 +222,53 @@ public class CScoreManager : MonoBehaviour
                 stack.Push(Convert.ToString(scorenumber));
             }
             for (int l = 0; l < iDigits; l++)
+            {
                 stock += stack.Pop();
+            }
 
 
-            GameObject.Find("score" + (i + 1).ToString()).GetComponent<Text>().text = stock;
+            gScoreObject[i].GetComponent<Text>().text = stock;
+
+            //Debug.Log(gTopObject.GetComponent<Text>().text);
+            //GameObject.Find("score" + (i + 1).ToString()).GetComponent<Text>().text = stock;
+            
         }
     }
 
-   
+    public void NameDisplay()
+    {
+        for (int i = 0; i < lPlayer.Count; i++)
+            gNameObject[i].GetComponent<CNameManager>().SetName(lPlayer[i].name);
+    }
+
+    public void NameOverwrite()
+    {
+        // 最新のword_PFBに更新
+        cnmScript = gNameManagerObj.GetComponent<CNameManager>();
+
+        if (cnmScript.GetbIsEnd() && !bDispName)
+        {
+
+            Load();
+
+            if (CSceneManager.GetRecently() == "ResultScene")
+            {
+                //OverwritePlayer.score = CScore.GetScore();
+                //Debug.Log(OverwritePlayer.score);
+
+                OverwritePlayer.name = cnmScript.GetName();
+                Debug.Log(OverwritePlayer.name[0]);
+                Debug.Log(OverwritePlayer.name[1]);
+                Debug.Log(OverwritePlayer.name[2]);
+            }
+
+            OverwriteRecord();
+
+            SaveScore();
+
+            bDispName = true;
+
+            NameDisplay();
+        }
+    }
 }

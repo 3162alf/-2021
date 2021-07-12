@@ -14,20 +14,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Video;
-
+ 
 public class CMovieController : MonoBehaviour {
 	[SerializeField]private VideoClip vcVideoClip;
 	[SerializeField]private GameObject gScreen;
+	[SerializeField] VideoPlayer videoPlayer;
 
 	void Start() {
-		VideoPlayer vpVideoPlayer = gScreen.AddComponent<VideoPlayer>();  // videoPlayeコンポーネントの追加
+		VideoPlayer vpVideoPlayer = gScreen.AddComponent<VideoPlayer>();  // videoPlayerコンポーネントの追加
 
 		vpVideoPlayer.source = VideoSource.VideoClip;               // 動画ソースの設定
 		vpVideoPlayer.clip = vcVideoClip;
 
 		vpVideoPlayer.isLooping = false;                            // ループの設定
 
-    }
+		videoPlayer.loopPointReached += LoopPointReached;
+		videoPlayer.Play();
+	}
 
 	public void Play_Pause() {
 		VideoPlayer vpVideoPlayer = GetComponent<VideoPlayer>();
@@ -36,5 +39,11 @@ public class CMovieController : MonoBehaviour {
 			vpVideoPlayer.Play();		// 動画を再生する。
 		else
 			vpVideoPlayer.Pause();		// 動画を一時停止する。
+	}
+
+	public void LoopPointReached(VideoPlayer vp)
+    {
+		//CSceneManager CSM = GameObject.Find("EventSystem").GetComponent<CSceneManager>();
+		//CSM.OnChangeScene_Title();
 	}
 }
