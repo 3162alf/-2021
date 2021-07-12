@@ -39,8 +39,8 @@ public class CClearLampManager : CSingletonMonoBehaviour<CClearLampManager> {
             iOffTimer++;
             if(iOffTimer > 60) {
                 for(int i = 0; i < gClearLampList.Count; i++) {
-                    gClearLampList[i].transform.Find("PFB_Lamp").gameObject.GetComponent<Renderer>().material.SetColor("_EmissionColor", new Color(1, 1, 1));
-                    gClearLampList[i].transform.Find("PFB_Lamp").gameObject.GetComponent<Renderer>().material.color = Color.white;
+                    gClearLampList[i].transform.Find("pCube1").gameObject.GetComponent<Renderer>().material.SetColor("_Color", new Color(1, 1, 1));
+                    gClearLampList[i].transform.Find("pCube1").gameObject.GetComponent<Renderer>().material.color = Color.white;
                 }
                 iOffTimer = 0;
                 bOff = false;
@@ -49,8 +49,8 @@ public class CClearLampManager : CSingletonMonoBehaviour<CClearLampManager> {
     }
 
     public void Lighting(int i, Color color) {
-        gClearLampList[i].transform.Find("PFB_Lamp").gameObject.GetComponent<Renderer>().material.SetColor("_EmissionColor", color * fBloomStrength);
-        gClearLampList[i].transform.Find("PFB_Lamp").gameObject.GetComponent<Renderer>().material.color = color;
+        gClearLampList[i].transform.Find("pCube1").gameObject.GetComponent<Renderer>().material.SetColor("_Color", color * fBloomStrength);
+        gClearLampList[i].transform.Find("pCube1").gameObject.GetComponent<Renderer>().material.color = color;
     }
 
     public void LightingOff() {
@@ -81,7 +81,7 @@ public class CClearLampManager : CSingletonMonoBehaviour<CClearLampManager> {
 
                 // ÉNÉäÉAÉâÉìÉvê∂ê¨
                 gClearLampList.Add(Instantiate(gClearLamp,
-                    new Vector3(-20, 0, st - i * 5), Quaternion.Euler(0, 0, 0)));
+                    new Vector3(-18, 0, st - i * 5), Quaternion.Euler(0, 0, 0)));
             }
         }
     }

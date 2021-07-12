@@ -25,7 +25,7 @@ public class CTimer : MonoBehaviour
 
     // 表示関連
     private int iPoint;                  // 表示する値
-    private float fSize = 1;             // 表示サイズ
+    //private float fSize = 1;             // 表示サイズ
     private static int iSort = 0;        // 数字の表示順
     private const int SORT_MAX = 30000;  // ソートする数字の最大数
 
@@ -37,14 +37,14 @@ public class CTimer : MonoBehaviour
     private float fSeconds;             // 秒数用変数
     private float fOldSeconds;          // 一個前の分数
     private float fTotalTime;           // 総合時間
-    private float fCountTime;           // タイマー切り替えよう
+    //private float fCountTime;           // タイマー切り替えよう
 
 
     void Start() {
         // 総合時間の算出と初期化
         fTotalTime = fMinute * 60 + fSeconds;
         fOldSeconds = 0.0f;
-        fCountTime = 0.0f;
+        //fCountTime = 0.0f;
 
         Init((int)fTotalTime, new Vector3(0, 0, 0));
 

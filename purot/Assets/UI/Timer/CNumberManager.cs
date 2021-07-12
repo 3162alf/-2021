@@ -10,7 +10,7 @@ public class CNumberManager : MonoBehaviour {
     [SerializeField] private int iDigitMinutes = 2;      // •\¦‚·‚éŒ…”•ª
     [SerializeField] private int i1Minutes = 60;         // ‰½•b‚Åˆê•ª‚©
 
-    [SerializeField] private int iDispNumber = 0;
+    //[SerializeField] private int iDispNumber = 0;
     [SerializeField] private float fTime = 0.0f;         // deltaTime‚ğ‰ÁZ‚µ‚Ä‚¢‚­
     private int iTimeMillisecond;                        // ƒ~ƒŠ•b
     private int iTimeMinutes;                            // •ª
@@ -31,7 +31,7 @@ public class CNumberManager : MonoBehaviour {
         fTime += Time.deltaTime;
 
         // ®”‚ÉŒJ‚èã‚°
-        iTimeMillisecond += (int)(fTime * 1000);
+        iTimeMillisecond = (int)(fTime * 1000);
 
         // 1•ª‘«‚Á‚½‚ç•ª”‚ğ‘«‚µ‚Ä•b‚ğˆø‚­
         if (iTimeMillisecond >= i1Minutes * 1000) {
@@ -66,5 +66,9 @@ public class CNumberManager : MonoBehaviour {
 
     public int Get_iNumber(int iDigit) {
         return l_iNumber[iDigit];
+    }
+
+    public float Get_fTime() {
+        return fTime;
     }
 }

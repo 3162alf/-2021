@@ -27,7 +27,7 @@ public class CGate : MonoBehaviour {
     [SerializeField] private GameObject gClear;       // �N���A�X�^���v
 
     private float fRadius = 9f;        // ��]���a
-    private float fSpeed = 0.5f;       // ��]���x
+    //private float fSpeed = 0.5f;       // ��]���x
     private float fDegree;             // �p�x
     private float fDegreeSub;          // �p�x
     private RotateState State;         // �I�u�W�F�N�g�̉�]���
@@ -36,8 +36,8 @@ public class CGate : MonoBehaviour {
 
     private GameObject gGateTimerController;            // LampManager�̃I�u�W�F�N�g��i�[
     private CGateTimerController csGateTimerController; // �Q�[�g�^�C�}�[�X�N���v�g
-    private bool bLampReset = false;
-    private int iResetTimer = 0;
+    //private bool bLampReset = false;
+    //private int iResetTimer = 0;
 
     //-- 2021.5.15�ǉ� sasaki
     [SerializeField] private GameObject gPanelObjectRed;    // �p�l���v���n�u�i�ԁj
@@ -70,12 +70,14 @@ public class CGate : MonoBehaviour {
         Quaternion rot = Quaternion.Euler(90.0f, 0.0f, 0.0f);
         gPanelRed = (GameObject)Instantiate(gPanelObjectRed, new Vector3(0.0f, 0.0f, 0.0f), rot);
         gPanelRed.GetComponent<RectTransform>().sizeDelta = new Vector2(1920.0f, 1080.0f);
-        gPanelRed.gameObject.transform.parent = gCanvas.gameObject.transform;
+        //gPanelRed.gameObject.transform.parent = gCanvas.gameObject.transform;
+        gPanelRed.gameObject.transform.SetParent(gCanvas.gameObject.transform, true);
         gPanelRed.SetActive(false);
 
         gPanelGreen = (GameObject)Instantiate(gPanelObjectGreen, new Vector3(0.0f, 0.0f, 0.0f), rot);
         gPanelGreen.GetComponent<RectTransform>().sizeDelta = new Vector2(1920.0f, 1080.0f);
-        gPanelGreen.gameObject.transform.parent = gCanvas.gameObject.transform;
+        //gPanelGreen.gameObject.transform.parent = gCanvas.gameObject.transform;
+        gPanelGreen.gameObject.transform.SetParent(gCanvas.gameObject.transform, true);
         gPanelGreen.SetActive(false);
 
         CCreateTrail = TrailManager.GetComponent<CCreateTrail>();
@@ -233,7 +235,7 @@ public class CGate : MonoBehaviour {
                     //-- 2021.5.15�ǉ� sasaki
                     gPanelGreen.SetActive(true);
 
-                    Debug.Log("SE!!");
+                    //Debug.Log("SE!!");
                     aAudioSourceGreen.PlayOneShot(aSEClear);
 
                     CLevelManager.Instance.UpdateLevel();
@@ -247,7 +249,7 @@ public class CGate : MonoBehaviour {
                     //-- 2021.5.15�ǉ� sasaki
                     gPanelRed.SetActive(true);
 
-                    Debug.Log("SE!!");
+                    //Debug.Log("SE!!");
                     aAudioSourceRed.PlayOneShot(aSEMiss);
                 }
                 // �V�����I�u�W�F�N�g����

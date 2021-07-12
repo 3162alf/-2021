@@ -33,7 +33,7 @@ public class CCursorController : MonoBehaviour {
     [SerializeField] private float fSphereCastRadius = 0.5f;
 
     [SerializeField] private int iDistance = 10;                // ray、SphereCastの最大距離(※ステージを広くした場合はそれに合わせて大きくしてください)
-    [SerializeField] private string stTagName = "RotateObject"; // ray、SphereCastと衝突処理を行うオブジェクトのtag(※回転オブジェクトすべてに設定してください)
+    //[SerializeField] private string stTagName = "RotateObject"; // ray、SphereCastと衝突処理を行うオブジェクトのtag(※回転オブジェクトすべてに設定してください)
     [SerializeField] private LayerMask lmLayerMask;             // ray、SphereCastと衝突処理を行うオブジェクトを配置するレイヤー(※衝突処理判定を行いたいオブジェクトすべてをこのレイヤーにおいてください)
 
 

@@ -12,6 +12,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CLevelManager : CSingletonMonoBehaviour<CLevelManager> {
     [System.Serializable]
@@ -21,6 +22,9 @@ public class CLevelManager : CSingletonMonoBehaviour<CLevelManager> {
         public int iGoal;
         public float fGateTime;
         public float fSpeed;
+        public int iMinutes;
+        public int iSeconds;
+        public float fTotalTime;
     }
 
     private int iLevel = 0;
@@ -30,6 +34,9 @@ public class CLevelManager : CSingletonMonoBehaviour<CLevelManager> {
     private int iFrame;                          // フレームカウンター
 
     private GameObject gScore;
+
+    [SerializeField] private float fStartTime;
+    private bool isEnd = false;
 
     // Start is called before the first frame update
     void Start() {
@@ -42,10 +49,12 @@ public class CLevelManager : CSingletonMonoBehaviour<CLevelManager> {
         CObjectManager.Instance.Create(Level[iLevel].iObjectNum - 1);
 
         // タイマーゲット
-        gTimer = GameObject.Find("PFB_TimerController");
+        gTimer = GameObject.Find("PFB_Number");
 
         gScore = GameObject.Find("PFB_ScoreObj");
         gScore.GetComponent<CScore>().Set_iScoreParam(Level[iLevel].iGoal);
+
+        fStartTime = gTimer.GetComponent<CNumberManager>().Get_fTime();
     }
 
     // Update is called once per frame
@@ -57,11 +66,29 @@ public class CLevelManager : CSingletonMonoBehaviour<CLevelManager> {
         //}
     }
 
-    public void UpdateLevel() {
+    public void UpdateLevel() {       
         if (CScore.GetScore() >= Level[iLevel].iGoal) {
-            iLevel++;
-            gScore.GetComponent<CScore>().Set_iScoreParam(Level[iLevel].iGoal);
-            CObjectManager.Instance.Create(Level[iLevel].iObjectNum - Level[iLevel - 1].iObjectNum);
+            if (isEnd) {// 終了
+                SceneManager.LoadScene("ResultScene");
+            }
+            else {
+                // 現在時間取得
+                float endtime = gTimer.GetComponent<CNumberManager>().Get_fTime();
+
+                // ステージクリア時間算出
+                float totaltime = endtime - fStartTime;
+                int timelimit = Level[iLevel].iMinutes * 60 + Level[iLevel].iSeconds;
+                Level[iLevel].fTotalTime = totaltime;
+                if(totaltime > timelimit) {// 制限時間内にクリアしなかったら次のステージで終了
+                    isEnd = true;
+                }
+                // スタート時間更新
+                fStartTime = endtime;
+
+                iLevel++;
+                gScore.GetComponent<CScore>().Set_iScoreParam(Level[iLevel].iGoal);
+                CObjectManager.Instance.Create(Level[iLevel].iObjectNum - Level[iLevel - 1].iObjectNum);
+            }
         }
     }
 
@@ -76,5 +103,9 @@ public class CLevelManager : CSingletonMonoBehaviour<CLevelManager> {
 
     public int Get_iOrderNum() {
         return Level[iLevel].iOrderNum;
+    }
+
+    public float Get_fGateTime() {
+        return Level[iLevel].fGateTime;
     }
 }
