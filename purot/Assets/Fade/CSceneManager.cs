@@ -26,11 +26,7 @@ public class CSceneManager : MonoBehaviour{
     AudioSource aAudioSource;                           // コンポーネント取得用
 
     // Fade用
-    float fFadeSpeed = 0.002f;
-    float fRed, fGreen, fBlue, fAlpha;
-    public bool isFadeIn = false;
-    Image IMG_Fade;
-
+    public Fade fade;              //フェードキャンバス取得
 
     void Start() {
         // カメラ(SE用)取得
@@ -38,42 +34,60 @@ public class CSceneManager : MonoBehaviour{
 
         // コンポーネント取得
         aAudioSource = gCamera.GetComponent<AudioSource>();
-
-        // Fade用
-        IMG_Fade = GetComponent<Image>();
-        fRed = IMG_Fade.color.r;
-        fGreen = IMG_Fade.color.g;
-        fBlue = IMG_Fade.color.b;
-        fAlpha = IMG_Fade.color.a;
+        fade = this.GetComponent<Fade>();
     }
 
     //ゲーム画面に遷移
     public void OnChangeScene_Game(){
-        isFadeIn = true;
+
         aAudioSource.PlayOneShot(aSE01);
         stRecentlyScene = SceneManager.GetActiveScene().name;
-        SceneManager.LoadScene("GameScene");
+        //トランジションを掛けてシーン遷移する
+        fade.FadeIn(1f, () =>
+        {
+            SceneManager.LoadScene("GameScene");
+        });
     }
     //チュートリアル画面に遷移
     public void OnChangeScene_Tutorial(){
-        isFadeIn = true;
+
         aAudioSource.PlayOneShot(aSE01);
         stRecentlyScene = SceneManager.GetActiveScene().name;
-        SceneManager.LoadScene("TutorialScene");
+        fade.FadeIn(1f, () =>
+        {
+            SceneManager.LoadScene("TutorialScene");
+        });
     }
     //タイトル画面に遷移
     public void OnChangeScene_Title() {
-        isFadeIn = true;
+
         aAudioSource.PlayOneShot(aSE01);
         stRecentlyScene = SceneManager.GetActiveScene().name;
-        SceneManager.LoadScene("TitleScene");
+        fade.FadeIn(1f, () =>
+        {
+            SceneManager.LoadScene("TitleScene");
+        });
     }
     //ランキング画面に遷移
     public void OnChangeScene_Ranking(){
-        isFadeIn = true;
+
         aAudioSource.PlayOneShot(aSE01);
         stRecentlyScene = SceneManager.GetActiveScene().name;
-        SceneManager.LoadScene("RankingScene");
+        fade.FadeIn(1f, () =>
+        {
+            SceneManager.LoadScene("RankingScene");
+        });
+    }
+    //リザルト画面に遷移
+    public void OnChangeScene_Result()
+    {
+        aAudioSource.PlayOneShot(aSE01);
+        stRecentlyScene = SceneManager.GetActiveScene().name;
+        //トランジションを掛けてシーン遷移する
+        fade.FadeIn(1f, () =>
+        {
+            SceneManager.LoadScene("ResultScene");
+        });
     }
 
     public static string GetRecently(){
@@ -83,7 +97,4 @@ public class CSceneManager : MonoBehaviour{
     public static void SetRecently(string name) { 
         stRecentlyScene = name;
     }
-
-
-  
 }

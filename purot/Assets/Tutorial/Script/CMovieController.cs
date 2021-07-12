@@ -14,7 +14,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Video;
- 
+
 public class CMovieController : MonoBehaviour {
 	[SerializeField]private VideoClip vcVideoClip;
 	[SerializeField]private GameObject gScreen;
@@ -26,7 +26,8 @@ public class CMovieController : MonoBehaviour {
 		vpVideoPlayer.clip = vcVideoClip;
 
 		vpVideoPlayer.isLooping = false;                            // ÉãÅ[ÉvÇÃê›íË
-	}
+
+    }
 
 	public void Play_Pause() {
 		VideoPlayer vpVideoPlayer = GetComponent<VideoPlayer>();

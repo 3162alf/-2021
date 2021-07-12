@@ -198,6 +198,30 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4774492}
   m_CullTransparentMesh: 1
+--- !u!114 &74268615 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2848036184241142156, guid: 53c22e1773be7f84aad8ed8b7b58fa6e,
+    type: 3}
+  m_PrefabInstance: {fileID: 598737778}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff5feabaa5b272948811f1bb70effc69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &74268616 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 11491604, guid: 53c22e1773be7f84aad8ed8b7b58fa6e,
+    type: 3}
+  m_PrefabInstance: {fileID: 598737778}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d416d1715bbc06d4789612d1211da8d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &153070702
 GameObject:
   m_ObjectHideFlags: 0
@@ -210,7 +234,6 @@ GameObject:
   - component: {fileID: 153070707}
   - component: {fileID: 153070706}
   - component: {fileID: 153070705}
-  - component: {fileID: 153070704}
   - component: {fileID: 153070708}
   m_Layer: 5
   m_Name: TutorialButtun
@@ -239,20 +262,6 @@ RectTransform:
   m_AnchoredPosition: {x: -650, y: -340}
   m_SizeDelta: {x: 480, y: 90}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &153070704
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 153070702}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff5feabaa5b272948811f1bb70effc69, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  aSE01: {fileID: 8300000, guid: 82a325c4257920c4584e6c323ba4fc47, type: 3}
-  isFadeIn: 0
 --- !u!114 &153070705
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -297,7 +306,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 153070704}
+      - m_Target: {fileID: 74268615}
         m_TargetAssemblyTypeName: CSceneManager, Assembly-CSharp
         m_MethodName: OnChangeScene_Tutorial
         m_Mode: 1
@@ -456,7 +465,6 @@ GameObject:
   - component: {fileID: 173248631}
   - component: {fileID: 173248630}
   - component: {fileID: 173248629}
-  - component: {fileID: 173248632}
   - component: {fileID: 173248633}
   m_Layer: 5
   m_Name: RankingButtun
@@ -529,7 +537,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 173248632}
+      - m_Target: {fileID: 74268615}
         m_TargetAssemblyTypeName: CSceneManager, Assembly-CSharp
         m_MethodName: OnChangeScene_Ranking
         m_Mode: 1
@@ -579,20 +587,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 173248627}
   m_CullTransparentMesh: 1
---- !u!114 &173248632
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 173248627}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff5feabaa5b272948811f1bb70effc69, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  aSE01: {fileID: 8300000, guid: 82a325c4257920c4584e6c323ba4fc47, type: 3}
-  isFadeIn: 0
 --- !u!82 &173248633
 AudioSource:
   m_ObjectHideFlags: 0
@@ -864,12 +858,24 @@ PrefabInstance:
       value: FadeCanvas
       objectReference: {fileID: 0}
     - target: {fileID: 11486218, guid: 53c22e1773be7f84aad8ed8b7b58fa6e, type: 3}
-      propertyPath: m_Enabled
+      propertyPath: m_Color.b
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 11486218, guid: 53c22e1773be7f84aad8ed8b7b58fa6e, type: 3}
-      propertyPath: cutoutRange
+      propertyPath: m_Color.g
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11486218, guid: 53c22e1773be7f84aad8ed8b7b58fa6e, type: 3}
+      propertyPath: m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11486218, guid: 53c22e1773be7f84aad8ed8b7b58fa6e, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11486218, guid: 53c22e1773be7f84aad8ed8b7b58fa6e, type: 3}
+      propertyPath: cutoutRange
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 22424616, guid: 53c22e1773be7f84aad8ed8b7b58fa6e, type: 3}
       propertyPath: m_Pivot.x
@@ -955,6 +961,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2848036184241142156, guid: 53c22e1773be7f84aad8ed8b7b58fa6e,
+        type: 3}
+      propertyPath: fade
+      value: 
+      objectReference: {fileID: 74268616}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 53c22e1773be7f84aad8ed8b7b58fa6e, type: 3}
 --- !u!1001 &1100868944
@@ -1161,7 +1172,6 @@ GameObject:
   - component: {fileID: 1253054941}
   - component: {fileID: 1253054940}
   - component: {fileID: 1253054939}
-  - component: {fileID: 1253054938}
   - component: {fileID: 1253054942}
   m_Layer: 5
   m_Name: GameStartButtun
@@ -1190,20 +1200,6 @@ RectTransform:
   m_AnchoredPosition: {x: -650, y: -230}
   m_SizeDelta: {x: 480, y: 90}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1253054938
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1253054936}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff5feabaa5b272948811f1bb70effc69, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  aSE01: {fileID: 8300000, guid: 82a325c4257920c4584e6c323ba4fc47, type: 3}
-  isFadeIn: 0
 --- !u!114 &1253054939
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1248,7 +1244,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1253054938}
+      - m_Target: {fileID: 74268615}
         m_TargetAssemblyTypeName: CSceneManager, Assembly-CSharp
         m_MethodName: OnChangeScene_Game
         m_Mode: 1
