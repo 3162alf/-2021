@@ -19,14 +19,16 @@ public class CRankingMove : MonoBehaviour
 {
 
     [SerializeField] private GameObject[] gRankObjects = new GameObject[10];
-    //private GameObject[] gNameObject = new GameObject[10];
+    [SerializeField] private GameObject[] gNameObject = new GameObject[10];
     [SerializeField] private GameObject[] gScoreObjects = new GameObject[10];
     //private GameObject[] gWakuObject = new GameObject[10];
+    public GameObject[] gImg_WAKU = new GameObject[2];
+    public GameObject[] gImg_RankingFrame = new GameObject[2];
 
     [SerializeField] private float fTopPosY;
     [SerializeField] private float fScorePosY;
 
-    public CNameManager cnmScript;
+    private CNameManager cnmScript;
 
     // Start is called before the first frame update
     void Start()
@@ -35,6 +37,9 @@ public class CRankingMove : MonoBehaviour
         //SetPosition();
 
         cnmScript = GameObject.Find("PFB_Words").GetComponent<CNameManager>();
+
+        //gImg_WAKU = GameObject.Find("IMG_WAKU").gameObject;
+        //Img_RankingFrame = GameObject.Find("RankingFrame").gameObject;
     }
 
     // Update is called once per frame
@@ -46,6 +51,12 @@ public class CRankingMove : MonoBehaviour
             {
                 gRankObjects[i].SetActive(true);
                 gScoreObjects[i].SetActive(true);
+                gNameObject[i].SetActive(true);
+            }
+            for(int i=0; i<2; i++)
+            {
+                gImg_WAKU[i].SetActive(true);
+                gImg_RankingFrame[i].SetActive(true);
             }
         }
         
