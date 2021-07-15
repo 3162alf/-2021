@@ -109,4 +109,8 @@ public class CLevelManager : CSingletonMonoBehaviour<CLevelManager> {
     public float Get_fGateTime() {
         return Level[iLevel].fGateTime;
     }
+
+    public int Get_iLevel() {
+        return iLevel;
+    }
 }
