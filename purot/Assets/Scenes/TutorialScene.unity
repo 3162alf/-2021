@@ -306,7 +306,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1047020921}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: CSceneManager, Assembly-CSharp
         m_MethodName: OnChangeScene_Title
         m_Mode: 1
@@ -356,7 +356,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 482750388}
   m_CullTransparentMesh: 1
---- !u!1001 &893249176
+--- !u!1001 &912079527
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -378,6 +378,18 @@ PrefabInstance:
     - target: {fileID: 11486218, guid: 53c22e1773be7f84aad8ed8b7b58fa6e, type: 3}
       propertyPath: m_Color.r
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11486218, guid: 53c22e1773be7f84aad8ed8b7b58fa6e, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11486218, guid: 53c22e1773be7f84aad8ed8b7b58fa6e, type: 3}
+      propertyPath: cutoutRange
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11491604, guid: 53c22e1773be7f84aad8ed8b7b58fa6e, type: 3}
+      propertyPath: bStartFade
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 22424616, guid: 53c22e1773be7f84aad8ed8b7b58fa6e, type: 3}
       propertyPath: m_Pivot.x
@@ -610,18 +622,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 979702567}
   m_CullTransparentMesh: 1
---- !u!114 &1047020921 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2848036184241142156, guid: 53c22e1773be7f84aad8ed8b7b58fa6e,
-    type: 3}
-  m_PrefabInstance: {fileID: 893249176}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff5feabaa5b272948811f1bb70effc69, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1179550956
 GameObject:
   m_ObjectHideFlags: 0

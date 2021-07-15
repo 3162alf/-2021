@@ -29,17 +29,20 @@ public class CSceneManager : MonoBehaviour{
     public Fade fade;              //フェードキャンバス取得
 
     void Start() {
+
         // カメラ(SE用)取得
         gCamera = Camera.main.gameObject;
 
         // コンポーネント取得
         aAudioSource = gCamera.GetComponent<AudioSource>();
         fade = this.GetComponent<Fade>();
+
+        fade.FadeOut(1f);
     }
 
     //ゲーム画面に遷移
     public void OnChangeScene_Game(){
-
+        
         aAudioSource.PlayOneShot(aSE01);
         stRecentlyScene = SceneManager.GetActiveScene().name;
         //トランジションを掛けてシーン遷移する
@@ -60,7 +63,7 @@ public class CSceneManager : MonoBehaviour{
     }
     //タイトル画面に遷移
     public void OnChangeScene_Title() {
-
+      
         aAudioSource.PlayOneShot(aSE01);
         stRecentlyScene = SceneManager.GetActiveScene().name;
         fade.FadeIn(1f, () =>
@@ -70,7 +73,7 @@ public class CSceneManager : MonoBehaviour{
     }
     //ランキング画面に遷移
     public void OnChangeScene_Ranking(){
-
+  
         aAudioSource.PlayOneShot(aSE01);
         stRecentlyScene = SceneManager.GetActiveScene().name;
         fade.FadeIn(1f, () =>
@@ -79,8 +82,8 @@ public class CSceneManager : MonoBehaviour{
         });
     }
     //リザルト画面に遷移
-    public void OnChangeScene_Result()
-    {
+    public void OnChangeScene_Result() {
+
         aAudioSource.PlayOneShot(aSE01);
         stRecentlyScene = SceneManager.GetActiveScene().name;
         //トランジションを掛けてシーン遷移する
