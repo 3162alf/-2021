@@ -44,13 +44,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gPrefab:
-  - {fileID: 919132149155446097, guid: 4d6fd8708a48d1b469743a5c92bf6a19, type: 3}
-  - {fileID: 919132149155446097, guid: da3a1eebc9f5df04091d06efb95d6d73, type: 3}
-  - {fileID: 919132149155446097, guid: de60b7ab3701c2a409e4553560333077, type: 3}
-  - {fileID: 919132149155446097, guid: 4af47494eb2ce1e4c9e70fb706ce48d5, type: 3}
-  - {fileID: 919132149155446097, guid: 1ba608eee14fa134ab4044f049982fbd, type: 3}
-  - {fileID: 919132149155446097, guid: 1f07e5453ede4e342a547c6cf74619c6, type: 3}
-  fColorLv: 0.75
-  fSpeed: 1
-  vBackGroundPos: {x: -160, y: -800, z: -15}
+  - {fileID: 919132149155446097, guid: 298cc4a0aecf4074a8d1fdceffc0e7e6, type: 3}
+  - {fileID: 919132149155446097, guid: 8ef77248b1265294f90103d0542a61c3, type: 3}
   material: {fileID: 2100000, guid: ad7a9bc4d56e8204e882989f7fdb3a74, type: 2}
+  fSpeed: 1
+  fColorLv: 0.75
