@@ -69,8 +69,12 @@ public class CLevelManager : CSingletonMonoBehaviour<CLevelManager> {
     public void UpdateLevel() {       
         if (CScore.GetScore() >= Level[iLevel].iGoal) {
             if (isEnd) {// 終了
+                CPauser.Pause();
+                CScore.AddFScore();
+                CScore.AddFScore();
+                CScore.AddFScore();
                 CSceneManager CSM = GameObject.Find("FadeCanvas").GetComponent<CSceneManager>();
-                CSM.OnChangeScene_Title();
+                CSM.OnChangeScene_Result();
             }
             else {
                 // 現在時間取得
@@ -80,7 +84,7 @@ public class CLevelManager : CSingletonMonoBehaviour<CLevelManager> {
                 float totaltime = endtime - fStartTime;
                 int timelimit = Level[iLevel].iMinutes * 60 + Level[iLevel].iSeconds;
                 Level[iLevel].fTotalTime = totaltime;
-                if(totaltime > timelimit) {// 制限時間内にクリアしなかったら次のステージで終了
+                if(totaltime > timelimit || iLevel >= 5) {// 制限時間内にクリアしなかったら次のステージで終了
                     isEnd = true;
                 }
                 // スタート時間更新

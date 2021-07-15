@@ -69,6 +69,6 @@ public class CNumberManager : MonoBehaviour {
     }
 
     public float Get_fTime() {
-        return fTime;
+        return fTime + iTimeMinutes * i1Minutes;
     }
 }
