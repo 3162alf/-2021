@@ -120,6 +120,7 @@ MonoBehaviour:
     type: 3}
   aSEClear: {fileID: 8300000, guid: 453c50abeaa034e49b06531955cdc6db, type: 3}
   aSEMiss: {fileID: 8300000, guid: 78194cc22c86f7d4d9f3dd3698c6ee27, type: 3}
+  aSEVanish: {fileID: 8300000, guid: 14a74c3b60f6d344eb3a74bbb5fe09ce, type: 3}
 --- !u!54 &1902362772890249024
 Rigidbody:
   m_ObjectHideFlags: 0
