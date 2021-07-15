@@ -27,17 +27,11 @@ using UnityEngine.Assertions;
 public class Fade : MonoBehaviour
 {
 	IFade fade;
-    public bool bStartFade;
 
-    void Start ()
+	void Start ()
 	{
 		Init ();
-        //シーン立ち上げ時にトランジションを掛けるか
-        if (bStartFade == true)
-        {
-            cutoutRange = 1;
-        }
-        fade.Range = cutoutRange;
+		fade.Range = cutoutRange;
 	}
 
 	float cutoutRange;
