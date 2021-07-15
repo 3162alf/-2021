@@ -10,7 +10,8 @@ TrueTypeFontImporter:
   includeFontData: 1
   fontNames:
   - CP_Revenge
-  fallbackFontReferences: []
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 53f4f60b7d8ad6747bf330667bb4f791, type: 3}
   customCharacters: 
   fontRenderingMode: 0
   ascentCalculationMode: 1
