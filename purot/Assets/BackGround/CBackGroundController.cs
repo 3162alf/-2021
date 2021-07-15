@@ -36,8 +36,8 @@ public class CBackGroundController : MonoBehaviour
     private byte bColorGreen;
     private byte bColorBlue;
     private bool isReturnColor;                 // ゲーミング背景に必要なフラグ
-    private int iBackGroundLevel = 0;
-    private CLevelManager Clevelmanager;
+    private int iBackGroundLevel = 0;           // 背景のレベル変動用
+    private CLevelManager Clevelmanager;        // レベルマネージャー取得用変数
 
 
     void Start() {
@@ -48,7 +48,7 @@ public class CBackGroundController : MonoBehaviour
         bColorBlue = 255;
         isReturnColor = false;
 
-
+        // ゲームシーンならオブジェクトを探し、レベル変動させる
         if (SceneManager.GetActiveScene().name == "GameScene") {
             Clevelmanager = GameObject.Find("PFB_LevelManager").GetComponent<CLevelManager>();
             iBackGroundLevel = Clevelmanager.Get_iLevel();
@@ -112,6 +112,8 @@ public class CBackGroundController : MonoBehaviour
         // マテリアルの色をセット
         material.SetColor("_FrontColor", new Color32((byte)(bColorRed * fColorLv), (byte)(bColorGreen * fColorLv), (byte)(bColorBlue * fColorLv), 255));
         material.SetColor("_BackColor", new Color32((byte)(bColorRed * fColorLv), (byte)(bColorGreen * fColorLv), (byte)(bColorBlue * fColorLv), 255));
+
+        // 背景のレベル変動を変更するやつ
         if (SceneManager.GetActiveScene().name == "GameScene") {
             iBackGroundLevel = Clevelmanager.Get_iLevel();
             if (iBackGroundLevel % 2 == 1)
