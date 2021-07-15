@@ -15,61 +15,54 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CBackGroundController : MonoBehaviour
 {
     // 背景のプレハブをそれぞれ入れる
-    [SerializeField]
-    private GameObject[] gPrefab = new GameObject[2];
+    [SerializeField] private GameObject[] gPrefab = new GameObject[6];
+    [SerializeField] private float fColorLv;    // 色合いの調整用
+    [SerializeField] private float fSpeed;      // 背景の速度
+    [SerializeField] private Vector3 vBackGroundPos;      // 生成位置
 
-    // ワイヤーフレームを付けるための変数
-    public Material material;
-
-    // 生成する方　多分無駄してる
-    private GameObject gBackGround01;
+    public Material material;                   // ワイヤーフレームを付けるための変数
+    private GameObject gBackGround01;           // 生成する方　多分無駄してる
     private GameObject gBackGround02;
-
-    // 子オブジェクトの箱　色変える用
-    //private GameObject gChild;
-    //private GameObject gChild01;
-    //private GameObject gChild02;
-
-    // 表示しているオブジェクトの数
-    private int iObjectCount;
-
-    // 背景の速度
-    [SerializeField]
-    private float fSpeed;
-
-    // 各背景のトランスフォーム格納用
-    private Transform tTransform01;
+    private int iObjectCount;                   // 表示しているオブジェクトの数      
+    private Transform tTransform01;             // 各背景のトランスフォーム格納用
     private Transform tTransform02;
-
-    // 乱数用
-    private int iRandomElement;
-
-    // RGBの変数用
-    private byte bColorRed;
+    private int iRandomElement;                 // 背景生成の乱数用
+    private byte bColorRed;                     // RGBの変数用
     private byte bColorGreen;
     private byte bColorBlue;
+    private bool isReturnColor;                 // ゲーミング背景に必要なフラグ
+    private int iBackGroundLevel = 0;
+    private CLevelManager Clevelmanager;
 
-    private bool isReturnColor;
-
-
-    [SerializeField] private float fColorLv;
 
     void Start() {
         // 開始時の背景を生成
-        gBackGround01 = Instantiate(gPrefab[0], new Vector3(-350.0f, 150, -100.0f), Quaternion.Euler(90.0f, 0.0f, 0.0f)) as GameObject;
+        iBackGroundLevel = 0;
+        bColorRed = 1;
+        bColorGreen = 1;
+        bColorBlue = 255;
+        isReturnColor = false;
+
+
+        if (SceneManager.GetActiveScene().name == "GameScene") {
+            Clevelmanager = GameObject.Find("PFB_LevelManager").GetComponent<CLevelManager>();
+            iBackGroundLevel = Clevelmanager.Get_iLevel();
+            gBackGround01 = Instantiate(gPrefab[iBackGroundLevel], new Vector3(vBackGroundPos.x, 150.0f, vBackGroundPos.z), Quaternion.Euler(90.0f, 0.0f, 0.0f)) as GameObject;
+        }
+        else {
+            gBackGround01 = Instantiate(gPrefab[iBackGroundLevel], new Vector3(vBackGroundPos.x, 150.0f, vBackGroundPos.z), Quaternion.Euler(90.0f, 0.0f, 0.0f)) as GameObject;
+        }
+
         gBackGround01.transform.localScale = new Vector3(1, 1, 3);
         GameObject gChild = gBackGround01.transform.Find("default").gameObject;
         gChild.GetComponent<Renderer>().material = material;
         iObjectCount++;
 
-        bColorRed = 1;
-        bColorGreen = 1;
-        bColorBlue = 255;
-        isReturnColor = false;
     }
 
     void Update() {
@@ -119,6 +112,15 @@ public class CBackGroundController : MonoBehaviour
         // マテリアルの色をセット
         material.SetColor("_FrontColor", new Color32((byte)(bColorRed * fColorLv), (byte)(bColorGreen * fColorLv), (byte)(bColorBlue * fColorLv), 255));
         material.SetColor("_BackColor", new Color32((byte)(bColorRed * fColorLv), (byte)(bColorGreen * fColorLv), (byte)(bColorBlue * fColorLv), 255));
+        if (SceneManager.GetActiveScene().name == "GameScene") {
+            iBackGroundLevel = Clevelmanager.Get_iLevel();
+            if (iBackGroundLevel % 2 == 1)
+            {
+                Debug.Log(iBackGroundLevel);
+                iBackGroundLevel--;
+            }
+        }
+
 
         // 有無の確認
         if (gBackGround01 != null) {
@@ -135,15 +137,15 @@ public class CBackGroundController : MonoBehaviour
             // 二種類目を出す
             if (tTransform01.position.y >= 700.0f && iObjectCount < 2)
             {
+
+                Debug.Log("二個目生成1");
                 // 3個の背景からランダムに生成
-                iRandomElement = Random.Range(0, 2);
-                gBackGround02 = Instantiate(gPrefab[iRandomElement], new Vector3(-350.0f, -800.0f, -100.0f), Quaternion.Euler(90.0f, 0.0f, 0.0f)) as GameObject;
+                //iRandomElement = Random.Range(0, 2);
+                gBackGround02 = Instantiate(gPrefab[iBackGroundLevel + 1], new Vector3(vBackGroundPos.x, vBackGroundPos.y, vBackGroundPos.z), Quaternion.Euler(90.0f, 0.0f, 0.0f)) as GameObject;
                 gBackGround02.transform.localScale = new Vector3(1, 1, 3);
                 GameObject gChild02 = gBackGround02.transform.Find("default").gameObject;
                 gChild02.GetComponent<Renderer>().material = material;
                 iObjectCount++;
-
-                //Debug.Log(iRandomElement);
             }
 
             // もう一個が定位置に来たら、片方を消去
@@ -170,14 +172,14 @@ public class CBackGroundController : MonoBehaviour
             // 一種類目を出す
             if (tTransform02.position.y >= 700.0f && iObjectCount < 2) {
                 // 3個の背景からランダムに生成
-                iRandomElement = Random.Range(0, 2);
-                gBackGround01 = Instantiate(gPrefab[iRandomElement], new Vector3(-350.0f, -800.0f, -100.0f), Quaternion.Euler(90.0f, 0.0f, 0.0f)) as GameObject;
+                //iRandomElement = Random.Range(0, 2);
+                gBackGround01 = Instantiate(gPrefab[iBackGroundLevel], new Vector3(vBackGroundPos.x, vBackGroundPos.y, vBackGroundPos.z), Quaternion.Euler(90.0f, 0.0f, 0.0f)) as GameObject;
                 gBackGround01.transform.localScale = new Vector3(1, 1, 3);
                 GameObject gChild01 = gBackGround01.transform.Find("default").gameObject;
                 gChild01.GetComponent<Renderer>().material = material;
                 iObjectCount++;
 
-                Debug.Log(iRandomElement);
+                Debug.Log("二個目生成2");
             }
 
             // もう一個が定位置に来たら、片方を消去
