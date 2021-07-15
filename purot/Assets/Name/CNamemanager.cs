@@ -46,8 +46,10 @@ public class CNameManager : MonoBehaviour{
         //iSavename[1] = 0;
         //iSavename[2] = 0;
 
+        
         bIsEnd = false;  // 終了フラグ
         bIsUse = true;   // 使っているフラグ
+        
 
         gPanel = GameObject.Find("NamePanel");
         /*
@@ -59,8 +61,7 @@ public class CNameManager : MonoBehaviour{
         }
         */
        // else
-        
-        gPanel.SetActive(true);
+       
         
 
         csmScript = GameObject.Find("ScoreDisplay").GetComponent<CScoreManager>();

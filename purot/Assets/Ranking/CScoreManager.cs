@@ -50,6 +50,7 @@ public class CScoreManager : MonoBehaviour
 
     void Start()
     {
+
         // CNameManager‚ÌŽæ“¾
         //gNameManagerObj = GameObject.Find("PFB_Words");
         cnmScript = gNameManagerObj.GetComponent<CNameManager>();
@@ -59,6 +60,7 @@ public class CScoreManager : MonoBehaviour
         if (CSceneManager.GetRecently() == "ResultScene")
         {
             OverwritePlayer.score = CScore.GetScore();
+            OverwritePlayer.score = 3;
             Debug.Log("ƒXƒRƒA" + OverwritePlayer.score);
 
             //OverwritePlayer.name = cnmScript.GetName();
@@ -189,7 +191,7 @@ public class CScoreManager : MonoBehaviour
     {
         Stack<string> stack = new Stack<string>();
 
-        for (int i = 0; i < lPlayer.Count; i++)
+        for (int i = 0; i < iMaxPlayer; i++)
         {
             int scorenumber = 0;
             string stock = "";
@@ -220,19 +222,24 @@ public class CScoreManager : MonoBehaviour
                 stock += stack.Pop();
             }
 
-
-            gScoreObject[i].GetComponent<Text>().text = stock;
-
             //Debug.Log(gTopObject.GetComponent<Text>().text);
             //GameObject.Find("score" + (i + 1).ToString()).GetComponent<Text>().text = stock;
-            
+            gScoreObject[i].GetComponent<Text>().text = stock;
+
+            if (lPlayer.Count <= iMaxPlayer)
+                break;
         }
     }
 
     public void NameDisplay()
     {
-        for (int i = 0; i < lPlayer.Count; i++)
+        for (int i = 0; i < iMaxPlayer; i++)
+        {
             gNameObject[i].GetComponent<CNameManager>().SetName(lPlayer[i].name);
+
+            if (lPlayer.Count <= iMaxPlayer)
+                break;
+        }  
     }
 
     public void NameOverwrite()
