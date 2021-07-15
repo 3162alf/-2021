@@ -112,12 +112,15 @@ public class CBackGroundController : MonoBehaviour
         // マテリアルの色をセット
         material.SetColor("_FrontColor", new Color32((byte)(bColorRed * fColorLv), (byte)(bColorGreen * fColorLv), (byte)(bColorBlue * fColorLv), 255));
         material.SetColor("_BackColor", new Color32((byte)(bColorRed * fColorLv), (byte)(bColorGreen * fColorLv), (byte)(bColorBlue * fColorLv), 255));
-
-        iBackGroundLevel = Clevelmanager.Get_iLevel();
-        if(iBackGroundLevel % 2 == 1) {
-            Debug.Log(iBackGroundLevel);
-            iBackGroundLevel--;
+        if (SceneManager.GetActiveScene().name == "GameScene") {
+            iBackGroundLevel = Clevelmanager.Get_iLevel();
+            if (iBackGroundLevel % 2 == 1)
+            {
+                Debug.Log(iBackGroundLevel);
+                iBackGroundLevel--;
+            }
         }
+
 
         // 有無の確認
         if (gBackGround01 != null) {
