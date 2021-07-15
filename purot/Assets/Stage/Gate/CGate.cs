@@ -12,6 +12,8 @@
             36~,52~,156~,169~�s�ځB�I�[�_�[���s/�������ɐԂ�/�΃p�l�����o��悤�ɂ��܂����B
         2021.05.27
             SE用にいろいろ追加
+        2021.0715 hirano
+            SE追加
 /*============================================================================*/
 using System.Collections;
 using System.Collections.Generic;
@@ -53,6 +55,7 @@ public class CGate : MonoBehaviour {
     // SE用
     [SerializeField] private AudioClip aSEClear;    // SE格納するやつ
     [SerializeField] private AudioClip aSEMiss;     // SE格納するやつ
+    [SerializeField] private AudioClip aSEVanish;   // 消滅音
     private GameObject gCamera;                     // AudioSource取得用
     AudioSource aAudioSourceGreen;                  // コンポーネント取得用
     AudioSource aAudioSourceRed;                    // コンポーネント取得用
@@ -207,9 +210,13 @@ public class CGate : MonoBehaviour {
             if (order == col.gameObject.GetComponent<CRotateObject>().Get_Shape()) {
                 iMatchNum++;
                 CClearLampManager.Instance.Lighting(iPassNum, Color.green);
+                // hirano.20210715 回収効果音を再生
+                aAudioSourceGreen.PlayOneShot(aSEVanish);
             }
             else {
                 CClearLampManager.Instance.Lighting(iPassNum, Color.red);
+                // hirano.20210715 回収効果音を再生
+                aAudioSourceGreen.PlayOneShot(aSEVanish);
             }
 
             // �ʉ߂����I�u�W�F�N�g��폜
@@ -258,6 +265,7 @@ public class CGate : MonoBehaviour {
 
                 csGateTimerController.Reset();
                 gGateTimerController.transform.LookAt(new Vector3(0, 0, 10));
+
                 Destroy(this.gameObject);
             }
         }
