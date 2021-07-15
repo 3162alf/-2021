@@ -50,6 +50,7 @@ public class CPauser : MonoBehaviour {
             com.enabled = true;
         }
         pauseBehavs = null;
+        Debug.Log("hai");
     }
 
     // ポーズ
@@ -64,7 +65,6 @@ public class CPauser : MonoBehaviour {
 
     // ポーズ解除
     public static void Resume() {
-        Debug.Log(targets.Count);
         foreach (var obj in targets) {
             obj.OnResume();
         }
