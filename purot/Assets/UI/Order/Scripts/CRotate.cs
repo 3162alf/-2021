@@ -15,6 +15,9 @@ using UnityEngine;
 
 public class CRotate : MonoBehaviour
 {
+
+    [SerializeField] private Vector3 vRotate;
+    [SerializeField] private float fSpeed;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,6 +27,6 @@ public class CRotate : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Rotate(new Vector3(0.1f, 0.5f, 0.3f) * 2);
+        transform.Rotate(vRotate * fSpeed);
     }
 }

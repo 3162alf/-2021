@@ -81,7 +81,7 @@ public class COrderManager : CSingletonMonoBehaviour<COrderManager> {
 
             // éwóﬂê∂ê¨
             gOrderList.Add(Instantiate(gOrderSource[(int)OrderList[i]],
-                new Vector3(-18, 0, st - i * 5), Quaternion.Euler(0, 180, 0)));
+                new Vector3(-22, 0, st - i * 5), Quaternion.Euler(0, 180, 0)));
         }
     }
 }

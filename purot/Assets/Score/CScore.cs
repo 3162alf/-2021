@@ -107,7 +107,7 @@ public class CScore : MonoBehaviour {
         iScoreParam = i;
     }
 
-    public void AddFScore() {
+    public static void AddFScore() {
         fScore += 0.34f;
         //Debug.Log(fScore);
     }

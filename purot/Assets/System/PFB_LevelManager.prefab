@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &4202722782177012419
+--- !u!1 &4883861399723383106
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,22 +8,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4202722782177012416}
-  - component: {fileID: 8043210675754063063}
+  - component: {fileID: 4883861399723383105}
+  - component: {fileID: 1588325316976731990}
   m_Layer: 0
-  m_Name: PFB_LevelManager
+  m_Name: PFB_LevelManager 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4202722782177012416
+--- !u!4 &4883861399723383105
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4202722782177012419}
+  m_GameObject: {fileID: 4883861399723383106}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -31,13 +31,13 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8043210675754063063
+--- !u!114 &1588325316976731990
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4202722782177012419}
+  m_GameObject: {fileID: 4883861399723383106}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a4a09cda3ab1da944b7f3cee44ad1214, type: 3}
@@ -46,31 +46,50 @@ MonoBehaviour:
   Level:
   - iObjectNum: 3
     iOrderNum: 3
-    iGoal: 3
+    iGoal: 2
     fGateTime: 20
     fSpeed: 0.05
+    iMinutes: 0
+    iSeconds: 30
+    fTotalTime: 0
   - iObjectNum: 4
     iOrderNum: 3
     iGoal: 5
     fGateTime: 20
     fSpeed: 0.05
+    iMinutes: 0
+    iSeconds: 40
+    fTotalTime: 0
   - iObjectNum: 5
     iOrderNum: 4
     iGoal: 10
     fGateTime: 20
     fSpeed: 0.05
+    iMinutes: 0
+    iSeconds: 50
+    fTotalTime: 0
   - iObjectNum: 6
     iOrderNum: 4
     iGoal: 15
     fGateTime: 20
     fSpeed: 0.05
+    iMinutes: 1
+    iSeconds: 0
+    fTotalTime: 0
   - iObjectNum: 7
     iOrderNum: 5
     iGoal: 20
     fGateTime: 20
     fSpeed: 0.05
+    iMinutes: 1
+    iSeconds: 20
+    fTotalTime: 0
   - iObjectNum: 8
     iOrderNum: 5
     iGoal: 25
     fGateTime: 20
     fSpeed: 0.05
+    iMinutes: 1
+    iSeconds: 0
+    fTotalTime: 0
+  fStartTime: 0

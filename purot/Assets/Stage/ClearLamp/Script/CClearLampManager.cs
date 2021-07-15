@@ -81,7 +81,7 @@ public class CClearLampManager : CSingletonMonoBehaviour<CClearLampManager> {
 
                 // ƒNƒŠƒAƒ‰ƒ“ƒv¶¬
                 gClearLampList.Add(Instantiate(gClearLamp,
-                    new Vector3(-18, 0, st - i * 5), Quaternion.Euler(0, 0, 0)));
+                    new Vector3(-22, 0, st - i * 5), Quaternion.Euler(0, 0, 0)));
             }
         }
     }
