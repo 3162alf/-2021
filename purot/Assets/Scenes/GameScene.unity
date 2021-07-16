@@ -2789,6 +2789,11 @@ PrefabInstance:
     - target: {fileID: 1588325316976731990, guid: e6376db54f413e74588da6c9f5e4d54d,
         type: 3}
       propertyPath: Level.Array.data[0].iSeconds
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1588325316976731990, guid: e6376db54f413e74588da6c9f5e4d54d,
+        type: 3}
+      propertyPath: Level.Array.data[0].fTotalTime
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4883861399723383105, guid: e6376db54f413e74588da6c9f5e4d54d,

@@ -15,7 +15,7 @@ public class CPauser : MonoBehaviour {
     }
 
     // 破棄されるとき
-    void OnDestory() {
+    void OnDestroy() {
         // ポーズ対象から除外する
         targets.Remove(this);
     }
@@ -50,7 +50,7 @@ public class CPauser : MonoBehaviour {
             com.enabled = true;
         }
         pauseBehavs = null;
-        Debug.Log("hai");
+        //Debug.Log("hai");
     }
 
     // ポーズ
@@ -68,5 +68,6 @@ public class CPauser : MonoBehaviour {
         foreach (var obj in targets) {
             obj.OnResume();
         }
+        targets.Clear();
     }
 }
