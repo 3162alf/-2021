@@ -8,6 +8,8 @@
     History    
         2021.05.09 @Author Sasaki Misaki
             25行目を見てください。そっと、スコアの数値をぶちこむ処理追加してます。
+        2021.07.16 @Author Tamura Yusuke
+            一応システム完了!!!
 ============================================================================*/
 
 using System;
@@ -22,7 +24,6 @@ public class CScoreManager : MonoBehaviour
     public class CPlayer
     {
         public int[] name = new int[3];
-        public string sName = null;
         public int score;
     }
 
@@ -37,7 +38,8 @@ public class CScoreManager : MonoBehaviour
     public GameObject gNameManagerObj;
     private CNameManager cnmScript;
 
-    private bool bDispName = false;
+    private bool bNameInEnd;
+    private bool bDispName;
 
     private string stOldScene;
 
@@ -47,43 +49,34 @@ public class CScoreManager : MonoBehaviour
     private static int iNameSize = 3; //全体文字数
     private static int iMaxPlayer = 10;
 
+    public void SetNameIn(bool nameInEnd)
+    {
+        bNameInEnd = nameInEnd;
+    }
+
+    public bool GetNameIn()
+    {
+        return bNameInEnd;
+    }
 
     void Start()
     {
+        bNameInEnd = false;
+        bDispName = false;
 
         // CNameManagerの取得
         //gNameManagerObj = GameObject.Find("PFB_Words");
         cnmScript = gNameManagerObj.GetComponent<CNameManager>();
 
-        Load();
-
-        if (CSceneManager.GetRecently() == "ResultScene")
-        {
-            OverwritePlayer.score = CScore.GetScore();
-            OverwritePlayer.score = 3;
-            Debug.Log("スコア" + OverwritePlayer.score);
-
-            //OverwritePlayer.name = cnmScript.GetName();
-            //Debug.Log(OverwritePlayer.name[0]);
-            //Debug.Log(OverwritePlayer.name[1]);
-            //Debug.Log(OverwritePlayer.name[2]);
-        }
-        // 情報上書き
-        OverwriteRecord();  
-
-        // 更新したデータをPlayerPrefs
-        SaveScore();
-        // ランキング表示
-        ScoreDisplay();
-        NameDisplay();
+        // スコア更新と表示はUpdateに移動
 
         stOldScene = CSceneManager.GetRecently();
-
+        Debug.Log(lPlayer.Count);
     }
 
     void Update()
     {
-        //NameOverwrite();
+        Overwrite();
 
         // ホームボタンかMキーを押したらタイトルに戻るように遷移（自動でできるようにしたかったの。。。）
         if (Input.GetButtonDown(stButtonNameHome) || Input.GetKeyDown(KeyCode.M))
@@ -98,9 +91,8 @@ public class CScoreManager : MonoBehaviour
         //3
         for (int i = 0; i < lPlayer.Count; i++)
         {
-            Debug.Log(lPlayer.Count);
             int saveNum = i + 1;
-
+            Debug.Log(saveNum);
             PlayerPrefs.SetInt("SCORE" + saveNum.ToString(), lPlayer[i].score);
             
             //for (int j = 0; j < 3; j++)
@@ -148,12 +140,11 @@ public class CScoreManager : MonoBehaviour
     public void Load()
     {
         //2
-        int saveNum = 0;
+        int loadNum = 0;
         //3
-        while (saveNum < 10)
+        while (loadNum < 10)
         {
-            int loadNum = saveNum + 1;
-
+            //loadNum += 1;
             if (PlayerPrefs.HasKey("SCORE" + loadNum.ToString()))
             {
                 CPlayer playerscore = new CPlayer();
@@ -162,28 +153,20 @@ public class CScoreManager : MonoBehaviour
                 PlayerPrefs.SetInt("SCORE" + loadNum.ToString(), playerscore.score);
                 Debug.Log("セットスコ～ア");
 
-                lPlayer.Add(playerscore);
-
                 for(int i = 0; i < iNameSize; i++)
                 {
                     if (PlayerPrefs.HasKey("NAME" + loadNum.ToString() + i))
                     {
                         playerscore.name[i] = PlayerPrefs.GetInt("NAME" + loadNum.ToString() + i);
 
-                        //string str = playerscore.sName;
-                        //string[] strArray = str.Split(',');
-                        //playerscore.name = Array.ConvertAll(strArray, int.Parse);
-                        //Debug.Log(playerscore.name);
-                        //lPlayer.Add(playerscore);
                         //saveNum += 1;
-                        lPlayer.Add(playerscore);
-                        Debug.Log("セットネ～ム");
-                        //cnmScript.SetName(playerscore.name);
                     }
                 }
+                // リストに追加
+                lPlayer.Add(playerscore);
             }
 
-            saveNum += 1;
+            loadNum += 1;
         }
     }
 
@@ -191,7 +174,7 @@ public class CScoreManager : MonoBehaviour
     {
         Stack<string> stack = new Stack<string>();
 
-        for (int i = 0; i < iMaxPlayer; i++)
+        for (int i = 0; i < lPlayer.Count; i++)
         {
             int scorenumber = 0;
             string stock = "";
@@ -225,51 +208,49 @@ public class CScoreManager : MonoBehaviour
             //Debug.Log(gTopObject.GetComponent<Text>().text);
             //GameObject.Find("score" + (i + 1).ToString()).GetComponent<Text>().text = stock;
             gScoreObject[i].GetComponent<Text>().text = stock;
-
-            if (lPlayer.Count <= iMaxPlayer)
-                break;
         }
     }
 
     public void NameDisplay()
     {
-        for (int i = 0; i < iMaxPlayer; i++)
+        for (int i = 0; i < lPlayer.Count; i++)
         {
             gNameObject[i].GetComponent<CNameManager>().SetName(lPlayer[i].name);
-
-            if (lPlayer.Count <= iMaxPlayer)
-                break;
         }  
     }
 
-    public void NameOverwrite()
+    public void Overwrite()
     {
-        // 最新のword_PFBに更新
-        cnmScript = gNameManagerObj.GetComponent<CNameManager>();
-
-        if (cnmScript.GetbIsEnd() && !bDispName)
+        if (bNameInEnd)
         {
-
-            Load();
-
-            if (CSceneManager.GetRecently() == "ResultScene")
+            if (!bDispName)
             {
-                //OverwritePlayer.score = CScore.GetScore();
-                //Debug.Log(OverwritePlayer.score);
+                // 最新のword_PFBに更新
+                cnmScript = gNameManagerObj.GetComponent<CNameManager>();
 
-                OverwritePlayer.name = cnmScript.GetName();
-                Debug.Log(OverwritePlayer.name[0]);
-                Debug.Log(OverwritePlayer.name[1]);
-                Debug.Log(OverwritePlayer.name[2]);
+                Load();
+
+                if (CSceneManager.GetRecently() == "ResultScene")
+                {
+                    OverwritePlayer.score = CScore.GetScore();
+                    Debug.Log("スコア" + OverwritePlayer.score);
+
+                    OverwritePlayer.name = cnmScript.GetName();
+                    Debug.Log(OverwritePlayer.name[0]);
+                    Debug.Log(OverwritePlayer.name[1]);
+                    Debug.Log(OverwritePlayer.name[2]);
+
+                    OverwriteRecord();
+
+                    SaveScore();
+                }
+
+
+                bDispName = true;
+
+                ScoreDisplay();
+                NameDisplay();
             }
-
-            OverwriteRecord();
-
-            SaveScore();
-
-            bDispName = true;
-
-            NameDisplay();
         }
     }
 }

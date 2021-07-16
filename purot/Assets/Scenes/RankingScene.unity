@@ -132,7 +132,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1355305760, guid: 61a73105cd71afd44a28306a2ab6941d, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 375653610385446378, guid: 61a73105cd71afd44a28306a2ab6941d,
         type: 3}
@@ -240,7 +240,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1355305760, guid: 61a73105cd71afd44a28306a2ab6941d, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 375653610385446378, guid: 61a73105cd71afd44a28306a2ab6941d,
         type: 3}
@@ -2065,7 +2065,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1355305760, guid: 61a73105cd71afd44a28306a2ab6941d, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 375653610385446378, guid: 61a73105cd71afd44a28306a2ab6941d,
         type: 3}
@@ -2241,6 +2241,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PFB_BackGroundManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 3295111552654781925, guid: cdcc0b9f77a74e443aef328acb2e2354,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3295111552654781926, guid: cdcc0b9f77a74e443aef328acb2e2354,
         type: 3}
@@ -3299,7 +3304,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1355305760, guid: 61a73105cd71afd44a28306a2ab6941d, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 375653610385446378, guid: 61a73105cd71afd44a28306a2ab6941d,
         type: 3}
