@@ -28,6 +28,12 @@ public class CNameManager : MonoBehaviour{
 
     private CScoreManager csmScript;
 
+    // SE用
+    [SerializeField] AudioClip aSE01;               // SE格納するやつ
+    [SerializeField] AudioClip aSE02;               // SE格納するやつ
+    private GameObject gCamera;                     // AudioSource取得用
+    AudioSource aAudioSource;                       // コンポーネント取得用
+
     // CScoreManagerにstring型にした状態で名前を引き渡すのに使用
     public int[] GetName(){
         return iSavename;
@@ -55,6 +61,12 @@ public class CNameManager : MonoBehaviour{
         
 
         csmScript = GameObject.Find("ScoreDisplay").GetComponent<CScoreManager>();
+
+        // カメラ(SE用)取得
+        gCamera = Camera.main.gameObject;
+
+        // コンポーネント取得
+        aAudioSource = gCamera.GetComponent<AudioSource>();
     }
     
     void Update(){
@@ -63,7 +75,7 @@ public class CNameManager : MonoBehaviour{
         if (csmScript.GetNameIn())
         {
             if (bIsUse)
-            {      
+            {                
                 bIsUse = false;
                 //gPanel.SetActive(false);
             }            
@@ -83,6 +95,7 @@ public class CNameManager : MonoBehaviour{
                     iSavename[iMojiCount] = 0;
 
                 }
+                aAudioSource.PlayOneShot(aSE01);
             }
             if (Input.GetKeyDown(KeyCode.A) || Input.GetButtonDown(stButtonNameLB))
             {
@@ -95,6 +108,7 @@ public class CNameManager : MonoBehaviour{
                     iSavename[iMojiCount] = 69;
 
                 }
+                aAudioSource.PlayOneShot(aSE01);
             }
             if (Input.GetKeyDown(KeyCode.Return) || Input.GetButtonDown(stButtonNameB))
             {
@@ -105,8 +119,9 @@ public class CNameManager : MonoBehaviour{
                     bIsEnd = true;
                     gPanel.SetActive(false);
                     csmScript.SetNameIn(true);
+                    aAudioSource.PlayOneShot(aSE02);
                 }
-
+                aAudioSource.PlayOneShot(aSE01);
             }
         }
 
