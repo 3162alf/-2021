@@ -41,6 +41,7 @@ public class CScore : MonoBehaviour {
         // 一回だけ実行したいからスタートに書きました。後悔はしています。
         if (SceneManager.GetActiveScene().name == "GameScene") {
             iScore = 0;
+            fScore = 0;
 
         }
         if (SceneManager.GetActiveScene().name == "ResultScene") {
