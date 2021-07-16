@@ -24,7 +24,7 @@ public class CNameManager : MonoBehaviour{
     private bool bIsEnd;
     private bool bIsUse;
 
-    [SerializeField] GameObject gPanel;
+    private GameObject gPanel;
 
     private CScoreManager csmScript;
 
@@ -52,16 +52,6 @@ public class CNameManager : MonoBehaviour{
         
 
         gPanel = GameObject.Find("NamePanel");
-        /*
-        if (CSceneManager.GetRecently() != "ResultScene")
-        {
-            gPanel.SetActive(false);
-            bIsUse = false;
-            bIsEnd = true;
-        }
-        */
-       // else
-       
         
 
         csmScript = GameObject.Find("ScoreDisplay").GetComponent<CScoreManager>();
@@ -70,7 +60,7 @@ public class CNameManager : MonoBehaviour{
     void Update(){
 
         // –¼‘O“ü—Í‚ğŒˆ’èI—¹‚µ‚½‚ç–³‘Ê‚ÉUpdate‚Ìˆ—‚ğ‚¨‚±‚È‚í‚È‚¢‚æ‚¤‚Éreturn‚·‚éB
-        if (bIsEnd)
+        if (csmScript.GetNameIn())
         {
             if (bIsUse)
             {      
@@ -79,7 +69,7 @@ public class CNameManager : MonoBehaviour{
             }            
             return;
         }
-        if (bIsUse && !bIsEnd)
+        if (bIsUse && !csmScript.GetNameIn())
         {
 
             if (Input.GetKeyDown(KeyCode.D) || Input.GetButtonDown(stButtonNameRB))
@@ -114,6 +104,7 @@ public class CNameManager : MonoBehaviour{
                 {
                     bIsEnd = true;
                     gPanel.SetActive(false);
+                    csmScript.SetNameIn(true);
                 }
 
             }
