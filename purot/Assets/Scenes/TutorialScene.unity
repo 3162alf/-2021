@@ -589,7 +589,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: f8458821c60ae704a822f1c127efb5fb, type: 3}
     m_FontSize: 44
     m_FontStyle: 0
     m_BestFit: 0
@@ -610,6 +610,75 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 979702567}
   m_CullTransparentMesh: 1
+--- !u!1001 &990820076
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 9091843564244624317, guid: 9300b13ea007b5a469c89a9888b3ea07,
+        type: 3}
+      propertyPath: m_Name
+      value: PFB_System
+      objectReference: {fileID: 0}
+    - target: {fileID: 9091843564244624319, guid: 9300b13ea007b5a469c89a9888b3ea07,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 9091843564244624319, guid: 9300b13ea007b5a469c89a9888b3ea07,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9091843564244624319, guid: 9300b13ea007b5a469c89a9888b3ea07,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9091843564244624319, guid: 9300b13ea007b5a469c89a9888b3ea07,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9091843564244624319, guid: 9300b13ea007b5a469c89a9888b3ea07,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9091843564244624319, guid: 9300b13ea007b5a469c89a9888b3ea07,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9091843564244624319, guid: 9300b13ea007b5a469c89a9888b3ea07,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9091843564244624319, guid: 9300b13ea007b5a469c89a9888b3ea07,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9091843564244624319, guid: 9300b13ea007b5a469c89a9888b3ea07,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9091843564244624319, guid: 9300b13ea007b5a469c89a9888b3ea07,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9091843564244624319, guid: 9300b13ea007b5a469c89a9888b3ea07,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9300b13ea007b5a469c89a9888b3ea07, type: 3}
 --- !u!114 &1047020921 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2848036184241142156, guid: 53c22e1773be7f84aad8ed8b7b58fa6e,
@@ -1187,7 +1256,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: f8458821c60ae704a822f1c127efb5fb, type: 3}
     m_FontSize: 44
     m_FontStyle: 0
     m_BestFit: 0
@@ -1199,7 +1268,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: ToTitle
+  m_Text: TO TITLE
 --- !u!222 &1995812754
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1256,7 +1325,7 @@ VideoPlayer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2118821451}
   m_Enabled: 1
-  m_VideoClip: {fileID: 32900000, guid: c0b0d6ad7c296c94facfe302275fa546, type: 3}
+  m_VideoClip: {fileID: 32900000, guid: 9331fc23611d2fc488fb6d7975a4ab9b, type: 3}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 0}
@@ -1330,7 +1399,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52611aa474aac32488c85a07d5b28b5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vcVideoClip: {fileID: 32900000, guid: c0b0d6ad7c296c94facfe302275fa546, type: 3}
+  vcVideoClip: {fileID: 32900000, guid: 9331fc23611d2fc488fb6d7975a4ab9b, type: 3}
   gScreen: {fileID: 92456645}
   vpVideoPlayer: {fileID: 2118821453}
   audioSource: {fileID: 2118821457}
