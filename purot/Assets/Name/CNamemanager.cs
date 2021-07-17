@@ -67,6 +67,8 @@ public class CNameManager : MonoBehaviour{
 
         // コンポーネント取得
         aAudioSource = gCamera.GetComponent<AudioSource>();
+
+
     }
     
     void Update(){
@@ -123,6 +125,13 @@ public class CNameManager : MonoBehaviour{
                 }
                 aAudioSource.PlayOneShot(aSE01);
             }
+        }
+        if(CSceneManager.GetRecently() == "TitleScene")
+        {
+            bIsEnd = true;
+            gPanel.SetActive(false);
+            csmScript.SetNameIn(true);
+            aAudioSource.PlayOneShot(aSE02);
         }
 
     }
