@@ -29,6 +29,9 @@ public class CRankingMove : MonoBehaviour
     [SerializeField] private float fScorePosY;
 
     private CNameManager cnmScript;
+    private CScoreManager csmSccript;
+    private GameObject gPanel;
+   
 
     // Start is called before the first frame update
     void Start()
@@ -37,7 +40,7 @@ public class CRankingMove : MonoBehaviour
         //SetPosition();
 
         cnmScript = GameObject.Find("PFB_Words").GetComponent<CNameManager>();
-
+       
         //gImg_WAKU = GameObject.Find("IMG_WAKU").gameObject;
         //Img_RankingFrame = GameObject.Find("RankingFrame").gameObject;
     }

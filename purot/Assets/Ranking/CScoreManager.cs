@@ -69,6 +69,8 @@ public class CScoreManager : MonoBehaviour
         cnmScript = gNameManagerObj.GetComponent<CNameManager>();
 
         // スコア更新と表示はUpdateに移動
+        ScoreDisplay();
+        NameDisplay();
 
         stOldScene = CSceneManager.GetRecently();
         Debug.Log(lPlayer.Count);
