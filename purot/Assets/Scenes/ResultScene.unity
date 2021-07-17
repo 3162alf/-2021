@@ -931,6 +931,12 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: OnChangeScene_Ranking
       objectReference: {fileID: 0}
+    - target: {fileID: 3082253608495467867, guid: 2c93058eb080a4343b8b2ac073c3d504,
+        type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: f8458821c60ae704a822f1c127efb5fb,
+        type: 3}
     - target: {fileID: 3082253609016754219, guid: 2c93058eb080a4343b8b2ac073c3d504,
         type: 3}
       propertyPath: m_Pivot.x
