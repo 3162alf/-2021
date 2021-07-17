@@ -131,7 +131,6 @@ public class CNameManager : MonoBehaviour{
             bIsEnd = true;
             gPanel.SetActive(false);
             csmScript.SetNameIn(true);
-            aAudioSource.PlayOneShot(aSE02);
         }
 
     }
